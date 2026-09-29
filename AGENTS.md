@@ -81,6 +81,8 @@ tokens, never hard-coded hex), add an item to `registry.json`:
 ```
 and add a section for it with every variant to `app/page.tsx`.
 
+**No comments in components** (`registry/ui/`): no `//`, `/* */` or JSDoc. Put anything that needs explaining in the PR description or the changeset instead.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know

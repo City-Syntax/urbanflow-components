@@ -3,11 +3,6 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { Slot } from "radix-ui"
 
 import { cn } from "@/lib/utils"
-
-// urbanflow Button — Figma "Platform" › Design System › Button (1712:13271).
-// Figma names are the real API; shadcn's names (default, destructive, outline,
-// ghost, link, sm, lg, icon…) are kept as aliases so stock shadcn components
-// that call buttonVariants() keep working.
 const primary = "bg-primary text-primary-foreground"
 const secondary =
   "bg-surface-default shadow-button not-disabled:hover:bg-surface-light not-disabled:active:bg-surface-medium aria-pressed:bg-surface-medium disabled:shadow-none"
@@ -35,7 +30,6 @@ const buttonVariants = cva(
         link: plain,
       },
       tone: {
-        // Colour depends on variant + tone together, so it lives in compoundVariants.
         default: null,
         critical: null,
         success: null,
@@ -57,7 +51,6 @@ const buttonVariants = cva(
       },
     },
     compoundVariants: [
-      // ponytail: hover/pressed shades for filled buttons are best guesses (Figma MCP was rate-limited); verify against 1712:13271
       {
         variant: ["primary", "default"],
         tone: "default",
@@ -85,7 +78,6 @@ const buttonVariants = cva(
       { variant: ["secondary", "tertiary", "plain", "outline", "ghost", "link"], tone: "default", class: "text-content-primary" },
       { variant: ["secondary", "tertiary", "plain", "outline", "ghost", "link"], tone: "critical", class: "text-content-critical-primary" },
       { variant: ["secondary", "tertiary", "plain", "outline", "ghost", "link"], tone: "success", class: "text-content-success-primary" },
-      // Plain is text-only: no box, whatever size is passed.
       { variant: ["plain", "link"], class: "h-auto px-0" },
     ],
     defaultVariants: {
@@ -109,7 +101,6 @@ function Button({
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
-    /** Shows a spinner in place of the label and disables the button. */
     loading?: boolean
   }) {
   const Comp = asChild ? Slot.Root : "button"
