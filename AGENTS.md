@@ -90,3 +90,9 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## Running as @claude on GitHub
+
+There is no Figma MCP connector in GitHub Actions. Icons still sync (`FIGMA_TOKEN` is set as a repo
+secret); for colour/type values, ask her to run the change locally or paste the values. You can't
+open PRs yourself here: push the branch and reply with the "Create PR" link so she can click it.
