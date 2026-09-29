@@ -1,11 +1,16 @@
 // Downloads every icon in figma-icons.json from Figma as SVG into raw/.
-// Usage: FIGMA_TOKEN=... npm run sync -w @urbanflow/icons
-// Token: Figma → Settings → Security → Personal access tokens (scope: file_content:read).
+// Usage: npm run sync -w @urbanflow/icons
+// Token: $FIGMA_TOKEN, else ~/.figma-token (same file the urbanflow monorepo uses).
+// Create one in Figma → Settings → Security → Personal access tokens (scope: file_content:read).
+import { existsSync, readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
+import { homedir } from "node:os";
+import { join } from "node:path";
 
 const FILE_KEY = "CyjMpmGxUHezAqjmA5qXwI";
-const token = process.env.FIGMA_TOKEN;
-if (!token) throw new Error("Set FIGMA_TOKEN (Figma personal access token).");
+const tokenFile = join(homedir(), ".figma-token");
+const token = process.env.FIGMA_TOKEN || (existsSync(tokenFile) && readFileSync(tokenFile, "utf8").trim());
+if (!token) throw new Error("Set FIGMA_TOKEN or put a Figma personal access token in ~/.figma-token.");
 
 const icons = JSON.parse(await readFile(new URL("../figma-icons.json", import.meta.url)));
 const ids = Object.values(icons).join(",");

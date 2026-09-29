@@ -65,7 +65,7 @@ Read values with the Figma MCP `get_variable_defs` on a section node id. The pre
 ## Icons
 
 1. Add `"name": "<figma node id of the Size=20 variant>"` to `packages/icons/figma-icons.json`.
-2. `FIGMA_TOKEN=… npm run sync -w @urbanflow/icons` downloads every icon into `raw/`.
+2. `npm run sync -w @urbanflow/icons` (token from `$FIGMA_TOKEN` or `~/.figma-token`) downloads every icon into `raw/`.
    (The Figma MCP works too, one call per icon: `download_assets` with `defaultFormat: "svg"`,
    save the `export` URL to `raw/<name>.svg`. It's rate-limited on the Starter plan.)
 3. `npm run build -w @urbanflow/icons` generates `<NameIcon />` components; colours become `currentColor`.
