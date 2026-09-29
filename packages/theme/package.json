@@ -1,7 +1,7 @@
 {
   "name": "@urbanflow/theme",
   "version": "0.0.0",
-  "description": "UrbanFlow design tokens for Tailwind v4 and shadcn/ui.",
+  "description": "urbanflow design tokens for Tailwind v4 and shadcn/ui.",
   "license": "MIT",
   "repository": {
     "type": "git",

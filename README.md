@@ -1,6 +1,6 @@
-# UrbanFlow Components
+# urbanflow components
 
-UrbanFlow's design system: tokens and icons on npm, plus re-skinned [shadcn/ui](https://ui.shadcn.com)
+urbanflow's design system: tokens and icons on npm, plus re-skinned [shadcn/ui](https://ui.shadcn.com)
 components you copy into your app. Preview everything at https://components.urbanflow.co.
 
 ## Use it in an app (Next.js or Vite, Tailwind v4)
@@ -39,7 +39,7 @@ import { SearchIcon } from "@urbanflow/icons";
 
 Then `npx shadcn add @urbanflow/<name>`. The component is now yours to edit. To pick up a newer
 version, re-run the command and review the diff. Components we haven't changed come straight
-from shadcn (`npx shadcn add dialog`) and use the UrbanFlow theme automatically.
+from shadcn (`npx shadcn add dialog`) and use the urbanflow theme automatically.
 
 Release notes live in each package's `CHANGELOG.md` ([theme](packages/theme/CHANGELOG.md),
 [icons](packages/icons/CHANGELOG.md), [components](CHANGELOG.md)). All packages share one version number.

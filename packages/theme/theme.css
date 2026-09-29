@@ -1,5 +1,5 @@
 /*
- * @urbanflow/theme — UrbanFlow design tokens for Tailwind v4 + shadcn/ui.
+ * @urbanflow/theme — urbanflow design tokens for Tailwind v4 + shadcn/ui.
  * Source: Figma "Platform" › 🔹 Design System (CyjMpmGxUHezAqjmA5qXwI, node 723:6170).
  * Excluded on purpose: ⛔ Deprecated/*, --p-* (Polaris), hack/*, *-figma-only,
  * "Background-new (ignore)". See the figma-cleanup issues before changing names.
@@ -170,7 +170,7 @@
   --shadow-md: 0 4px 20px -4px #0000001a, 0 2px 4px -1px #1c1c1c0d;
 }
 
-/* shadcn/ui semantic tokens → UrbanFlow palette. Stock shadcn components read these. */
+/* shadcn/ui semantic tokens → urbanflow palette. Stock shadcn components read these. */
 :root {
   --radius: 0.5rem; /* Figma border-8; gives rounded-sm/md/lg/xl = 4/6/8/12px */
   --background: var(--color-surface-default);

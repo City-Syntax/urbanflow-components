@@ -31,7 +31,7 @@ export default function Home() {
   return (
     <main className="mx-auto flex max-w-5xl flex-col gap-12 px-4 py-10">
       <header className="flex flex-col gap-1">
-        <h1 className="text-header-xxlarge">UrbanFlow Components</h1>
+        <h1 className="text-header-xxlarge">urbanflow components</h1>
         <p className="text-paragraph-medium text-content-secondary">
           Tokens from <code className="font-mono">@urbanflow/theme</code>, icons from{" "}
           <code className="font-mono">@urbanflow/icons</code>.

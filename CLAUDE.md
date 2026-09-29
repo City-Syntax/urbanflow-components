@@ -1,8 +1,8 @@
-# UrbanFlow Components
+# urbanflow components
 
-The UrbanFlow design system. A designer maintains it by prompting an agent (you); she reviews the
+The urbanflow design system. A designer maintains it by prompting an agent (you); she reviews the
 result on the Vercel preview, not the code. Explain in plain design terms, keep PRs small, and
-always give her the preview link.
+always give her the preview link. The brand is always lowercase: **urbanflow**, never UrbanFlow.
 
 ## What lives where
 
