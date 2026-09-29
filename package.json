@@ -1,9 +1,10 @@
 {
-  "name": "@urbanflow/registry",
+  "name": "urbanflow-components",
   "version": "0.0.0",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "registry"
   ],
   "scripts": {
     "dev": "npm run build -w @urbanflow/icons && next dev",
@@ -14,8 +15,8 @@
     "release": "npm run build -w @urbanflow/icons && changeset publish"
   },
   "dependencies": {
-    "@urbanflow/icons": "^0.0.0",
-    "@urbanflow/theme": "^0.0.0",
+    "@urbanflow/icons": "*",
+    "@urbanflow/theme": "*",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "next": "^16.3.6",

@@ -1,0 +1,6 @@
+{
+  "name": "@urbanflow/registry",
+  "version": "0.0.0",
+  "private": true,
+  "description": "urbanflow shadcn/ui registry components. Not published to npm; this package only carries the version and CHANGELOG.md."
+}

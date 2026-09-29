@@ -30,7 +30,8 @@ installed straight from shadcn by apps and pick up the theme automatically.
    Added `info-xlight` colour.
    ```
    Write it for app engineers: what changed and what they need to do. All `@urbanflow/*` packages
-   share one version, so list whichever package you touched.
+   share one version, so list whichever package you touched: `@urbanflow/theme`, `@urbanflow/icons`,
+   or `@urbanflow/registry` (components; not on npm, it just holds the version and changelog).
    - **patch**: fixed/tweaked a value, no names changed
    - **minor**: added a token, icon, component or variant
    - **major**: renamed or removed anything apps might use (a class name, icon, prop). Say what to replace it with.
