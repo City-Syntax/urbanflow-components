@@ -46,4 +46,4 @@ Release notes live in each package's `CHANGELOG.md` ([theme](packages/theme/CHAN
 
 ## Working on this repo
 
-See [CLAUDE.md](CLAUDE.md). `npm install`, `npm run dev`, `npm run check`.
+See [AGENTS.md](AGENTS.md). `npm install`, `npm run dev`, `npm run check`.
