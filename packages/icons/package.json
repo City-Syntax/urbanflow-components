@@ -1,0 +1,27 @@
+{
+  "name": "@urbanflow/icons",
+  "version": "0.0.0",
+  "description": "UrbanFlow icon set as React components, generated from Figma.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/City-Syntax/urbanflow-components.git",
+    "directory": "packages/icons"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "sync": "node scripts/sync.mjs",
+    "build": "node scripts/build.mjs && tsc -p ."
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  }
+}

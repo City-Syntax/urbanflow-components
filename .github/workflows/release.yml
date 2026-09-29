@@ -1,0 +1,33 @@
+name: Release
+on:
+  push:
+    branches: [main]
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: write # push the version commit and tags
+  pull-requests: write # open the "Version Packages" PR
+  id-token: write # npm trusted publishing (no NPM_TOKEN needed)
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24 # ships npm 11, required for trusted publishing
+          cache: npm
+          registry-url: https://registry.npmjs.org
+      - run: npm ci
+      # Opens/updates a "Version Packages" PR while changesets are pending;
+      # once that PR is merged, publishes to npm.
+      - uses: changesets/action@v1
+        with:
+          version: npm run version-packages
+          publish: npm run release
+          title: Version Packages
+          commit: Version Packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

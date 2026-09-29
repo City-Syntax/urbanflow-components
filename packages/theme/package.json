@@ -1,0 +1,21 @@
+{
+  "name": "@urbanflow/theme",
+  "version": "0.0.0",
+  "description": "UrbanFlow design tokens for Tailwind v4 and shadcn/ui.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/City-Syntax/urbanflow-components.git",
+    "directory": "packages/theme"
+  },
+  "exports": {
+    ".": {
+      "style": "./theme.css",
+      "default": "./theme.css"
+    }
+  },
+  "files": ["theme.css"],
+  "peerDependencies": {
+    "tailwindcss": "^4"
+  }
+}
