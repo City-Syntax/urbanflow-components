@@ -1,6 +1,9 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import * as Icons from "@urbanflow/icons";
+import { ArrowRightIcon } from "@urbanflow/icons";
+
+import { Button } from "@/registry/ui/button";
 
 // Tokens are read straight from theme.css so this page never drifts from the package.
 const themeCss = readFileSync(join(process.cwd(), "packages/theme/theme.css"), "utf8");
@@ -81,6 +84,55 @@ export default function Home() {
             <div key={r} className="flex size-28 items-end border bg-muted p-3 text-label-xsmall" style={{ borderRadius: `var(--radius-${r})` }}>
               rounded-{r}
             </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section title="Button">
+        <div className="overflow-x-auto">
+          <table className="border-separate border-spacing-3 text-left">
+            <thead className="text-label-xsmall text-content-secondary">
+              <tr>
+                <th />
+                {(["default", "critical", "success"] as const).map((tone) => (
+                  <th key={tone}>{tone}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {(["primary", "secondary", "tertiary", "plain"] as const).map((variant) => (
+                <tr key={variant}>
+                  <th className="pr-4 text-label-xsmall text-content-secondary">{variant}</th>
+                  {(["default", "critical", "success"] as const).map((tone) => (
+                    <td key={tone}>
+                      <div className="flex items-center gap-2">
+                        {(["micro", "medium", "large"] as const).map((size) => (
+                          <Button key={size} variant={variant} tone={tone} size={size}>
+                            {size}
+                          </Button>
+                        ))}
+                      </div>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="flex flex-wrap items-center gap-3">
+          <Button disabled>Disabled</Button>
+          <Button variant="secondary" disabled>Disabled</Button>
+          <Button loading>Loading</Button>
+          <Button variant="secondary" loading>Loading</Button>
+          <Button variant="secondary" aria-pressed>Pressed</Button>
+          <Button variant="tertiary" aria-pressed>Pressed</Button>
+          <Button>
+            Continue <ArrowRightIcon />
+          </Button>
+          {(["icon-micro", "icon", "icon-large"] as const).map((size) => (
+            <Button key={size} variant="secondary" size={size} aria-label="Next">
+              <ArrowRightIcon />
+            </Button>
           ))}
         </div>
       </Section>

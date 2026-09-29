@@ -2,5 +2,22 @@
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "urbanflow",
   "homepage": "https://components.urbanflow.co",
-  "items": []
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "urbanflow Button: primary / secondary / tertiary / plain \u00d7 default / critical / success tones, micro / medium / large and icon sizes, loading and pressed states.",
+      "dependencies": [
+        "radix-ui",
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
 }

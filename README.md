@@ -42,7 +42,7 @@ version, re-run the command and review the diff. Components we haven't changed c
 from shadcn (`npx shadcn add dialog`) and use the urbanflow theme automatically.
 
 Release notes live in each package's `CHANGELOG.md` ([theme](packages/theme/CHANGELOG.md),
-[icons](packages/icons/CHANGELOG.md), [components](registry/CHANGELOG.md)). All packages share one version number.
+[icons](packages/icons/CHANGELOG.md), [components](packages/registry/CHANGELOG.md)). All packages share one version number.
 
 ## Working on this repo
 
