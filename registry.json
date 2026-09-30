@@ -2,5 +2,41 @@
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "urbanflow",
   "homepage": "https://components.urbanflow.co",
-  "items": []
+  "items": [
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "cn helper",
+      "description": "cn() that understands Flow text styles and shadows. Replaces shadcn's lib/utils.",
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "files": [
+        {
+          "path": "lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "urbanflow Button: primary / secondary / tertiary / plain × default / critical / success tones, micro / medium / large and icon sizes, loading and pressed states.",
+      "dependencies": [
+        "radix-ui",
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ]
+    }
+  ]
 }
