@@ -3,7 +3,7 @@
 // Token: Figma → Settings → Security → Personal access tokens (scope: file_content:read).
 import { readFile, writeFile } from "node:fs/promises";
 
-const FILE_KEY = "CyjMpmGxUHezAqjmA5qXwI";
+const FILE_KEY = "NQpg4P9K158sjcEKmMLd8w";
 const token = process.env.FIGMA_TOKEN;
 if (!token) throw new Error("Set FIGMA_TOKEN (Figma personal access token).");
 
