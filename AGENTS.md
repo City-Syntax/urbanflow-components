@@ -41,9 +41,10 @@ Merging to `main` makes CI open a "Version Packages" PR (the changelog). Merging
 
 ## Figma is the source of truth — and it's messy. Stop and ask.
 
-File: `CyjMpmGxUHezAqjmA5qXwI` (Platform) › page `🔹 Design System` (`723:6170`). Sections:
-Colours `2146:21181`, Typography `1711:12198`, Shadow `1712:12819`, Icons `1726:14351`,
-Radii `1712:12472`, Button `1712:14208`, Input `1712:16814`.
+File: `NQpg4P9K158sjcEKmMLd8w` (Flow Design System). Tokens live on the `Variables` page (Colours `2146:21181`,
+Typography `1711:12198`, Shadow `1712:12819`, Radius `6009:2928`, Icons `1726:14351`). Shared components are on
+`Components` (`723:6170`: Button `1712:14208`, Input `1712:16814`, …); pages starting with `↪` hold feature-only
+components (`↪ Urbanflow`, `↪ Compliance`, `↪ Comments`, `↪ Files`). The old `CyjMpmGxUHezAqjmA5qXwI` (Platform) file is retired.
 
 Before implementing, if the Figma source has any of these, **stop, explain the problem in one line,
 and recommend a fix**: duplicated or conflicting variables (`Stroke/*` vs `Stroke-new/*`), leftovers

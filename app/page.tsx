@@ -77,7 +77,7 @@ export default function Home() {
               shadow-{name}
             </div>
           ))}
-          {["sm", "md", "lg", "xl"].map((r) => (
+          {["xs", "sm", "md", "lg", "xl"].map((r) => (
             <div key={r} className="flex size-28 items-end border bg-muted p-3 text-label-xsmall" style={{ borderRadius: `var(--radius-${r})` }}>
               rounded-{r}
             </div>
