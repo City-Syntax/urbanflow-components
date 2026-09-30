@@ -1,0 +1,10 @@
+---
+"@urbanflow/icons": minor
+---
+
+Full Flow icon set: 75 icons (was 6), exported from the Flow Design System Figma file.
+
+- New: `AddIcon`, `AddBuildingIcon`, `ArrowReloadIcon`, `ArrowUpIcon`, `ArrowUpDownIcon`, `ArrowsDirectionIcon`, `ArrowsMaximizeIcon`, `ArrowsMinimizeIcon`, `BlueprintIcon`, `BoxAddAboveIcon`, `BoxAddBelowIcon`, `BuildingIcon`, `BuildingFilledIcon`, `CarbonIcon`, `CheckIcon`, `Checkbox{Checked,Indeterminate,Unchecked}Icon`, `Chevron{Up,Down,Left,Right}Icon`, `CloseIcon`, `CloudIcon`, `CoinIcon`, `ComplianceIcon`, `ConstructionIcon`, `CopyIcon`, `DateIcon`, `DownloadIcon`, `DrawWallIcon`, `EducationIcon`, `EllipsisHorizontal(Alt)Icon`, `Eye{Open,Closed,Dotted}Icon`, `FilesIcon`, `FloorIcon`, `GlobeIcon`, `HammerIcon`, `HelpIcon`, `InfoIcon`, `LayoutIcon`, `LightbulbIcon`, `ListIcon`, `MassingIcon`, `MessageIcon`, `MinusIcon`, `NoteIcon`, `ParameterIcon`, `PencilIcon`, `PhotoIcon`, `PlaceholderIcon`, `PoliciesIcon`, `Radio{Checked,Unchecked}Icon`, `SearchIcon`, `SelectObjectIcon`, `SendIcon`, `SlopedIcon`, `SteppedIcon`, `TimeIcon`, `TokenIcon`, `TrashIcon`, `UploadIcon`, `VersionIcon`, `ZoneIcon`, `ZoneFilledIcon`.
+- The existing six (`Ai`, `AlertTriangle`, `Analytics`, `ArrowDown/Left/Right`) are re-exported cleanly from Flow; names unchanged.
+- Figma's "select" (up/down chevrons) ships as `ArrowUpDownIcon`.
+- All icons use `currentColor`; set colour with a text class.

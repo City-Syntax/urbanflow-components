@@ -94,7 +94,7 @@ export default function Home() {
                 <Icon size={16} />
                 <Icon size={20} />
               </div>
-              <span className="text-center text-paragraph-xsmall">{name.slice(0, -4)}</span>
+              <span className="w-full truncate text-center text-paragraph-xsmall" title={name}>{name.slice(0, -4)}</span>
             </div>
           ))}
         </div>
