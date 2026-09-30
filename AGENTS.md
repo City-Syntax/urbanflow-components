@@ -31,7 +31,7 @@ installed straight from shadcn by apps and pick up the theme automatically.
    ```
    Write it for app engineers: what changed and what they need to do. All `@urbanflow/*` packages
    share one version, so list whichever package you touched: `@urbanflow/theme`, `@urbanflow/icons`,
-   or `@urbanflow/registry` (components; not on npm, it just holds the version and changelog).
+   or `@urbanflow/registry` (components in `registry/`; its changelog lives in `packages/registry/`).
    - **patch**: fixed/tweaked a value, no names changed
    - **minor**: added a token, icon, component or variant
    - **major**: renamed or removed anything apps might use (a class name, icon, prop). Say what to replace it with.
@@ -76,10 +76,12 @@ Read values with the Figma MCP `get_variable_defs` on a section node id. The pre
 tokens, never hard-coded hex), add an item to `registry.json`:
 ```json
 { "name": "button", "type": "registry:ui", "title": "Button",
-  "dependencies": ["@radix-ui/react-slot", "class-variance-authority"],
+  "dependencies": ["radix-ui", "class-variance-authority"],
   "files": [{ "path": "registry/ui/button.tsx", "type": "registry:ui" }] }
 ```
 and add a section for it with every variant to `app/page.tsx`.
+
+**No comments in components** (`registry/ui/`): no `//`, `/* */` or JSDoc. Put anything that needs explaining in the PR description or the changeset instead.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
