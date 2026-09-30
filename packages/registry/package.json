@@ -1,6 +1,6 @@
 {
   "name": "@urbanflow/registry",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "description": "Version + CHANGELOG.md for the urbanflow shadcn registry (components live in /registry). Not published to npm."
 }

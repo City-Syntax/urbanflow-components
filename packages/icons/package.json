@@ -1,6 +1,6 @@
 {
   "name": "@urbanflow/icons",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "urbanflow icon set as React components, generated from Figma.",
   "license": "MIT",
   "repository": {
