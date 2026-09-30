@@ -28,7 +28,7 @@ npm i @urbanflow/theme @urbanflow/icons
 
 ```tsx
 import { SearchIcon } from "@urbanflow/icons";
-<SearchIcon size={16} className="text-content-secondary" />
+<SearchIcon size={16} className="text-texticons-secondary" />
 ```
 
 **Components.** Add the registry to `components.json`:

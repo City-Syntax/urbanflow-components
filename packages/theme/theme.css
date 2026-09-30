@@ -1,8 +1,15 @@
 /*
- * @urbanflow/theme — urbanflow design tokens for Tailwind v4 + shadcn/ui.
- * Source: Figma "Platform" › 🔹 Design System (CyjMpmGxUHezAqjmA5qXwI, node 723:6170).
- * Excluded on purpose: ⛔ Deprecated/*, --p-* (Polaris), hack/*, *-figma-only,
- * "Background-new (ignore)". See the figma-cleanup issues before changing names.
+ * @urbanflow/theme — urbanflow design tokens for Tailwind v4.
+ * Source: Figma "Flow Design System" (NQpg4P9K158sjcEKmMLd8w) › Variables page + text/effect styles.
+ * Only Flow tokens exist: Tailwind's default colours, font sizes, shadows and radii are switched off,
+ * so a class that isn't in Flow (bg-white, text-sm, shadow-2xl, bg-primary…) simply doesn't work.
+ *
+ * Naming: Figma variable → CSS variable, lowercase with dashes.
+ *   Background/Default → --color-background-default (bg-background-default)
+ *   TextIcons/Primary  → --color-texticons-primary  (text-texticons-primary)
+ *   Stroke/default     → --color-stroke-default     (border-stroke-default)
+ *   Semantic/info-primary → --color-info-primary · Neutrals/neutral-10 → --color-neutral-10 · Misc/misc-red → --color-misc-red
+ *   text style header/large → text-header-large · effect Shadow/sm → shadow-sm · radius/md → rounded-md
  *
  * Usage (after `@import "tailwindcss";`):  @import "@urbanflow/theme";
  */
@@ -10,9 +17,11 @@
 /* static: emit every variable so apps can use var(--color-*) in charts, maps, inline styles. */
 @theme static {
   /* Fonts — load Figtree + DM Mono in the app (next/font or @fontsource). */
+  --font-*: initial;
   --font-sans: var(--font-figtree, "Figtree"), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-dm-mono, "DM Mono"), ui-monospace, monospace;
 
+  --text-*: initial;
   /* Type scale: Figma text styles → text-{group}-{size}. metric-* also needs font-mono. */
   --text-header-xxlarge: 2rem;
   --text-header-xxlarge--line-height: 2.25rem;
@@ -55,6 +64,9 @@
   --text-label-medium: 1rem;
   --text-label-medium--line-height: 1.25rem;
   --text-label-medium--font-weight: 600;
+  --text-label-small: 0.875rem;
+  --text-label-small--line-height: 1rem;
+  --text-label-small--font-weight: 600;
   --text-label-xsmall: 0.75rem;
   --text-label-xsmall--line-height: 1rem;
   --text-label-xsmall--font-weight: 600;
@@ -72,8 +84,9 @@
   --text-metric-xsmall--line-height: 1.25rem;
   --text-metric-xsmall--font-weight: 400;
 
-  /* Neutrals — replaces Tailwind's neutral scale (Figma's runs dark at 100+). */
-  --color-neutral-*: initial;
+  --color-*: initial;
+
+  /* Figma Neutrals/* */
   --color-neutral-0: #ffffff;
   --color-neutral-1: #fdfdfd;
   --color-neutral-2: #fafafa;
@@ -86,7 +99,7 @@
   --color-neutral-100: #303030;
   --color-neutral-120: #1a1a1a;
 
-  /* Semantic */
+  /* Figma Semantic/* */
   --color-info-xxxlight: #fcfdff;
   --color-info-xxlight: #e2e7ff;
   --color-info-xlight: #d5dcff;
@@ -99,6 +112,7 @@
   --color-success-light: #29845a;
   --color-success-primary: #136f45;
   --color-success-heavy: #0c5132;
+  --color-success-xheavy: #083d25;
   --color-success-xxheavy: #092a1b;
   --color-caution-xxlight: #fff1e3;
   --color-caution-light: #ffbd14;
@@ -115,7 +129,7 @@
   --color-magic-primary: #7126ff;
   --color-magic-heavy: #5700d1;
 
-  /* Misc */
+  /* Figma Misc/* */
   --color-misc-red: #ff383c;
   --color-misc-orange: #ff8d28;
   --color-misc-yellow: #ffcc00;
@@ -125,132 +139,74 @@
   --color-misc-pink: #ff2d55;
   --color-misc-brown: #ac7f5e;
 
-  /* Figma TextIcons/* → text-content-* */
-  --color-content-primary: #1a1a1a;
-  --color-content-secondary: #4a4a4a;
-  --color-content-tertiary: #b5b5b5;
-  --color-content-placeholder: #cccccc;
-  --color-content-disabled: #cccccc;
-  --color-content-inverse-primary: #ffffff;
-  --color-content-inverse-secondary: #f7f7f7;
-  --color-content-inverse-disabled: #ffffff;
-  --color-content-link-primary: #005bd3;
-  --color-content-link-secondary: #004299;
-  --color-content-success-primary: #29845a;
-  --color-content-caution-primary: #ffbd14;
-  --color-content-caution-secondary: #e6aa12;
-  --color-content-critical-primary: #8e1f0b;
-  --color-content-critical-secondary: #5f1507;
+  /* Figma Background/* → bg-background-* */
+  --color-background-default: var(--color-neutral-0);
+  --color-background-light: var(--color-neutral-3);
+  --color-background-medium: #efefef;
+  --color-background-card: #fdfdfa;
+  --color-background-overlay: #00000066;
+  --color-background-inverse: var(--color-neutral-120);
+  --color-background-inverse-secondary: #4b4b48;
+  --color-background-info: var(--color-info-xxlight);
+  --color-background-critical: var(--color-critical-light);
+  --color-background-caution: var(--color-caution-xxlight);
+  --color-background-success: var(--color-success-xxlight);
 
-  /* Figma Background/* → bg-surface-* */
-  --color-surface-default: #ffffff;
-  --color-surface-light: #f7f7f7;
-  --color-surface-medium: #efefef;
-  --color-surface-inverse: #1a1a1a;
-  --color-surface-overlay: #00000066;
-  --color-surface-info: #e2e7ff;
-  --color-surface-critical: #fee9e8;
-  --color-surface-success: #cdfee1;
-  --color-surface-caution: #fff1e3;
+  /* Figma TextIcons/* → text-texticons-* (one ink, #202020, at 100/80/70/50/40/30%) */
+  --color-texticons-emphasis: #202020;
+  --color-texticons-primary: #202020cc;
+  --color-texticons-secondary: #202020b2;
+  --color-texticons-tertiary: #20202080;
+  --color-texticons-placeholder: #20202066;
+  --color-texticons-disabled: #2020204d;
+  --color-texticons-inverse-primary: #ffffff;
+  --color-texticons-inverse-secondary: #ffffffb2;
+  --color-texticons-inverse-disabled: #ffffff80;
+  --color-texticons-link-primary: var(--color-info-primary);
+  --color-texticons-link-secondary: var(--color-info-heavy);
+  --color-texticons-success-primary: var(--color-success-light);
+  --color-texticons-caution-primary: var(--color-caution-light);
+  --color-texticons-caution-secondary: var(--color-caution-primary);
+  --color-texticons-critical-primary: var(--color-critical-heavy);
+  --color-texticons-critical-secondary: var(--color-critical-xxheavy);
 
-  /* Figma Stroke/* and Stroke-new/* → border-stroke-* */
-  --color-stroke-xlight: #f7f7f7;
-  --color-stroke-light: #e3e3e3;
-  --color-stroke-medium: #b5b5b5;
-  --color-stroke-info: #005bd3;
-  --color-stroke-critical: #8e1f0b;
+  /* Figma Stroke/* → border-stroke-* */
   --color-stroke-subtle: #ecece6;
   --color-stroke-default: #e3e3dc;
   --color-stroke-strong: #d1d1ca;
   --color-stroke-selected: #202020cc;
+  --color-stroke-info: var(--color-info-primary);
+  --color-stroke-critical: var(--color-critical-heavy);
 
-  /* Shadows */
+  /* Shadows — Figma effect styles Shadow/* ("[hack] shadow-focus" ships as shadow-focus) */
+  --shadow-*: initial;
   --shadow-xs: 0 1px 2px 0 #1c1c1c0d;
   --shadow-sm: 0 2px 6px 1px #1c1c1c0f, 0 1px 2px 0 #1c1c1c0a;
   --shadow-md: 0 4px 20px -4px #0000001a, 0 2px 4px -1px #1c1c1c0d;
-  /* Figma shadow-button/hover: a 1px inner edge, darker at the bottom */
-  --shadow-button: inset 0 1px 0 0 #ebebeb, inset -1px 0 0 0 #ebebeb, inset 1px 0 0 0 #ebebeb, inset 0 -1px 0 0 #cccccc;
-}
+  --shadow-lg: 0 24px 48px -12px #0000002e, 0 4px 8px -2px #1c1c1c0f;
+  --shadow-float: 0 12px 32px -8px #00000059;
+  --shadow-focus: 0 0 0 2px var(--color-info-primary);
 
-/* shadcn/ui semantic tokens → urbanflow palette. Stock shadcn components read these. */
-:root {
-  --radius: 0.5rem; /* Figma border-8; gives rounded-sm/md/lg/xl = 4/6/8/12px */
-  --background: var(--color-surface-default);
-  --foreground: var(--color-content-primary);
-  --card: var(--color-surface-default);
-  --card-foreground: var(--color-content-primary);
-  --popover: var(--color-surface-default);
-  --popover-foreground: var(--color-content-primary);
-  --primary: var(--color-surface-inverse);
-  --primary-foreground: var(--color-content-inverse-primary);
-  --secondary: var(--color-surface-light);
-  --secondary-foreground: var(--color-content-primary);
-  --muted: var(--color-surface-light);
-  --muted-foreground: var(--color-content-secondary);
-  --accent: var(--color-surface-medium);
-  --accent-foreground: var(--color-content-primary);
-  --destructive: var(--color-critical-primary);
-  --border: var(--color-stroke-light);
-  --input: var(--color-stroke-light);
-  --ring: var(--color-info-primary);
-  --chart-1: var(--color-info-primary);
-  --chart-2: var(--color-success-light);
-  --chart-3: var(--color-caution-primary);
-  --chart-4: var(--color-magic-primary);
-  --chart-5: var(--color-critical-primary);
-  --sidebar: var(--color-neutral-2);
-  --sidebar-foreground: var(--color-content-primary);
-  --sidebar-primary: var(--color-surface-inverse);
-  --sidebar-primary-foreground: var(--color-content-inverse-primary);
-  --sidebar-accent: var(--color-surface-medium);
-  --sidebar-accent-foreground: var(--color-content-primary);
-  --sidebar-border: var(--color-stroke-light);
-  --sidebar-ring: var(--color-info-primary);
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  /* Radius — Figma radius/* */
+  --radius-*: initial;
+  --radius-none: 0px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-stroke-default);
+    outline-color: var(--color-info-primary);
   }
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--color-background-default);
+    color: var(--color-texticons-primary);
+    font-family: var(--font-sans);
   }
 }

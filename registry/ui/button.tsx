@@ -3,11 +3,12 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { Slot } from "radix-ui"
 
 import { cn } from "@/lib/utils"
-const primary = "bg-primary text-primary-foreground"
+// Flow Button (Figma 1712:13271). Hover/active/pressed move one step; focus is the Flow focus ring.
+const primary = "bg-background-inverse text-texticons-inverse-primary disabled:bg-background-medium"
 const secondary =
-  "bg-surface-default shadow-button not-disabled:hover:bg-surface-light not-disabled:active:bg-surface-medium aria-pressed:bg-surface-medium disabled:shadow-none"
+  "bg-background-default inset-ring inset-ring-stroke-default not-disabled:hover:bg-background-light not-disabled:active:bg-background-medium not-disabled:active:inset-ring-0 aria-pressed:bg-background-medium aria-pressed:inset-ring-0 disabled:bg-background-light disabled:inset-ring-0"
 const tertiary =
-  "not-disabled:hover:bg-surface-light not-disabled:active:bg-surface-medium aria-pressed:bg-surface-medium"
+  "not-disabled:hover:bg-background-light not-disabled:active:bg-background-medium aria-pressed:bg-background-medium"
 const plain = "underline-offset-2 not-disabled:hover:underline"
 
 const micro = "h-6 gap-0.5 px-2 [&_svg:not([class*='size-'])]:size-3.5"
@@ -15,7 +16,7 @@ const medium = "h-7 gap-0.5 px-3"
 const large = "h-8 gap-1 px-4"
 
 const buttonVariants = cva(
-  "relative inline-flex shrink-0 cursor-pointer items-center justify-center whitespace-nowrap rounded-lg text-label-xsmall transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:text-content-disabled [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "relative inline-flex shrink-0 cursor-pointer items-center justify-center whitespace-nowrap rounded-md text-label-xsmall transition-colors outline-none focus-visible:shadow-focus disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
@@ -59,29 +60,29 @@ const buttonVariants = cva(
       {
         variant: ["primary", "default", "destructive"],
         tone: "critical",
-        class: "bg-critical-primary not-disabled:hover:bg-critical-heavy not-disabled:active:bg-critical-xxheavy aria-pressed:bg-critical-xxheavy",
+        class: "not-disabled:bg-critical-primary not-disabled:hover:bg-critical-heavy not-disabled:active:bg-critical-xxheavy aria-pressed:bg-critical-heavy",
       },
       {
         variant: "destructive",
         tone: "default",
-        class: "bg-critical-primary not-disabled:hover:bg-critical-heavy not-disabled:active:bg-critical-xxheavy aria-pressed:bg-critical-xxheavy",
+        class: "not-disabled:bg-critical-primary not-disabled:hover:bg-critical-heavy not-disabled:active:bg-critical-xxheavy aria-pressed:bg-critical-heavy",
       },
       {
         variant: ["primary", "default"],
         tone: "success",
-        class: "bg-success-primary not-disabled:hover:bg-success-heavy not-disabled:active:bg-success-xxheavy aria-pressed:bg-success-xxheavy",
+        class: "not-disabled:bg-success-light not-disabled:hover:bg-success-primary not-disabled:active:bg-success-heavy aria-pressed:bg-success-heavy",
       },
-      {
-        variant: ["primary", "default", "destructive"],
-        class: "disabled:bg-surface-light",
-      },
-      { variant: ["secondary", "tertiary", "plain", "outline", "ghost", "link"], tone: "default", class: "text-content-primary" },
-      { variant: ["secondary", "tertiary", "plain", "outline", "ghost", "link"], tone: "critical", class: "text-content-critical-primary" },
-      { variant: ["secondary", "tertiary", "plain", "outline", "ghost", "link"], tone: "success", class: "text-content-success-primary" },
+      { variant: ["secondary", "tertiary", "outline", "ghost"], tone: "default", class: "text-texticons-emphasis" },
+      { variant: ["secondary", "tertiary", "outline", "ghost"], tone: "critical", class: "text-texticons-critical-primary" },
+      { variant: ["secondary", "tertiary", "outline", "ghost"], tone: "success", class: "text-texticons-success-primary" },
+      { variant: ["plain", "link"], tone: "default", class: "text-texticons-link-primary not-disabled:hover:text-texticons-link-secondary" },
+      { variant: ["plain", "link"], tone: "critical", class: "text-texticons-critical-primary not-disabled:hover:text-texticons-critical-secondary" },
+      { variant: ["plain", "link"], tone: "success", class: "text-texticons-success-primary" },
+      { variant: ["secondary", "tertiary", "plain", "outline", "ghost", "link"], class: "disabled:text-neutral-20" },
       { variant: ["plain", "link"], class: "h-auto px-0" },
     ],
     defaultVariants: {
-      variant: "primary",
+      variant: "secondary",
       tone: "default",
       size: "medium",
     },
@@ -90,7 +91,7 @@ const buttonVariants = cva(
 
 function Button({
   className,
-  variant = "primary",
+  variant = "secondary",
   tone = "default",
   size = "medium",
   asChild = false,
