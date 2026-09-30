@@ -1,9 +1,14 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import * as Icons from "@urbanflow/icons";
-import { ArrowRightIcon } from "@urbanflow/icons";
+import { ArrowRightIcon, DrawWallIcon, LayoutIcon, PencilIcon, SearchIcon, TrashIcon } from "@urbanflow/icons";
 
+import { Badge } from "@/registry/ui/badge";
 import { Button } from "@/registry/ui/button";
+import { Checkbox } from "@/registry/ui/checkbox";
+import { IconButton, IconButtonGroup } from "@/registry/ui/icon-button";
+import { Toggle } from "@/registry/ui/toggle";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/registry/ui/tooltip";
 
 // Tokens are read straight from theme.css so this page never drifts from the package.
 const themeCss = readFileSync(join(process.cwd(), "packages/theme/theme.css"), "utf8");
@@ -133,6 +138,78 @@ export default function Home() {
             <Button key={size} variant="secondary" size={size} aria-label="Next">
               <ArrowRightIcon />
             </Button>
+          ))}
+        </div>
+      </Section>
+
+      <Section title="Icon Button">
+        <div className="flex flex-wrap items-center gap-6">
+          {(["secondary", "tertiary", "primary"] as const).map((variant) => (
+            <div key={variant} className="flex items-center gap-2">
+              {(["micro", "medium", "large"] as const).map((size) => (
+                <IconButton key={size} variant={variant} size={size} label={`Edit (${size})`}>
+                  <PencilIcon />
+                </IconButton>
+              ))}
+            </div>
+          ))}
+          <IconButton variant="secondary" tone="critical" label="Delete"><TrashIcon /></IconButton>
+          <IconButton variant="tertiary" label="Draw wall" selected><DrawWallIcon /></IconButton>
+          <IconButton variant="secondary" label="Disabled" disabled><PencilIcon /></IconButton>
+        </div>
+        <div className="flex items-start gap-6 rounded-lg bg-background-light p-6">
+          <IconButtonGroup label="Drawing tools">
+            <IconButton variant="tertiary" label="Select" selected><LayoutIcon /></IconButton>
+            <IconButton variant="tertiary" label="Draw wall"><DrawWallIcon /></IconButton>
+            <IconButton variant="tertiary" label="Search"><SearchIcon /></IconButton>
+          </IconButtonGroup>
+          <IconButtonGroup label="Vertical tools" orientation="vertical">
+            <IconButton variant="tertiary" label="Select"><LayoutIcon /></IconButton>
+            <IconButton variant="tertiary" label="Draw wall" selected><DrawWallIcon /></IconButton>
+          </IconButtonGroup>
+        </div>
+      </Section>
+
+      <Section title="Badge">
+        <div className="flex flex-wrap items-center gap-3">
+          {(["default", "info", "critical"] as const).map((type) => (
+            <div key={type} className="flex items-center gap-2">
+              <Badge type={type}>Label</Badge>
+              <Badge type={type} shape="number">12</Badge>
+              <Badge type={type} shape="small-number">3</Badge>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section title="Checkbox & Toggle">
+        <div className="flex flex-wrap items-center gap-6">
+          <Checkbox label="Unchecked" />
+          <Checkbox label="Checked" defaultChecked />
+          <Checkbox label="Indeterminate" defaultChecked="indeterminate" />
+          <Checkbox label="Disabled" disabled />
+          <Checkbox label="Disabled checked" disabled defaultChecked />
+          <Checkbox variant="icon" aria-label="Hide layer" />
+          <Checkbox variant="icon" aria-label="Show layer" defaultChecked />
+          <Checkbox variant="icon" aria-label="Partly hidden" defaultChecked="indeterminate" />
+        </div>
+        <div className="flex flex-wrap items-center gap-6">
+          <Toggle label="Off" />
+          <Toggle label="On" defaultChecked />
+          <Toggle label="Disabled" disabled />
+          <Toggle label="Disabled on" disabled defaultChecked />
+        </div>
+      </Section>
+
+      <Section title="Tooltip">
+        <div className="flex items-center gap-6 py-8">
+          {(["top", "bottom", "left", "right"] as const).map((side) => (
+            <Tooltip key={side} defaultOpen={side === "top"}>
+              <TooltipTrigger asChild>
+                <Button variant="secondary">{side}</Button>
+              </TooltipTrigger>
+              <TooltipContent side={side}>Tooltip label</TooltipContent>
+            </Tooltip>
           ))}
         </div>
       </Section>
