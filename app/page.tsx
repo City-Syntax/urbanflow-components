@@ -4,17 +4,17 @@ import * as Icons from "@urbanflow/icons";
 
 // Tokens are read straight from theme.css so this page never drifts from the package.
 const themeCss = readFileSync(join(process.cwd(), "packages/theme/theme.css"), "utf8");
-const [figmaCss, shadcnCss] = themeCss.split(":root {");
-const tokens = (prefix: string, css = figmaCss) =>
+const tokens = (prefix: string, css = themeCss) =>
   [...css.matchAll(new RegExp(`--${prefix}-([a-z0-9-]+?):\\s*([^;]+);`, "g"))]
     .filter(([, name]) => !name.includes("--"))
     .map(([, name, value]) => ({ name, value: value.trim(), swatch: `var(--${prefix}-${name})` }));
 
-const colorGroups = {
-  ...Object.groupBy(tokens("color"), ({ name }) => name.split("-")[0]),
-  // shadcn semantic tokens, e.g. bg-primary → var(--primary) → the Figma colour it maps to
-  shadcn: tokens("color", shadcnCss.split("@layer")[0]).filter(({ value }) => !value.includes("calc"))
-    .map((t) => ({ ...t, swatch: t.value })),
+// Grouped like Figma: Background, TextIcons, Stroke, then the Semantic, Neutrals and Misc palettes.
+const figmaGroup = (name: string) =>
+  ["background", "texticons", "stroke", "neutral", "misc"].find((g) => name.startsWith(`${g}-`)) ?? "semantic";
+const colorGroups = Object.groupBy(tokens("color"), ({ name }) => figmaGroup(name));
+const groupTitles: Record<string, string> = {
+  background: "Background", texticons: "TextIcons", stroke: "Stroke", semantic: "Semantic", neutral: "Neutrals", misc: "Misc",
 };
 const iconEntries = Object.entries(Icons).filter(([name]) => name.endsWith("Icon"));
 
@@ -32,22 +32,22 @@ export default function Home() {
     <main className="mx-auto flex max-w-5xl flex-col gap-12 px-4 py-10">
       <header className="flex flex-col gap-1">
         <h1 className="text-header-xxlarge">urbanflow components</h1>
-        <p className="text-paragraph-medium text-content-secondary">
+        <p className="text-paragraph-medium text-texticons-secondary">
           Tokens from <code className="font-mono">@urbanflow/theme</code>, icons from{" "}
           <code className="font-mono">@urbanflow/icons</code>.
         </p>
       </header>
 
       <Section title="Colours">
-        {Object.entries(colorGroups).map(([group, colors]) => (
+        {Object.keys(groupTitles).map((g) => [g, colorGroups[g]] as const).map(([group, colors]) => (
           <div key={group} className="flex flex-col gap-2">
-            <h3 className="text-label-medium capitalize">{group}</h3>
+            <h3 className="text-label-medium">{groupTitles[group]}</h3>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6">
               {colors!.map(({ name, value, swatch }) => (
                 <div key={name} className="flex flex-col gap-1">
                   <div className="h-12 rounded-md border" style={{ background: swatch }} />
                   <span className="text-label-xsmall">{name}</span>
-                  <span className="font-mono text-paragraph-xsmall text-content-secondary">{value}</span>
+                  <span className="font-mono text-paragraph-xsmall text-texticons-secondary">{value}</span>
                 </div>
               ))}
             </div>
@@ -59,7 +59,7 @@ export default function Home() {
         <div className="flex flex-col gap-3">
           {tokens("text").map(({ name, value }) => (
             <div key={name} className="flex items-baseline gap-4 border-b pb-3">
-              <span className="w-40 shrink-0 font-mono text-paragraph-xsmall text-content-secondary">
+              <span className="w-40 shrink-0 font-mono text-paragraph-xsmall text-texticons-secondary">
                 text-{name} · {value}
               </span>
               <span className={name.startsWith("metric") ? "font-mono" : undefined} style={{ fontSize: `var(--text-${name})`, lineHeight: `var(--text-${name}--line-height)`, fontWeight: `var(--text-${name}--font-weight)` }}>
@@ -73,12 +73,12 @@ export default function Home() {
       <Section title="Shadows & radius">
         <div className="flex flex-wrap gap-6">
           {tokens("shadow").map(({ name }) => (
-            <div key={name} className="flex size-28 items-end rounded-lg bg-card p-3 text-label-xsmall" style={{ boxShadow: `var(--shadow-${name})` }}>
+            <div key={name} className="flex size-28 items-end rounded-lg bg-background-card p-3 text-label-xsmall" style={{ boxShadow: `var(--shadow-${name})` }}>
               shadow-{name}
             </div>
           ))}
-          {["xs", "sm", "md", "lg", "xl"].map((r) => (
-            <div key={r} className="flex size-28 items-end border bg-muted p-3 text-label-xsmall" style={{ borderRadius: `var(--radius-${r})` }}>
+          {["none", "xs", "sm", "md", "lg", "full"].map((r) => (
+            <div key={r} className="flex size-28 items-end border bg-background-light p-3 text-label-xsmall" style={{ borderRadius: `var(--radius-${r})` }}>
               rounded-{r}
             </div>
           ))}
@@ -88,7 +88,7 @@ export default function Home() {
       <Section title={`Icons (${iconEntries.length})`}>
         <div className="grid grid-cols-3 gap-3 sm:grid-cols-5 lg:grid-cols-8">
           {iconEntries.map(([name, Icon]) => (
-            <div key={name} className="flex flex-col items-center gap-2 rounded-md border p-3 text-content-secondary">
+            <div key={name} className="flex flex-col items-center gap-2 rounded-md border p-3 text-texticons-secondary">
               <div className="flex items-end gap-2">
                 <Icon size={14} />
                 <Icon size={16} />

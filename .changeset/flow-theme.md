@@ -2,9 +2,11 @@
 "@urbanflow/theme": minor
 ---
 
-Theme now follows the Flow Design System Figma file (`NQpg4P9K158sjcEKmMLd8w`).
+Theme now follows the Flow Design System Figma file (`NQpg4P9K158sjcEKmMLd8w`), and only Flow tokens exist.
 
-- **Text colours** are one ink (#202020) at 100/80/70/50/40/30% instead of solid greys. New `text-content-emphasis` (100%) for titles and key values; `content-primary` is now 80% ink. Check text on tinted or dark grounds still reads.
-- **Corners** match Flow: `rounded-xs` 2px (new), `rounded-sm` 4px, `rounded-md` 8px (was 6), `rounded-lg` 12px (was 8), `rounded-xl` 12px (was 16). Stock shadcn buttons, inputs and cards get rounder.
-- **Borders**: shadcn's `border` / `input` colours now use `stroke-default` (#e3e3dc). `stroke-xlight`, `stroke-light` and `stroke-medium` are deprecated — switch to `stroke-subtle` / `stroke-default` / `stroke-strong`; they'll be removed in the next major.
-- **New tokens**: `text-label-small`, `bg-surface-card`, `bg-surface-inverse-secondary`, `shadow-lg`, `shadow-float`, `shadow-focus`.
+- **Names match Figma.** Figma variable → class, lowercase with dashes: `Background/Default` → `bg-background-default`, `TextIcons/Primary` → `text-texticons-primary`, `Stroke/default` → `border-stroke-default`, `Semantic/info-primary` → `info-primary`, `Neutrals/neutral-10` → `neutral-10`, `Misc/misc-red` → `misc-red`. Text styles: `header/large` → `text-header-large`. (Pre-release names `surface-*` / `content-*` are gone: use `background-*` / `texticons-*`.)
+- **Flow only.** Tailwind's default colours (`bg-white`, `text-gray-500`…), font sizes (`text-sm`…), shadows and radii are switched off, and shadcn's colour aliases (`bg-primary`, `text-muted-foreground`, `border-input`, `chart-*`, `sidebar-*`) are removed. Stock shadcn components must be re-skinned with Flow classes before use (see the mapping in AGENTS.md).
+- **Text colours** are one ink (#202020) at 100/80/70/50/40/30%: `texticons-emphasis`, `-primary`, `-secondary`, `-tertiary`, `-placeholder`, `-disabled`.
+- **Corners**: `rounded-none` 0, `rounded-xs` 2px, `rounded-sm` 4px, `rounded-md` 8px, `rounded-lg` 12px, `rounded-full`. There is no `rounded-xl`.
+- **Shadows**: `shadow-xs`, `-sm`, `-md`, `-lg`, `-float`, `-focus`.
+- Default border colour is `stroke-default`; focus outlines are `info-primary`; the page is `background-default` with `texticons-primary` text.

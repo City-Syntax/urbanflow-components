@@ -13,8 +13,8 @@ always give her the preview link. The brand is always lowercase: **urbanflow**, 
 | Re-skinned shadcn components | `registry/ui/*.tsx` + `registry.json` | shadcn registry at components.urbanflow.co | Yes (they copy it) |
 | Preview site | `app/` | components.urbanflow.co (Vercel) | — |
 
-Only put a component in the registry once we've changed it. Unchanged shadcn components are
-installed straight from shadcn by apps and pick up the theme automatically.
+Stock shadcn components don't work with this theme on their own (it has no shadcn colours), so every
+shadcn component an app uses goes through the registry, re-skinned with Flow tokens.
 
 ## Every change
 
@@ -54,14 +54,18 @@ as-is, do so and log it: `gh issue create --label figma-cleanup --title "…" --
 
 ## Tokens
 
-Edit `packages/theme/theme.css`. Figma name → token name:
-`Neutrals/neutral-10` → `--color-neutral-10`, `Semantic/info-primary` → `--color-info-primary`,
-`TextIcons/*` → `--color-content-*`, `Background/*` → `--color-surface-*`, `Stroke*/*` → `--color-stroke-*`,
-text style `header/large` → `--text-header-large` (+ `--line-height`, `--font-weight`).
-shadcn's own tokens (`--primary`, `--border`, …) are mapped in the `:root` block; restyling a stock
-shadcn component usually means changing that mapping, not the component.
-Read values with the Figma MCP `get_variable_defs` on a section node id. The preview page reads
-`theme.css` directly, so new tokens appear there automatically.
+Edit `packages/theme/theme.css`. **Only Flow tokens exist**: Tailwind's default colours, font sizes,
+shadows and radii are switched off, and there are no shadcn colour aliases (`--primary`, `--border`…).
+Figma name → token name is mechanical: lowercase, words joined with dashes, group kept for the
+three role groups and dropped for the palettes:
+`Background/Default` → `--color-background-default` (`bg-background-default`),
+`TextIcons/InversePrimary` → `--color-texticons-inverse-primary`, `Stroke/default` → `--color-stroke-default`,
+`Semantic/info-primary` → `--color-info-primary`, `Neutrals/neutral-10` → `--color-neutral-10`,
+`Misc/misc-red` → `--color-misc-red`, text style `header/large` → `--text-header-large`
+(+ `--line-height`, `--font-weight`), effect `Shadow/sm` → `--shadow-sm`, `radius/md` → `--radius-md`.
+Figma aliases (e.g. `Background/Default` = `neutral-0`) stay aliases: `var(--color-neutral-0)`.
+Read values with `use_figma` (`figma.variables`) or `get_variable_defs` on a section node id. The
+preview page reads `theme.css` directly, so new tokens appear there automatically.
 
 ## Icons
 
@@ -73,8 +77,23 @@ Read values with the Figma MCP `get_variable_defs` on a section node id. The pre
 
 ## Components
 
-`npx shadcn add <component>` writes into `registry/ui/`. Re-skin it (add `cva` variants, use theme
-tokens, never hard-coded hex), add an item to `registry.json`:
+`npx shadcn add <component>` writes into `registry/ui/`. It arrives with shadcn's colour classes,
+which don't exist here, so re-skin it before anything else: add `cva` variants, use Flow classes only
+(never hex), and swap Lucide icons for `@urbanflow/icons`. Starting mapping (check the Flow component in Figma):
+
+| shadcn | Flow |
+|---|---|
+| `bg-background`, `bg-card`, `bg-popover` | `bg-background-default` |
+| `text-foreground`, `*-foreground` on light | `text-texticons-primary` |
+| `bg-primary` / `text-primary-foreground` | `bg-background-inverse` / `text-texticons-inverse-primary` |
+| `bg-secondary`, `bg-muted` | `bg-background-light` |
+| `bg-accent` (hover) | `bg-background-medium` |
+| `text-muted-foreground` | `text-texticons-secondary` |
+| `bg-destructive` / `text-destructive` | `bg-critical-primary` / `text-texticons-critical-primary` |
+| `border`, `border-input` | `border-stroke-default` (hover `border-stroke-strong`) |
+| `ring-ring`, focus rings | `shadow-focus` |
+
+Then add an item to `registry.json`:
 ```json
 { "name": "button", "type": "registry:ui", "title": "Button",
   "dependencies": ["@radix-ui/react-slot", "class-variance-authority"],
