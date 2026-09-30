@@ -15,4 +15,6 @@ jobs:
       - run: npm ci
       - run: npm run check
       # Every PR needs a changeset (use `npx changeset --empty` for changes that don't ship).
-      - run: npx changeset status --since=origin/main
+      # Skipped on the Version Packages PR, which consumes the changesets by design.
+      - if: github.head_ref != 'changeset-release/main'
+        run: npx changeset status --since=origin/main
