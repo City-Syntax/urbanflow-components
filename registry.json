@@ -444,6 +444,114 @@
       ]
     },
     {
+      "name": "app-shell",
+      "type": "registry:ui",
+      "title": "App Shell",
+      "categories": [
+        "shell"
+      ],
+      "description": "Shell App Shell: shared chrome for every urbanflow product (urbanflow, Flux). A top bar, then a canvas full-bleed behind a left panel, floating canvas tools (AppShellPin top-right / bottom-centre / bottom-right) and a right panel, all 8px inset. Products fill the slots; modes and tools go on the canvas, never as tabs in the top bar.",
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/app-shell.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "top-navigation",
+      "type": "registry:ui",
+      "title": "Top Navigation",
+      "categories": [
+        "shell"
+      ],
+      "description": "Shell Top Navigation: 44px dark bar with the product logo and the urbanflow TopNav project bar (project switcher menu, open proposal and its status, notifications, collaborators, credits). product=\"flux\" hides notifications and collaborators.",
+      "dependencies": [
+        "@urbanflow/icons",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/avatar.json",
+        "https://components.urbanflow.co/r/action-list.json",
+        "https://components.urbanflow.co/r/icon-button.json",
+        "https://components.urbanflow.co/r/proposal-badge.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/top-navigation.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "proposal-badge",
+      "type": "registry:ui",
+      "title": "Proposal Badge",
+      "categories": [
+        "shell"
+      ],
+      "description": "Shell Proposal Badge and Proposal Title: proposal status (Draft, Behind main, In review, Changes suggested, Ready for merge, Merged, Closed shown as Archived) and the proposal name with its badges on the dark top bar.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/proposal-badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "utilities-toolbar",
+      "type": "registry:ui",
+      "title": "Utilities Toolbar",
+      "categories": [
+        "shell"
+      ],
+      "description": "Shell Utilities Toolbar: floating rail of large icon buttons pinned top-right of the canvas. urbanflow puts its analysis tools here; Flux puts its modes (Model, HVAC, Weather, Runs, Results, Files), one selected at a time.",
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/icon-button.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/utilities-toolbar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "left-context-panel",
+      "type": "registry:ui",
+      "title": "Left Context Panel",
+      "categories": [
+        "shell"
+      ],
+      "description": "Shell Left Context Panel: urbanflow's 252px left panel with a page switcher menu, optional tabs and scrolling Building / Floor / Zone sections.",
+      "dependencies": [
+        "@urbanflow/icons",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/action-list.json",
+        "https://components.urbanflow.co/r/icon-button.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/left-context-panel.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "hybrid-button-group",
       "type": "registry:ui",
       "title": "Hybrid Button Group",
