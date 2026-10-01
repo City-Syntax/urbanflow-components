@@ -6,8 +6,6 @@ import { EyeClosedIcon, EyeDottedIcon, EyeOpenIcon } from "@urbanflow/icons"
 
 import { cn } from "@/lib/utils"
 
-// Flow Checkbox (Figma 1747:17310). variant "default" is the 16px box; variant "icon" is the
-// eye used for layer visibility (unchecked = open eye, indeterminate = dotted, checked = closed).
 function Checkbox({
   className,
   variant = "default",
@@ -15,7 +13,6 @@ function Checkbox({
   ...props
 }: React.ComponentProps<typeof CheckboxPrimitive.Root> & {
   variant?: "default" | "icon"
-  /** Inline label (label-xsmall). Omit it and pass aria-label when the label lives elsewhere. */
   label?: React.ReactNode
 }) {
   const box = (

@@ -5,8 +5,6 @@ import { Switch as SwitchPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
 
-// Flow Toggle (Figma 1746:16581): 36×21 on/off switch for settings that apply immediately.
-// Built on Radix Switch (shadcn calls this "Switch"; shadcn's own "Toggle" is a pressable button).
 function Toggle({
   className,
   label,

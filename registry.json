@@ -126,6 +126,73 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "title": "Field",
+      "description": "urbanflow Field shell (label, help text, error / alert) and Inline Error, shared by Text Field, Multiline Field and Select.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "text-field",
+      "type": "registry:ui",
+      "title": "Text Field",
+      "description": "urbanflow Text Field: 32px input with label, unit, prefix / suffix icon, number stepper, help text, error / alert, disabled, read only, inline label.",
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/field.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/text-field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "multiline-field",
+      "type": "registry:ui",
+      "title": "Multiline Field",
+      "description": "urbanflow Multiline Field: textarea with label, character count, help text and error / alert.",
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/field.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/multiline-field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "urbanflow Select: 36px trigger with chevron opening an Action List of options; label default / inline / hidden.",
+      "dependencies": [
+        "radix-ui",
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/field.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/select.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

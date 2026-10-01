@@ -3,7 +3,6 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { Slot } from "radix-ui"
 
 import { cn } from "@/lib/utils"
-// Flow Button (Figma 1712:13271). Hover/active/pressed move one step; focus is the Flow focus ring.
 const primary = "bg-background-inverse text-texticons-inverse-primary disabled:bg-background-medium"
 const secondary =
   "bg-background-default inset-ring inset-ring-stroke-default not-disabled:hover:bg-background-light not-disabled:active:bg-background-medium not-disabled:active:inset-ring-0 aria-pressed:bg-background-medium aria-pressed:inset-ring-0 disabled:bg-background-light disabled:inset-ring-0"
@@ -39,7 +38,6 @@ const buttonVariants = cva(
         micro,
         medium,
         large,
-        // Flow Icon Button: 24 / 28 / 32px square, 16 / 20 / 20px icon
         "icon-micro": "size-6 px-0 [&_svg:not([class*='size-'])]:size-4",
         icon: "size-7 px-0 [&_svg:not([class*='size-'])]:size-5",
         "icon-large": "size-8 px-0 [&_svg:not([class*='size-'])]:size-5",
