@@ -7,8 +7,6 @@ type ButtonProps = React.ComponentProps<typeof Button>
 
 const iconSize = { micro: "icon-micro", medium: "icon", large: "icon-large" } as const
 
-// Flow Icon Button (Figma 1712:12895): Button's variants and tones, square, icon only.
-// `label` is required: it becomes the accessible name and the native tooltip.
 function IconButton({
   label,
   size = "medium",
@@ -19,7 +17,6 @@ function IconButton({
 }: Omit<ButtonProps, "size" | "aria-label"> & {
   label: string
   size?: keyof typeof iconSize
-  /** Toggle buttons (e.g. an active drawing tool). Sets aria-pressed. */
   selected?: boolean
 }) {
   return (
@@ -36,7 +33,6 @@ function IconButton({
   )
 }
 
-// Flow Icon Button Group (Figma 1726:13819): floating white cluster for canvas toolbars.
 function IconButtonGroup({
   label,
   orientation = "horizontal",

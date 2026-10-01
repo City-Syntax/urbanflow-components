@@ -3,7 +3,6 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-// Flow Badge (Figma 1713:13268): small status or count label.
 const badgeVariants = cva(
   "inline-flex shrink-0 items-center justify-center gap-1 whitespace-nowrap text-label-xsmall [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5",
   {
