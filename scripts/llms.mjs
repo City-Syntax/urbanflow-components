@@ -1,5 +1,5 @@
 // Writes public/llms.txt: DESIGN.md + setup + tokens, components and icons generated from the code.
-import { readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
 const SITE = "https://components.urbanflow.co";
 const read = (p) => readFileSync(new URL(`../${p}`, import.meta.url), "utf8");
@@ -54,5 +54,6 @@ ${list("shadow", "shadow")}
 ${list("radius", "rounded")}
 `;
 
+mkdirSync(new URL("../public/", import.meta.url), { recursive: true });
 writeFileSync(new URL("../public/llms.txt", import.meta.url), text);
 console.log(`Wrote public/llms.txt (${items.length} components, ${icons.length} icons).`);
