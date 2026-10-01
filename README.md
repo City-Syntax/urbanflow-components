@@ -38,8 +38,11 @@ import { SearchIcon } from "@urbanflow/icons";
 ```
 
 Then `npx shadcn add @urbanflow/<name>`. The component is now yours to edit. To pick up a newer
-version, re-run the command and review the diff. Components we haven't changed come straight
-from shadcn (`npx shadcn add dialog`) and use the urbanflow theme automatically.
+version, re-run the command and review the diff. Install `@urbanflow/utils` first (Flow-aware `cn()`).
+Stock shadcn components don't pick up the theme (it has no shadcn colours), so use the registry versions.
+
+**AI agents.** Point them at https://components.urbanflow.co/llms.txt: the design language
+([DESIGN.md](DESIGN.md)), setup, and every token, component and icon, generated from this repo.
 
 Release notes live in each package's `CHANGELOG.md` ([theme](packages/theme/CHANGELOG.md),
 [icons](packages/icons/CHANGELOG.md), [components](packages/registry/CHANGELOG.md)). All packages share one version number.

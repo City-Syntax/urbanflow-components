@@ -101,6 +101,11 @@ Then add an item to `registry.json`:
 ```
 and add a section for it with every variant to `app/page.tsx`.
 
+**Design language** lives in `DESIGN.md` and is served at `/llms.txt` with generated lists of tokens,
+components (from `registry.json` descriptions) and icons. When a change alters how Flow should be used
+(a new principle, a button rule, a component's purpose), update `DESIGN.md` or the item's `description`
+in the same PR.
+
 **No comments in components** (`registry/ui/`): no `//`, `/* */` or JSDoc. Put anything that needs explaining in the PR description or the changeset instead.
 
 <!-- BEGIN:nextjs-agent-rules -->
