@@ -8,7 +8,7 @@ const clause =
 
 export function ComplianceDemo() {
   return (
-    <div className="w-96 overflow-hidden rounded-lg bg-background-default inset-ring inset-ring-stroke-default">
+    <div className="w-96 overflow-hidden rounded-lg bg-background-default ring-1 ring-stroke-default">
       <ComplianceIssue
         status="failed"
         title="Exceeds maximum height"
