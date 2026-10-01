@@ -567,6 +567,116 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "photo",
+      "type": "registry:ui",
+      "title": "Photo",
+      "categories": [
+        "comments"
+      ],
+      "description": "↪ Comments Photo: image attachment tile (S 60px or L 120×90), selected ring, +N overflow, optional remove.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/photo.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "comment-pin",
+      "type": "registry:ui",
+      "title": "Comment Pin",
+      "categories": [
+        "comments"
+      ],
+      "description": "↪ Comments Comment Pin: 32px canvas pin; read, unread, selected, resolved, typing; stacked avatars or a group count.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/avatar.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/comment-pin.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "comment-thread",
+      "type": "registry:ui",
+      "title": "Comment Thread",
+      "categories": [
+        "comments"
+      ],
+      "description": "↪ Comments Comment Thread: panel row with location, author, time, first message and replies; unread dot; more and resolve on hover.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/avatar.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/comment-thread.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "comment-section",
+      "type": "registry:ui",
+      "title": "Comment Section",
+      "categories": [
+        "comments"
+      ],
+      "description": "↪ Comments Comment Section (panel header with filter menu and close) and Comment Search (search field with empty-state guidance or no-match message).",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/action-list.json",
+        "https://components.urbanflow.co/r/icon-button.json",
+        "https://components.urbanflow.co/r/text-field.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/comment-section.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "view-comment",
+      "type": "registry:ui",
+      "title": "View Comment",
+      "categories": [
+        "comments"
+      ],
+      "description": "↪ Comments View Comment: open thread popover beside its pin — header actions, messages with photos and a reply composer.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/avatar.json",
+        "https://components.urbanflow.co/r/comment-pin.json",
+        "https://components.urbanflow.co/r/icon-button.json",
+        "https://components.urbanflow.co/r/photo.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/view-comment.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
