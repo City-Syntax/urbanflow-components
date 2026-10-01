@@ -10,3 +10,5 @@ Added `HvacIcon` and `RunIcon` (Flux's HVAC and Runs modes).
 Figma now draws icons in `texticons-placeholder` (40%) instead of `texticons-secondary`. Icons still paint `currentColor`, so nothing changes in your app until you set the colour; new components use `text-texticons-placeholder` for idle icons.
 
 The urbanflow mark is now on the site as SVG: `/brand/urbanflow-mark.svg` and `/brand/urbanflow-mark-white.svg` (white, for the top bar). The Shell demo uses the white one.
+
+`LeftContextPanel` takes `product` ("urbanflow" 252px or "flux" 360px, where children fill the panel). It opens at that default width every session and users can resize it by dragging its right edge (`minWidth` 240, `maxWidth` 480, `resizable`, `onWidthChange`). The width isn't saved, so don't persist it.

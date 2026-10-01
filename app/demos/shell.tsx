@@ -133,7 +133,9 @@ export function ShellDemo() {
           leftPanel={
             showLeft &&
             (flux ? (
-              <Placeholder label="Chat panel" className="w-72" />
+              <LeftContextPanel product="flux">
+                <Placeholder label="Chat panel" className="flex-1" />
+              </LeftContextPanel>
             ) : (
               <LeftContextPanel
                 page="Properties"
