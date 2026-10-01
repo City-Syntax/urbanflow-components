@@ -265,6 +265,80 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "action-list",
+      "type": "registry:ui",
+      "title": "Action List",
+      "description": "urbanflow Action List: static ActionList / ActionSection / ActionItem, and DropdownMenu built on the same styles (icon, help text, destructive, selected, disabled).",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/action-list.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "modal",
+      "type": "registry:ui",
+      "title": "Modal",
+      "description": "urbanflow Modal over the Dimmer: grey title bar, body, right-aligned footer; default 620px or small 360px.",
+      "dependencies": [
+        "radix-ui",
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/modal.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "urbanflow Toast: dark pill (or critical red) with optional action and dismiss; auto-dismisses after 4s.",
+      "dependencies": [
+        "radix-ui",
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/toast.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "banner",
+      "type": "registry:ui",
+      "title": "Banner",
+      "description": "urbanflow Banner: info / success / warning / critical, as a card with a tinted icon tile or inCard on a tinted ground; title, description, actions, dismiss.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/icon-button.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/banner.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

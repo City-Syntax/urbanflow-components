@@ -5,6 +5,7 @@ import { ArrowRightIcon, DrawWallIcon, LayoutIcon, PencilIcon, SearchIcon, Trash
 
 import { InputsDemo } from "@/app/demos/inputs";
 import { NavigationDemo } from "@/app/demos/navigation";
+import { OverlaysDemo } from "@/app/demos/overlays";
 import { Badge } from "@/registry/ui/badge";
 import { Button } from "@/registry/ui/button";
 import { Checkbox } from "@/registry/ui/checkbox";
@@ -178,6 +179,10 @@ export default function Home() {
 
       <Section title="Tabs, segmented control & headers">
         <NavigationDemo />
+      </Section>
+
+      <Section title="Action list, modal, toast & banner">
+        <OverlaysDemo />
       </Section>
 
       <Section title="Badge">
