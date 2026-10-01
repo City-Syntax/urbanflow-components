@@ -677,6 +677,92 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "file-category",
+      "type": "registry:ui",
+      "title": "File Category",
+      "categories": [
+        "files"
+      ],
+      "description": "↪ Files File Category: tone-coded category pill that opens a menu to classify a file; empty reads Uncategorized. Also exports CategoryTag.",
+      "dependencies": [
+        "radix-ui",
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/file-category.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "file-actions",
+      "type": "registry:ui",
+      "title": "File Actions",
+      "categories": [
+        "files"
+      ],
+      "description": "↪ Files File Actions: primary Actions button whose caret flips when its Action List menu opens.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/action-list.json",
+        "https://components.urbanflow.co/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/file-actions.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "file-row",
+      "type": "registry:ui",
+      "title": "File Row",
+      "categories": [
+        "files"
+      ],
+      "description": "↪ Files File Row: file glyph, name + type, category, size, owner, date; hover swaps the date for actions; selected info ring.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/avatar.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/file-row.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "select-floor-plan",
+      "type": "registry:ui",
+      "title": "Select Floor Plan",
+      "categories": [
+        "files"
+      ],
+      "description": "↪ Files Select Floor Plan: row to upload a new floor plan or pick an existing file.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/select-floor-plan.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
