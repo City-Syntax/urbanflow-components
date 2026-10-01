@@ -4,6 +4,7 @@ import * as Icons from "@urbanflow/icons";
 import { ArrowRightIcon, DrawWallIcon, LayoutIcon, PencilIcon, SearchIcon, TrashIcon } from "@urbanflow/icons";
 
 import { InputsDemo } from "@/app/demos/inputs";
+import { NavigationDemo } from "@/app/demos/navigation";
 import { Badge } from "@/registry/ui/badge";
 import { Button } from "@/registry/ui/button";
 import { Checkbox } from "@/registry/ui/checkbox";
@@ -173,6 +174,10 @@ export default function Home() {
 
       <Section title="Inputs">
         <InputsDemo />
+      </Section>
+
+      <Section title="Tabs, segmented control & headers">
+        <NavigationDemo />
       </Section>
 
       <Section title="Badge">
