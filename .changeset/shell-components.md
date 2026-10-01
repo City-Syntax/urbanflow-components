@@ -8,3 +8,5 @@ Added the Shell components every product's chrome is built from (Figma page "She
 Added `HvacIcon` and `RunIcon` (Flux's HVAC and Runs modes).
 
 Figma now draws icons in `texticons-placeholder` (40%) instead of `texticons-secondary`. Icons still paint `currentColor`, so nothing changes in your app until you set the colour; new components use `text-texticons-placeholder` for idle icons.
+
+The urbanflow mark is now on the site as SVG: `/brand/urbanflow-mark.svg` and `/brand/urbanflow-mark-white.svg` (white, for the top bar). The Shell demo uses the white one.

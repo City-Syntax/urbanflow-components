@@ -46,6 +46,9 @@ floating canvas tools and a right panel on top of it, 8px inset so the model sta
 change what fills each region. Product modes and tools live in the `UtilitiesToolbar` pinned top-right of
 the canvas, never as tabs in the top bar.
 
+The urbanflow mark is at `/brand/urbanflow-mark.svg` (ink) and `/brand/urbanflow-mark-white.svg` (for the
+dark top bar). Pass it to `TopNavigation` as `logo`; never redraw, recolour beyond these two, or put it in a box.
+
 ## Type
 
 Figtree for everything; DM Mono only for numbers that are read as data.
