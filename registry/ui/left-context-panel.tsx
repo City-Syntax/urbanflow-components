@@ -6,7 +6,6 @@ import { ChevronDownIcon, LayoutIcon } from "@urbanflow/icons"
 import { cn } from "@/lib/utils"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/registry/ui/action-list"
 import { IconButton } from "@/registry/ui/icon-button"
-import { ResizeHandle, useResizableWidth } from "@/registry/ui/resize-handle"
 
 const defaultWidths = { urbanflow: 252, flux: 360 } as const
 
@@ -21,10 +20,6 @@ function LeftContextPanel({
   onCollapse,
   tabs,
   defaultWidth,
-  minWidth = 240,
-  maxWidth = 480,
-  resizable = true,
-  onWidthChange,
   className,
   style,
   children,
@@ -38,13 +33,8 @@ function LeftContextPanel({
   onCollapse?: () => void
   tabs?: React.ReactNode
   defaultWidth?: number
-  minWidth?: number
-  maxWidth?: number
-  resizable?: boolean
-  onWidthChange?: (width: number) => void
 }) {
   const initial = defaultWidth ?? defaultWidths[product]
-  const { width, handleProps } = useResizableWidth({ initial, min: minWidth, max: maxWidth, onWidthChange })
   const flux = product === "flux"
   const trigger = (
     <button
@@ -76,7 +66,7 @@ function LeftContextPanel({
     <aside
       data-slot="left-context-panel"
       data-product={product}
-      style={{ width: resizable ? width : initial, ...style }}
+      style={{ width: initial, ...style }}
       className={cn(
         "relative flex min-h-0 shrink-0 flex-col gap-2 rounded-lg bg-background-default p-2 shadow-sm inset-ring inset-ring-stroke-subtle",
         className
@@ -92,7 +82,6 @@ function LeftContextPanel({
       ) : (
         <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-auto rounded-md bg-background-light p-2">{children}</div>
       )}
-      {resizable && <ResizeHandle edge="right" {...handleProps} />}
     </aside>
   )
 }

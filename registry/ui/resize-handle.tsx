@@ -1,66 +1,9 @@
 "use client"
 
 import * as React from "react"
+import { ChevronLeftIcon, ChevronRightIcon } from "@urbanflow/icons"
 
 import { cn } from "@/lib/utils"
-
-function useResizableWidth({
-  initial,
-  min,
-  max,
-  edge = "right",
-  onWidthChange,
-}: {
-  initial: number
-  min: number
-  max: number
-  edge?: "left" | "right"
-  onWidthChange?: (width: number) => void
-}) {
-  const [width, setWidth] = React.useState(initial)
-  const update = React.useCallback(
-    (w: number) => {
-      const next = Math.min(max, Math.max(min, Math.round(w)))
-      setWidth(next)
-      onWidthChange?.(next)
-    },
-    [min, max, onWidthChange]
-  )
-  const start = React.useRef<{ x: number; width: number } | null>(null)
-  const dir = edge === "right" ? 1 : -1
-  const handleProps = {
-    role: "separator",
-    "aria-orientation": "vertical" as const,
-    "aria-valuenow": width,
-    "aria-valuemin": min,
-    "aria-valuemax": max,
-    tabIndex: 0,
-    onPointerDown: (e: React.PointerEvent<HTMLDivElement>) => {
-      e.currentTarget.setPointerCapture(e.pointerId)
-      start.current = { x: e.clientX, width }
-    },
-    onPointerMove: (e: React.PointerEvent<HTMLDivElement>) => {
-      if (start.current) update(start.current.width + dir * (e.clientX - start.current.x))
-    },
-    onPointerUp: () => {
-      start.current = null
-    },
-    onDoubleClick: () => update(initial),
-    onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => {
-      const step = e.shiftKey ? 64 : 16
-      const grow = edge === "right" ? "ArrowRight" : "ArrowLeft"
-      const shrink = edge === "right" ? "ArrowLeft" : "ArrowRight"
-      if (e.key === grow) update(width + step)
-      else if (e.key === shrink) update(width - step)
-      else if (e.key === "Home") update(min)
-      else if (e.key === "End") update(max)
-      else if (e.key === "Enter") update(initial)
-      else return
-      e.preventDefault()
-    },
-  }
-  return { width, handleProps }
-}
 
 function ResizeHandle({
   edge = "right",
@@ -71,7 +14,10 @@ function ResizeHandle({
   return (
     <div
       data-slot="resize-handle"
+      role="separator"
+      aria-orientation="vertical"
       aria-label={label}
+      tabIndex={0}
       title="Drag to resize · double-click to reset"
       className={cn(
         "group absolute inset-y-3 z-10 flex w-3 cursor-col-resize touch-none justify-center outline-none",
@@ -85,4 +31,30 @@ function ResizeHandle({
   )
 }
 
-export { ResizeHandle, useResizableWidth }
+function PanelReopenTab({
+  side,
+  label,
+  className,
+  ...props
+}: React.ComponentProps<"button"> & { side: "left" | "right"; label?: string }) {
+  return (
+    <button
+      type="button"
+      data-slot="panel-reopen-tab"
+      aria-label={label ?? `Show ${side} panel`}
+      title={label ?? `Show ${side} panel`}
+      className={cn(
+        "absolute top-1/2 z-20 flex h-14 w-5 -translate-y-1/2 cursor-pointer touch-none items-center justify-center bg-background-default text-texticons-placeholder shadow-sm outline-none hover:bg-background-light hover:text-texticons-emphasis focus-visible:shadow-focus [&_svg]:size-4",
+        side === "left"
+          ? "left-0 rounded-r-md inset-ring inset-ring-stroke-default [clip-path:inset(-8px_-8px_-8px_0)]"
+          : "right-0 rounded-l-md inset-ring inset-ring-stroke-default [clip-path:inset(-8px_0_-8px_-8px)]",
+        className
+      )}
+      {...props}
+    >
+      {side === "left" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+    </button>
+  )
+}
+
+export { ResizeHandle, PanelReopenTab }

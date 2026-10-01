@@ -46,9 +46,12 @@ floating canvas tools and a right panel on top of it, 8px inset so the model sta
 change what fills each region. Product modes and tools live in the `UtilitiesToolbar` pinned top-right of
 the canvas, never as tabs in the top bar.
 
-Both side panels open at a fixed default width every session and the user can drag their inner edge to resize
-them: left panel urbanflow 252px / Flux 360px (240–480px), right panel urbanflow 359px / Flux 300px
-(280–480px). Don't save the widths; the next session starts at the defaults again.
+Both side panels open at a fixed default width every session (left urbanflow 252px / Flux 360px, right
+359px / 300px) and the user can drag their inner edge to resize them, with no maximum. The two panels always
+keep a 24px gap: growing one squeezes the other, and a panel dragged to 0 closes, leaving a small reopen tab
+on that edge (click to reopen at the default width, or drag it out). With one panel closed, the other stops
+24px from the far edge so the tab stays reachable. Floating canvas tools hide when there isn't room. Never
+save the widths; the next session starts at the defaults again.
 
 The urbanflow mark is at `/brand/urbanflow-mark.svg` (ink) and `/brand/urbanflow-mark-white.svg` (for the
 dark top bar). Pass it to `TopNavigation` as `logo`; never redraw, recolour beyond these two, or put it in a box.
