@@ -35,6 +35,7 @@ const rowAction =
 function BuildingSelect({
   hierarchy = "parent",
   depth,
+  guides,
   label,
   icon,
   count,
@@ -51,6 +52,7 @@ function BuildingSelect({
 }: Omit<React.ComponentProps<"div">, "children"> & {
   hierarchy?: Hierarchy
   depth?: number
+  guides?: boolean[]
   label: React.ReactNode
   icon?: React.ReactNode
   count?: number
@@ -97,7 +99,9 @@ function BuildingSelect({
       {...props}
     >
       {Array.from({ length: Math.max(0, level - 1) }, (_, i) => (
-        <span key={i} className="relative inline-flex h-6 w-[21px] shrink-0" />
+        <span key={i} className="relative inline-flex h-6 w-[21px] shrink-0 text-neutral-30">
+          {guides?.[i] && <span aria-hidden className="absolute inset-y-0 left-[5.25px] w-[1.5px] rounded-full bg-current" />}
+        </span>
       ))}
       <span
         className={cn(

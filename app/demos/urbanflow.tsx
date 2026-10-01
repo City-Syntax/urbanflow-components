@@ -65,12 +65,13 @@ export function UrbanflowDemo() {
                   />
                   <BuildingSelect
                     depth={3}
+                    guides={[true, true]}
                     label="South wall"
                     hasChildren
                     expanded
                     trailing={<span className="font-mono text-paragraph-xsmall text-texticons-secondary">32 m²</span>}
                   />
-                  <BuildingSelect depth={4} label="Window" last />
+                  <BuildingSelect depth={4} guides={[true, true, false]} label="Window" last />
                   <BuildingSelect depth={2} label="Zone 3" last />
                   <BuildingSelect hierarchy="child" label="Roof" last selected={selected === "R"} onClick={() => setSelected("R")} />
                 </>
