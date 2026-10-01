@@ -6,6 +6,7 @@ import { ArrowRightIcon, DrawWallIcon, LayoutIcon, PencilIcon, SearchIcon, Trash
 import { InputsDemo } from "@/app/demos/inputs";
 import { NavigationDemo } from "@/app/demos/navigation";
 import { OverlaysDemo } from "@/app/demos/overlays";
+import { SmallDemo } from "@/app/demos/small";
 import { Badge } from "@/registry/ui/badge";
 import { Button } from "@/registry/ui/button";
 import { Checkbox } from "@/registry/ui/checkbox";
@@ -195,6 +196,10 @@ export default function Home() {
             </div>
           ))}
         </div>
+      </Section>
+
+      <Section title="Color indicator, avatar, chips & scroll">
+        <SmallDemo />
       </Section>
 
       <Section title="Checkbox & Toggle">

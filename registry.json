@@ -339,6 +339,88 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "color-indicator",
+      "type": "registry:ui",
+      "title": "Color Indicator",
+      "description": "urbanflow Color Indicator: 14px (or 8px small) swatch keying a series, zone or category to a Misc colour.",
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/color-indicator.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "urbanflow Avatar (L 28 · M 24 · S 20 · XS 18, initials on a Misc colour or a photo) and Avatars Stacked (+N after max).",
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/avatar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chip-filter",
+      "type": "registry:ui",
+      "title": "Chip Filter",
+      "description": "urbanflow Chip Filter: pill toggle for filtering a list; selected inverts.",
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/chip-filter.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dropdown-pill",
+      "type": "registry:ui",
+      "title": "Dropdown Pill",
+      "description": "urbanflow Dropdown Pill: compact pill that opens a menu to set a category inline; empty reads Unclassified.",
+      "dependencies": [
+        "radix-ui",
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/select.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/dropdown-pill.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "scroll-indicator",
+      "type": "registry:ui",
+      "title": "Scroll Indicator",
+      "description": "urbanflow Scroll Indicator (5px light or dark thumb) and ScrollArea that uses it.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/scroll-indicator.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
