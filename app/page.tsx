@@ -3,6 +3,7 @@ import { join } from "node:path";
 import * as Icons from "@urbanflow/icons";
 import { ArrowRightIcon, DrawWallIcon, LayoutIcon, PencilIcon, SearchIcon, TrashIcon } from "@urbanflow/icons";
 
+import { ComplianceDemo } from "@/app/demos/compliance";
 import { InputsDemo } from "@/app/demos/inputs";
 import { NavigationDemo } from "@/app/demos/navigation";
 import { OverlaysDemo } from "@/app/demos/overlays";
@@ -237,6 +238,10 @@ export default function Home() {
 
       <Section title="↪ Urbanflow">
         <UrbanflowDemo />
+      </Section>
+
+      <Section title="↪ Compliance">
+        <ComplianceDemo />
       </Section>
 
       <Section title={`Icons (${iconEntries.length})`}>
