@@ -116,8 +116,8 @@ function BuildingSelect({
         {!parent && <TreeElbow last={last} />}
         {caret}
       </span>
-      {!leaf && (
-        <span className="inline-flex text-neutral-100 [&_svg]:size-3.5">
+      {(!leaf || icon != null) && (
+        <span className="inline-flex shrink-0 text-neutral-100 [&_svg]:size-3.5">
           {icon ?? (parent ? <BuildingIcon /> : <ZoneIcon />)}
         </span>
       )}
