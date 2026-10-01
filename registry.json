@@ -534,7 +534,7 @@
       "categories": [
         "shell"
       ],
-      "description": "Shell Left Context Panel: urbanflow's 252px left panel with a page switcher menu, optional tabs and scrolling Building / Floor / Zone sections.",
+      "description": "Shell Left Context Panel: the AppShell's left panel. product=\"urbanflow\" (252px: page switcher menu, optional tabs, scrolling Building / Floor / Zone sections) or product=\"flux\" (360px: children fill the panel, e.g. the chat). Width starts at the default every session and the user can resize it by dragging the right edge (240–480px; arrow keys, double-click resets); it is not saved.",
       "dependencies": [
         "@urbanflow/icons",
         "radix-ui"
