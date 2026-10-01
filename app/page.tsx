@@ -5,6 +5,7 @@ import { ArrowRightIcon, DrawWallIcon, LayoutIcon, PencilIcon, SearchIcon, Trash
 
 import { CommentsDemo } from "@/app/demos/comments";
 import { ComplianceDemo } from "@/app/demos/compliance";
+import { FilesDemo } from "@/app/demos/files";
 import { InputsDemo } from "@/app/demos/inputs";
 import { NavigationDemo } from "@/app/demos/navigation";
 import { OverlaysDemo } from "@/app/demos/overlays";
@@ -247,6 +248,10 @@ export default function Home() {
 
       <Section title="↪ Comments">
         <CommentsDemo />
+      </Section>
+
+      <Section title="↪ Files">
+        <FilesDemo />
       </Section>
 
       <Section title={`Icons (${iconEntries.length})`}>
