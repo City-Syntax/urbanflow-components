@@ -85,7 +85,7 @@ function BuildingSelect({
       className={cn(
         "flex h-6 cursor-pointer items-center bg-background-default pr-1 pl-2 text-neutral-100 outline-none hover:bg-background-light focus-visible:shadow-[inset_0_0_0_2px_var(--color-info-primary)]",
         parent ? "gap-2" : "gap-1",
-        leaf ? "text-paragraph-medium" : "text-label-small",
+        leaf ? "text-paragraph-xsmall" : "text-label-small",
         selected && "bg-background-light",
         className
       )}
