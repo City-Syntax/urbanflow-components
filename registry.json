@@ -523,6 +523,50 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "policy",
+      "type": "registry:ui",
+      "title": "Policy",
+      "categories": [
+        "compliance"
+      ],
+      "description": "↪ Compliance Policy: collapsible rule reference with source link and quoted clause.",
+      "dependencies": [
+        "radix-ui",
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/policy.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "compliance-issue",
+      "type": "registry:ui",
+      "title": "Compliance Issue",
+      "categories": [
+        "compliance"
+      ],
+      "description": "↪ Compliance Issue: result card with a 2px pass/fail rail; opens to a Required / Actual table, a Policy and a Dismiss footer.",
+      "dependencies": [
+        "radix-ui",
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/compliance-issue.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
