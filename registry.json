@@ -421,6 +421,108 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "thumbnail",
+      "type": "registry:ui",
+      "title": "Thumbnail",
+      "categories": [
+        "urbanflow"
+      ],
+      "description": "↪ Urbanflow Thumbnail: render, plan or file tile (xsmall 24 · small 40 · medium 60 · large 80) with a placeholder glyph.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/thumbnail.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "hybrid-button-group",
+      "type": "registry:ui",
+      "title": "Hybrid Button Group",
+      "categories": [
+        "urbanflow"
+      ],
+      "description": "↪ Urbanflow Hybrid Button Group: floating canvas bar with the current mode, its object and one action.",
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/hybrid-button-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "building-select",
+      "type": "registry:ui",
+      "title": "Building Select",
+      "categories": [
+        "urbanflow"
+      ],
+      "description": "↪ Urbanflow Building Select (24px building / floor / zone tree row with connectors, caret, count, add and more) and Building Header.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/badge.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/building-select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "output-select",
+      "type": "registry:ui",
+      "title": "Output Select",
+      "categories": [
+        "urbanflow"
+      ],
+      "description": "↪ Urbanflow Output Select: selectable analysis-run card with thumbnail, meta, badges and key metrics.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/thumbnail.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/output-select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "template-select",
+      "type": "registry:ui",
+      "title": "Template Select",
+      "categories": [
+        "urbanflow"
+      ],
+      "description": "↪ Urbanflow Template Select: 116px floor-plate template tile.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/thumbnail.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/template-select.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
