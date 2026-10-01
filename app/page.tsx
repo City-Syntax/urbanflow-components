@@ -8,6 +8,7 @@ import { ComplianceDemo } from "@/app/demos/compliance";
 import { FilesDemo } from "@/app/demos/files";
 import { InputsDemo } from "@/app/demos/inputs";
 import { NavigationDemo } from "@/app/demos/navigation";
+import { ShellDemo } from "@/app/demos/shell";
 import { OverlaysDemo } from "@/app/demos/overlays";
 import { SmallDemo } from "@/app/demos/small";
 import { UrbanflowDemo } from "@/app/demos/urbanflow";
@@ -245,6 +246,10 @@ export default function Home() {
         </div>
       </Section>
 
+      <Section title="Shell">
+        <ShellDemo />
+      </Section>
+
       <Section title="↪ Urbanflow">
         <UrbanflowDemo />
       </Section>
@@ -264,7 +269,7 @@ export default function Home() {
       <Section title={`Icons (${iconEntries.length})`}>
         <div className="grid grid-cols-3 gap-3 sm:grid-cols-5 lg:grid-cols-8">
           {iconEntries.map(([name, Icon]) => (
-            <div key={name} className="flex flex-col items-center gap-2 rounded-md border p-3 text-texticons-secondary">
+            <div key={name} className="flex flex-col items-center gap-2 rounded-md border p-3 text-texticons-placeholder">
               <div className="flex items-end gap-2">
                 <Icon size={14} />
                 <Icon size={16} />

@@ -12,8 +12,10 @@ from the code.
    categories and avatars). Never use colour for decoration.
 2. **One ink.** All text and icons are one ink, `#202020`, at different strengths. Choose the strength
    by importance, not by picking greys:
-   `texticons-emphasis` (100%) › `primary` (80%, default body) › `secondary` (70%, supporting text
-   and icons) › `tertiary` (50%) › `placeholder` (40%) › `disabled` (30%). On dark surfaces use
+   `texticons-emphasis` (100%) › `primary` (80%, default body) › `secondary` (70%, supporting text)
+   › `tertiary` (50%) › `placeholder` (40%, placeholders and the default icon colour) › `disabled` (30%).
+   Icons at 40% are below 3:1, so an icon-only control always needs a label (tooltip / `aria-label`), and a
+   selected or primary control uses its own ink. On dark surfaces use
    `texticons-inverse-*`.
 3. **Black is the primary action.** The main call to action is `background-inverse` (near-black) with
    inverse text. Use one primary action per view.
@@ -35,6 +37,14 @@ from the code.
 7. **Warm, quiet structure.** Surfaces are white (`background-default`) with light greys
    (`background-light` for fills, `background-medium` for hover and pressed). Borders are warm greys:
    `stroke-subtle` › `stroke-default` › `stroke-strong`, and `stroke-selected` for the selected item.
+
+## App shell
+
+Every product (urbanflow, Flux, and the next one) uses the same `AppShell`, the way Figma Design, Slides
+and FigJam share one chrome: a 44px dark `TopNavigation`, then the canvas full-bleed with a left panel,
+floating canvas tools and a right panel on top of it, 8px inset so the model stays visible. Products only
+change what fills each region. Product modes and tools live in the `UtilitiesToolbar` pinned top-right of
+the canvas, never as tabs in the top bar.
 
 ## Type
 
