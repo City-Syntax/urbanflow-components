@@ -100,7 +100,11 @@ function BuildingSelect({
     >
       {Array.from({ length: Math.max(0, level - 1) }, (_, i) => (
         <span key={i} className="relative inline-flex h-6 w-[21px] shrink-0 text-neutral-30">
-          {guides?.[i] && <span aria-hidden className="absolute inset-y-0 left-[5.25px] w-[1.5px] rounded-full bg-current" />}
+          {guides?.[i] && (
+            <svg className="absolute top-0 left-0" width="21" height="24" viewBox="0 0 21 24" fill="none" aria-hidden>
+              <path d="M6 0v24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          )}
         </span>
       ))}
       <span
