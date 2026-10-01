@@ -193,6 +193,78 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "urbanflow Tabs: 28px pill tabs (Flow Tab) or dense underline tabs (Flow Underline Tab) via TabsList variant.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "segmented-control",
+      "type": "registry:ui",
+      "title": "Segmented Control",
+      "description": "urbanflow Segmented Control: 2–4 mutually exclusive options, text or icon.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/segmented-control.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "page-header",
+      "type": "registry:ui",
+      "title": "Page Header",
+      "description": "urbanflow Page Header: back, title with badge or leading mark, description, actions.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/icon-button.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/page-header.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "full-screen-modal-header",
+      "type": "registry:ui",
+      "title": "Full Screen Modal Header",
+      "description": "urbanflow Full Screen Modal Header: 56px title bar with back, leading mark, tabs, actions and close.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/icon-button.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/full-screen-modal-header.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
