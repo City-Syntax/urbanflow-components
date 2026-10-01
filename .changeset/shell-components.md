@@ -12,3 +12,5 @@ Figma now draws icons in `texticons-placeholder` (40%) instead of `texticons-sec
 The urbanflow mark is now on the site as SVG: `/brand/urbanflow-mark.svg` and `/brand/urbanflow-mark-white.svg` (white, for the top bar). The Shell demo uses the white one.
 
 `LeftContextPanel` takes `product` ("urbanflow" 252px or "flux" 360px, where children fill the panel). It opens at that default width every session and users can resize it by dragging its right edge (`minWidth` 240, `maxWidth` 480, `resizable`, `onWidthChange`). The width isn't saved, so don't persist it.
+
+`AppShell` takes `product` and makes the right panel resizable the same way: it opens at 359px (urbanflow) or 300px (Flux) each session and users can drag its left edge (`rightPanelMinWidth` 280, `rightPanelMaxWidth` 480, `rightPanelResizable`, `onRightPanelWidthChange`). Don't give the panel you pass in its own width; the shell sets it. Both panels share the new `resize-handle` item.

@@ -6,58 +6,11 @@ import { ChevronDownIcon, LayoutIcon } from "@urbanflow/icons"
 import { cn } from "@/lib/utils"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/registry/ui/action-list"
 import { IconButton } from "@/registry/ui/icon-button"
+import { ResizeHandle, useResizableWidth } from "@/registry/ui/resize-handle"
 
 const defaultWidths = { urbanflow: 252, flux: 360 } as const
 
 type Product = keyof typeof defaultWidths
-
-function useResizableWidth({
-  initial,
-  min,
-  max,
-  onWidthChange,
-}: {
-  initial: number
-  min: number
-  max: number
-  onWidthChange?: (width: number) => void
-}) {
-  const [width, setWidth] = React.useState(initial)
-  const clamp = React.useCallback((w: number) => Math.min(max, Math.max(min, Math.round(w))), [min, max])
-  const update = React.useCallback(
-    (w: number) => {
-      const next = clamp(w)
-      setWidth(next)
-      onWidthChange?.(next)
-    },
-    [clamp, onWidthChange]
-  )
-  const start = React.useRef<{ x: number; width: number } | null>(null)
-  const handleProps = {
-    onPointerDown: (e: React.PointerEvent<HTMLDivElement>) => {
-      e.currentTarget.setPointerCapture(e.pointerId)
-      start.current = { x: e.clientX, width }
-    },
-    onPointerMove: (e: React.PointerEvent<HTMLDivElement>) => {
-      if (start.current) update(start.current.width + e.clientX - start.current.x)
-    },
-    onPointerUp: () => {
-      start.current = null
-    },
-    onDoubleClick: () => update(initial),
-    onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => {
-      const step = e.shiftKey ? 64 : 16
-      if (e.key === "ArrowLeft") update(width - step)
-      else if (e.key === "ArrowRight") update(width + step)
-      else if (e.key === "Home") update(min)
-      else if (e.key === "End") update(max)
-      else if (e.key === "Enter") update(initial)
-      else return
-      e.preventDefault()
-    },
-  }
-  return { width, handleProps }
-}
 
 function LeftContextPanel({
   product = "urbanflow",
@@ -139,22 +92,7 @@ function LeftContextPanel({
       ) : (
         <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-auto rounded-md bg-background-light p-2">{children}</div>
       )}
-      {resizable && (
-        <div
-          role="separator"
-          aria-orientation="vertical"
-          aria-label="Resize panel"
-          aria-valuenow={width}
-          aria-valuemin={minWidth}
-          aria-valuemax={maxWidth}
-          tabIndex={0}
-          title="Drag to resize · double-click to reset"
-          className="group absolute inset-y-3 -right-2 z-10 flex w-3 cursor-col-resize touch-none justify-center outline-none"
-          {...handleProps}
-        >
-          <span className="h-full w-0.5 rounded-full bg-transparent transition-colors duration-120 group-hover:bg-stroke-strong group-focus-visible:bg-info-primary group-active:bg-info-primary" />
-        </div>
-      )}
+      {resizable && <ResizeHandle edge="right" {...handleProps} />}
     </aside>
   )
 }

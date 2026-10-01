@@ -444,14 +444,33 @@
       ]
     },
     {
+      "name": "resize-handle",
+      "type": "registry:ui",
+      "title": "Resize Handle",
+      "categories": [
+        "shell"
+      ],
+      "description": "Shell Resize Handle: the drag edge for resizable panels (useResizableWidth + ResizeHandle). Drag, arrow keys (Shift for bigger steps), Home/End, Enter or double-click resets. Shows stroke-strong on hover and info-primary while dragging or focused. Width lives in React state only, so it resets every session.",
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/resize-handle.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "app-shell",
       "type": "registry:ui",
       "title": "App Shell",
       "categories": [
         "shell"
       ],
-      "description": "Shell App Shell: shared chrome for every urbanflow product (urbanflow, Flux). A top bar, then a canvas full-bleed behind a left panel, floating canvas tools (AppShellPin top-right / bottom-centre / bottom-right) and a right panel, all 8px inset. Products fill the slots; modes and tools go on the canvas, never as tabs in the top bar.",
+      "description": "Shell App Shell: shared chrome for every urbanflow product (urbanflow, Flux). A top bar, then a canvas full-bleed behind a left panel, floating canvas tools (AppShellPin top-right / bottom-centre / bottom-right) and a right panel, all 8px inset. The right panel opens at the product default every session (urbanflow 359px, Flux 300px) and the user can drag its left edge to resize it (280–480px); the width isn't saved. Products fill the slots; modes and tools go on the canvas, never as tabs in the top bar.",
       "registryDependencies": [
+        "https://components.urbanflow.co/r/resize-handle.json",
         "https://components.urbanflow.co/r/utils.json"
       ],
       "files": [
@@ -540,6 +559,7 @@
         "radix-ui"
       ],
       "registryDependencies": [
+        "https://components.urbanflow.co/r/resize-handle.json",
         "https://components.urbanflow.co/r/action-list.json",
         "https://components.urbanflow.co/r/icon-button.json",
         "https://components.urbanflow.co/r/utils.json"
