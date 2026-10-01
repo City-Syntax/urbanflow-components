@@ -6,9 +6,9 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run build -w @urbanflow/icons && next dev",
-    "build": "npm run build -w @urbanflow/icons && shadcn build && next build",
-    "check": "npm run build -w @urbanflow/icons && tsc --noEmit && eslint . && shadcn build",
+    "dev": "npm run build -w @urbanflow/icons && node scripts/llms.mjs && next dev",
+    "build": "npm run build -w @urbanflow/icons && node scripts/llms.mjs && shadcn build && next build",
+    "check": "npm run build -w @urbanflow/icons && node scripts/llms.mjs && tsc --noEmit && eslint . && shadcn build",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "npm run build -w @urbanflow/icons && changeset publish"

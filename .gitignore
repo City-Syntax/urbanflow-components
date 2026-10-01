@@ -44,3 +44,4 @@ next-env.d.ts
 /public/r/
 packages/*/dist/
 packages/icons/src/
+/public/llms.txt

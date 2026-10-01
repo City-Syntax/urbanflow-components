@@ -52,6 +52,13 @@ export default function Home() {
           Tokens from <code className="font-mono">@urbanflow/theme</code>, icons from{" "}
           <code className="font-mono">@urbanflow/icons</code>.
         </p>
+        <p className="text-paragraph-small text-texticons-secondary">
+          Building with an AI agent? Point it at{" "}
+          <a href="/llms.txt" className="text-texticons-link-primary underline">
+            components.urbanflow.co/llms.txt
+          </a>{" "}
+          for the design language, setup, tokens, components and icons.
+        </p>
       </header>
 
       <Section title="Colours">

@@ -8,6 +8,8 @@ const dmMono = DM_Mono({ variable: "--font-dm-mono", subsets: ["latin"], weight:
 export const metadata: Metadata = {
   title: "urbanflow components",
   description: "urbanflow design system: tokens, icons and shadcn/ui components.",
+  metadataBase: new URL("https://components.urbanflow.co"),
+  alternates: { types: { "text/plain": "/llms.txt" } },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
