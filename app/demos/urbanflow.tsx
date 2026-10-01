@@ -56,7 +56,22 @@ export function UrbanflowDemo() {
                     onClick={() => setSelected("L2")}
                   />
                   <BuildingSelect hierarchy="2ndChild" label="Zone 1" />
-                  <BuildingSelect hierarchy="2ndChild" label="Zone 2" last />
+                  <BuildingSelect
+                    depth={2}
+                    label="Zone 2"
+                    hasChildren
+                    expanded
+                    trailing={<span className="font-mono text-paragraph-xsmall text-texticons-secondary">84 m²</span>}
+                  />
+                  <BuildingSelect
+                    depth={3}
+                    label="South wall"
+                    hasChildren
+                    expanded
+                    trailing={<span className="font-mono text-paragraph-xsmall text-texticons-secondary">32 m²</span>}
+                  />
+                  <BuildingSelect depth={4} label="Window" last />
+                  <BuildingSelect depth={2} label="Zone 3" last />
                   <BuildingSelect hierarchy="child" label="Roof" last selected={selected === "R"} onClick={() => setSelected("R")} />
                 </>
               )}

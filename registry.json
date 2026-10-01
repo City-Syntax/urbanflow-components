@@ -576,7 +576,7 @@
       "categories": [
         "urbanflow"
       ],
-      "description": "↪ Urbanflow Building Select (24px building / floor / zone tree row with connectors, caret, count, add and more) and Building Header.",
+      "description": "↪ Urbanflow Building Select (24px building / floor / zone tree row with connectors, caret, count, add and more; `depth` for trees deeper than three levels, `trailing` for row details such as an area) and Building Header.",
       "dependencies": [
         "@urbanflow/icons"
       ],
