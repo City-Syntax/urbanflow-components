@@ -118,6 +118,7 @@ export function ShellDemo() {
       </div>
       <div className="h-[560px] overflow-hidden rounded-lg inset-ring inset-ring-stroke-default">
         <AppShell
+          product={flux ? "flux" : "urbanflow"}
           className="h-full"
           topNav={
             <TopNavigation
@@ -155,7 +156,7 @@ export function ShellDemo() {
               </LeftContextPanel>
             ))
           }
-          rightPanel={<Placeholder label={flux ? "Model panel" : "Analysis panel"} className="w-60" />}
+          rightPanel={<Placeholder label={flux ? "Model panel" : "Analysis panel"} />}
           canvasTools={
             <>
               <AppShellPin position="top-right">

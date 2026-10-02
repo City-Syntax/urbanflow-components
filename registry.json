@@ -444,14 +444,36 @@
       ]
     },
     {
+      "name": "resize-handle",
+      "type": "registry:ui",
+      "title": "Resize Handle & Panel Reopen Tab",
+      "categories": [
+        "shell"
+      ],
+      "description": "Shell Resize Handle (the 12px drag edge of a resizable panel: invisible at rest, stroke-strong on hover, info-primary while dragging or focused) and Panel Reopen Tab (20×56 tab flush with the canvas edge when a panel is closed; click reopens at the default width, drag pulls it out). Used by AppShell.",
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/resize-handle.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@urbanflow/icons"
+      ]
+    },
+    {
       "name": "app-shell",
       "type": "registry:ui",
       "title": "App Shell",
       "categories": [
         "shell"
       ],
-      "description": "Shell App Shell: shared chrome for every urbanflow product (urbanflow, Flux). A top bar, then a canvas full-bleed behind a left panel, floating canvas tools (AppShellPin top-right / bottom-centre / bottom-right) and a right panel, all 8px inset. Products fill the slots; modes and tools go on the canvas, never as tabs in the top bar.",
+      "description": "Shell App Shell: shared chrome for every urbanflow product (urbanflow, Flux). A top bar, then a canvas full-bleed behind a left panel, floating canvas tools (AppShellPin top-right / bottom-centre / bottom-right) and a right panel, 8px inset. The shell owns both panel widths: they open at the product defaults every session (left urbanflow 252 / Flux 360, right 359 / 300), resize by dragging their inner edge with no maximum, always keep a 24px gap (growing one squeezes the other), close when dragged to 0 with a reopen tab on that edge, and are never saved. Canvas tools hide when there isn't room. Products fill the slots; modes and tools go on the canvas, never as tabs in the top bar.",
       "registryDependencies": [
+        "https://components.urbanflow.co/r/resize-handle.json",
         "https://components.urbanflow.co/r/utils.json"
       ],
       "files": [
@@ -534,7 +556,7 @@
       "categories": [
         "shell"
       ],
-      "description": "Shell Left Context Panel: the AppShell's left panel. product=\"urbanflow\" (252px: page switcher menu, optional tabs, scrolling Building / Floor / Zone sections) or product=\"flux\" (360px: children fill the panel, e.g. the chat). Width starts at the default every session and the user can resize it by dragging the right edge (240–480px; arrow keys, double-click resets); it is not saved.",
+      "description": "Shell Left Context Panel: the AppShell's left panel. product=\"urbanflow\" (252px: page switcher menu, optional tabs, scrolling Building / Floor / Zone sections) or product=\"flux\" (360px: children fill the panel, e.g. the chat). Inside AppShell it fills the width the shell gives it (resizable, collapsible); on its own it uses its default width.",
       "dependencies": [
         "@urbanflow/icons",
         "radix-ui"
