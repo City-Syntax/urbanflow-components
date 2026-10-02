@@ -34,6 +34,8 @@ const rowAction =
 
 function BuildingSelect({
   hierarchy = "parent",
+  depth,
+  guides,
   label,
   icon,
   count,
@@ -44,10 +46,13 @@ function BuildingSelect({
   last = false,
   onAdd,
   onMore,
+  trailing,
   className,
   ...props
 }: Omit<React.ComponentProps<"div">, "children"> & {
   hierarchy?: Hierarchy
+  depth?: number
+  guides?: boolean[]
   label: React.ReactNode
   icon?: React.ReactNode
   count?: number
@@ -58,8 +63,10 @@ function BuildingSelect({
   last?: boolean
   onAdd?: () => void
   onMore?: () => void
+  trailing?: React.ReactNode
 }) {
-  const parent = hierarchy === "parent"
+  const level = depth ?? (hierarchy === "parent" ? 0 : hierarchy === "child" ? 1 : 2)
+  const parent = level === 0
   const leaf = !hasChildren && !parent
   const caret = hasChildren && (
     <button
@@ -81,7 +88,7 @@ function BuildingSelect({
       tabIndex={0}
       aria-selected={selected}
       aria-expanded={hasChildren ? expanded : undefined}
-      aria-level={parent ? 1 : hierarchy === "child" ? 2 : 3}
+      aria-level={level + 1}
       className={cn(
         "flex h-6 cursor-pointer items-center bg-background-default pr-1 pl-2 text-neutral-100 outline-none hover:bg-background-light focus-visible:shadow-[inset_0_0_0_2px_var(--color-info-primary)]",
         parent ? "gap-2" : "gap-1",
@@ -91,7 +98,15 @@ function BuildingSelect({
       )}
       {...props}
     >
-      {hierarchy === "2ndChild" && <span className="relative inline-flex h-6 w-[21px] shrink-0" />}
+      {Array.from({ length: Math.max(0, level - 1) }, (_, i) => (
+        <span key={i} className="relative inline-flex h-6 w-[21px] shrink-0 text-neutral-30">
+          {guides?.[i] && (
+            <svg className="absolute top-0 left-0" width="21" height="24" viewBox="0 0 21 24" fill="none" aria-hidden>
+              <path d="M6 0v24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          )}
+        </span>
+      ))}
       <span
         className={cn(
           "relative inline-flex h-6 w-[21px] shrink-0 items-center justify-end text-neutral-30",
@@ -101,12 +116,13 @@ function BuildingSelect({
         {!parent && <TreeElbow last={last} />}
         {caret}
       </span>
-      {!leaf && (
-        <span className="inline-flex text-neutral-100 [&_svg]:size-3.5">
+      {(!leaf || icon != null) && (
+        <span className="inline-flex shrink-0 text-neutral-100 [&_svg]:size-3.5">
           {icon ?? (parent ? <BuildingIcon /> : <ZoneIcon />)}
         </span>
       )}
       <span className="min-w-0 flex-1 truncate">{label}</span>
+      {trailing}
       {count != null && <Badge shape="small-number">{count}</Badge>}
       {(onAdd || onMore) && (
         <span className="inline-flex gap-1">
