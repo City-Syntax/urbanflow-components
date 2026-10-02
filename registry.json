@@ -58,7 +58,7 @@
       "name": "badge",
       "type": "registry:ui",
       "title": "Badge",
-      "description": "urbanflow Badge: default / info / critical × label / number / small-number.",
+      "description": "urbanflow Badge: short status, label or count. default / info / critical / success (done, passed) / caution (warning, needs attention) × label / number / small-number.",
       "dependencies": [
         "class-variance-authority"
       ],
