@@ -11,6 +11,8 @@ const badgeVariants = cva(
         default: "bg-background-medium text-texticons-primary",
         info: "bg-background-info text-texticons-link-secondary",
         critical: "bg-critical-primary text-texticons-inverse-primary",
+        success: "bg-background-success text-success-primary",
+        caution: "bg-background-caution text-caution-heavy",
       },
       shape: {
         label: "rounded-md px-2 py-0.5",

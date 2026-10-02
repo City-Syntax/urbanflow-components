@@ -200,7 +200,7 @@ export default function Home() {
 
       <Section title="Badge">
         <div className="flex flex-wrap items-center gap-3">
-          {(["default", "info", "critical"] as const).map((type) => (
+          {(["default", "info", "critical", "success", "caution"] as const).map((type) => (
             <div key={type} className="flex items-center gap-2">
               <Badge type={type}>Label</Badge>
               <Badge type={type} shape="number">12</Badge>
