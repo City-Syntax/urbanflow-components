@@ -1,5 +1,24 @@
 # @urbanflow/registry
 
+## 0.4.0
+
+### Minor Changes
+
+- f7fd3d9: Badge: added `type="success"` (green, for done or passed) and `type="caution"` (yellow, for warnings or needs attention), matching Figma Badge › Type. Text uses `success-primary` and `caution-heavy` so it stays readable on the light backgrounds; the `texticons-success-primary` / `texticons-caution-primary` tokens are too light for small text. Re-add `badge` from the registry; Flux can drop its local success/caution variants.
+- 9a32735: Building Select: two optional props.
+  
+  - `depth` (number) places a row at any level of the tree: `0` is the building, `1` a child, `2` the old `2ndChild`, and each level past that indents one more 21px step. It overrides `hierarchy`, which keeps working unchanged, so nothing needs updating.
+  - `trailing` renders before the count badge, for row details such as an area or a type label.
+  - `guides` (one boolean per ancestor level) draws the vertical line through an indent column when the row above at that level has more siblings below, so open branches stay connected.
+  - `icon` now shows on rows without children too when you pass one; leaf rows without an `icon` are unchanged.
+  
+  Re-run `npx shadcn add @urbanflow/building-select` to pick it up.
+
+### Patch Changes
+
+- 9489f5b: Building Select: every row is now 12px. Rows with children (buildings, expandable floors and zones) use `label-xsmall` instead of the larger `label-small`; leaf rows stay `paragraph-xsmall`. Ancestor guide lines are now drawn by default, so a zone under a floor keeps the building's line running down its left edge. Pass `guides` with `false` for a column only when that ancestor was the last child and its line should stop.
+- 5cfbec8: Button: a disabled primary button's label now uses `texticons-disabled` instead of white, so it's readable on the grey disabled background (it was about 1.15:1 contrast). Re-add `button` from the registry to pick it up; if you patched this locally (Flux adds `disabled:text-texticons-disabled`), you can drop the patch.
+
 ## 0.3.0
 
 ### Minor Changes
