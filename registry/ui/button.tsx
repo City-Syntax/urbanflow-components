@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { Slot } from "radix-ui"
 
 import { cn } from "@/lib/utils"
-const primary = "bg-background-inverse text-texticons-inverse-primary disabled:bg-background-medium"
+const primary = "bg-background-inverse text-texticons-inverse-primary disabled:bg-background-medium disabled:text-texticons-disabled"
 const secondary =
   "bg-background-default inset-ring inset-ring-stroke-default not-disabled:hover:bg-background-light not-disabled:active:bg-background-medium not-disabled:active:inset-ring-0 aria-pressed:bg-background-medium aria-pressed:inset-ring-0 disabled:bg-background-light disabled:inset-ring-0"
 const tertiary =
