@@ -92,7 +92,7 @@ function BuildingSelect({
       className={cn(
         "flex h-6 cursor-pointer items-center bg-background-default pr-1 pl-2 text-neutral-100 outline-none hover:bg-background-light focus-visible:shadow-[inset_0_0_0_2px_var(--color-info-primary)]",
         parent ? "gap-2" : "gap-1",
-        leaf ? "text-paragraph-xsmall" : "text-label-small",
+        leaf ? "text-paragraph-xsmall" : "text-label-xsmall",
         selected && "bg-background-light",
         className
       )}
@@ -100,7 +100,7 @@ function BuildingSelect({
     >
       {Array.from({ length: Math.max(0, level - 1) }, (_, i) => (
         <span key={i} className="relative inline-flex h-6 w-[21px] shrink-0 text-neutral-30">
-          {guides?.[i] && (
+          {(guides?.[i] ?? true) && (
             <svg className="absolute top-0 left-0" width="21" height="24" viewBox="0 0 21 24" fill="none" aria-hidden>
               <path d="M6 0v24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
