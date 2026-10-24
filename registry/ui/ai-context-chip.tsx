@@ -63,7 +63,7 @@ type AIContextSelection = { kind: string; label: string; count?: number }
 function AIContextSelectionChip({
   selection,
   ...props
-}: Omit<React.ComponentProps<typeof AIContextChip>, "label" | "detail"> & { selection: AIContextSelection }) {
+}: Omit<React.ComponentProps<typeof AIContextChip>, "label"> & { selection: AIContextSelection }) {
   const { kind, label, count } = selection
   return (
     <AIContextChip data-kind={kind} data-count={count} label={label} detail="Selection" {...props} />

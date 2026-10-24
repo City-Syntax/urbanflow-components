@@ -1056,9 +1056,9 @@
       "categories": [
         "ai"
       ],
-      "description": "urbanflow AI Prompt Input (AI Elements PromptInput on Flow): context chips row, auto-growing textarea (Enter sends, Shift+Enter new line, max 6 lines), toolbar with attach, mode / model / effort pills (a dropdown only when there are two or more options, a static label for one, hidden for none), context usage and Send / Stop (status ready / submitted / streaming / error, like useChat). AIPromptInputPicker floats a Command list above it for @ and / pickers. Presentational: state and callbacks come from the app.",
+      "description": "urbanflow AI Prompt Input (AI Elements PromptInput on Flow): context chips row, auto-growing textarea (Enter sends, Shift+Enter new line, max 6 lines), toolbar with attach, mode / model / effort pills (a dropdown only when there are two or more options, a static label for one, hidden for none), context usage and Send / Stop (status ready / submitted / streaming / error, like useChat). Enter does not send while generating unless submitWhileGenerating is set. AIPromptInputPicker floats a Command list above it for @ and / pickers; give the textarea role=combobox, aria-expanded and aria-controls when you open one. Presentational: state and callbacks come from the app.",
       "dependencies": [
-        "@urbanflow/icons"
+        "@urbanflow/icons@^0.4.0"
       ],
       "registryDependencies": [
         "https://components.urbanflow.co/r/action-list.json",

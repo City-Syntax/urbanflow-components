@@ -10,7 +10,7 @@ function Progress({ className, value, ...props }: React.ComponentProps<typeof Pr
   return (
     <ProgressPrimitive.Root
       data-slot="progress"
-      value={value}
+      value={value == null ? value : clamped}
       className={cn("relative h-1 w-full overflow-hidden rounded-full bg-background-medium", className)}
       {...props}
     >

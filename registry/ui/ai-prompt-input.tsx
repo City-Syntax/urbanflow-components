@@ -25,10 +25,16 @@ type AIPromptInputOption = {
   disabled?: boolean
 }
 
-function AIPromptInput({ className, onSubmit, ...props }: React.ComponentProps<"form">) {
+function AIPromptInput({
+  className,
+  onSubmit,
+  submitWhileGenerating = false,
+  ...props
+}: React.ComponentProps<"form"> & { submitWhileGenerating?: boolean }) {
   return (
     <form
       data-slot="ai-prompt-input"
+      data-submit-while-generating={submitWhileGenerating || undefined}
       className={cn(
         "relative flex w-full flex-col gap-2 rounded-lg border border-stroke-default bg-background-default p-2 shadow-xs has-[[data-slot=ai-prompt-input-context]>*]:border-stroke-selected",
         className
@@ -70,11 +76,14 @@ function AIPromptInputTextarea({
       )}
       onKeyDown={(event) => {
         onKeyDown?.(event)
-        if (event.defaultPrevented || event.key !== "Enter" || event.shiftKey || event.nativeEvent.isComposing) return
+        const composing = event.nativeEvent.isComposing || event.keyCode === 229
+        if (event.defaultPrevented || event.key !== "Enter" || event.shiftKey || composing) return
         event.preventDefault()
         const form = event.currentTarget.form
-        const submit = form?.querySelector<HTMLButtonElement>('button[type="submit"]')
-        if (form && !submit?.disabled) form.requestSubmit()
+        const submit = form?.querySelector<HTMLButtonElement>("[data-slot=ai-prompt-input-submit]")
+        const generating = submit?.dataset.status === "submitted" || submit?.dataset.status === "streaming"
+        if (!form || submit?.disabled || (generating && !form.dataset.submitWhileGenerating)) return
+        form.requestSubmit()
       }}
       {...props}
     />
@@ -157,9 +166,9 @@ function AIPromptInputSelect({
           variant="secondary"
           size="micro"
           data-slot="ai-prompt-input-select"
-          aria-label={ariaLabel ?? title}
           className={cn("data-[state=open]:bg-background-light", className)}
         >
+          {(ariaLabel ?? title) && <span className="sr-only">{ariaLabel ?? title}: </span>}
           {selected?.label ?? placeholder}
           <ChevronDownIcon className="-mx-0.75 size-5 text-texticons-placeholder" />
         </Button>

@@ -27,8 +27,9 @@ const RING_RADIUS = 6.8
 const RING_LENGTH = 2 * Math.PI * RING_RADIUS
 
 function contextUsage({ used, limit, nearlyFullAt = 75 }: AIContextUsageValue) {
-  const percent = limit > 0 ? Math.min(100, Math.round((used / limit) * 100)) : 0
-  const state: AIContextUsageState = limit > 0 && used >= limit ? "full" : percent >= nearlyFullAt ? "nearly-full" : "ok"
+  const isFull = limit > 0 && used >= limit
+  const percent = isFull ? 100 : limit > 0 ? Math.min(99, Math.round((used / limit) * 100)) : 0
+  const state: AIContextUsageState = isFull ? "full" : percent >= nearlyFullAt ? "nearly-full" : "ok"
   return { percent, state }
 }
 
@@ -152,15 +153,16 @@ function AIContextLimit({
   nearlyFullAt,
   onDismiss,
   onNewChat,
+  children,
   ...props
-}: Omit<React.ComponentProps<typeof Banner>, "tone" | "inCard" | "children" | "actions" | "title"> &
+}: Omit<React.ComponentProps<typeof Banner>, "tone" | "inCard" | "actions" | "title"> &
   AIContextUsageValue & { onNewChat?: () => void }) {
   const { percent, state } = contextUsage({ used, limit, nearlyFullAt })
   if (state === "ok") return null
   if (state === "nearly-full") {
     return (
       <Banner data-slot="ai-context-limit" data-usage={state} tone="warning" onDismiss={onDismiss} {...props}>
-        Usage limit at {percent}%.
+        {children ?? `Usage limit at ${percent}%.`}
       </Banner>
     )
   }
@@ -172,7 +174,7 @@ function AIContextLimit({
       actions={onNewChat && <Button variant="secondary" onClick={onNewChat}>New chat</Button>}
       {...props}
     >
-      This chat is full. Start a new chat to keep going.
+      {children ?? "This chat is full. Start a new chat to keep going."}
     </Banner>
   )
 }
