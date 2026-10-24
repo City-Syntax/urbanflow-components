@@ -45,6 +45,9 @@ File: `NQpg4P9K158sjcEKmMLd8w` (Flow Design System). Tokens live on the `Variabl
 Typography `1711:12198`, Shadow `1712:12819`, Radius `6009:2928`, Icons `1726:14351`). Shared components are on
 `Components` (`723:6170`: Button `1712:14208`, Input `1712:16814`, …); pages starting with `↪` hold feature-only
 components (`↪ Urbanflow`, `↪ Compliance`, `↪ Comments`, `↪ Files`). The old `CyjMpmGxUHezAqjmA5qXwI` (Platform) file is retired.
+Exception, on purpose: the AI components (`ai-*` items and the primitives they need) are ported from
+that file's **AI Refresh** section (`5499:53043`) as it is, until the AI set moves into Flow. Read their
+values there; check Flow (`NQpg4P9K158sjcEKmMLd8w`) first for anything shared, such as icons.
 
 Before implementing, if the Figma source has any of these, **stop, explain the problem in one line,
 and recommend a fix**: duplicated or conflicting variables (`Stroke/*` vs `Stroke-new/*`), leftovers
@@ -100,6 +103,11 @@ Then add an item to `registry.json`:
   "files": [{ "path": "registry/ui/button.tsx", "type": "registry:ui" }] }
 ```
 and add a section for it with every variant to `app/page.tsx`.
+
+The AI items and the primitives added with them (`spinner`, `progress`, `separator`, `hover-card`, `command`)
+carry `"meta": { "version": "1.0.0" }` in `registry.json`. Bump it in the same PR as any change to the
+item's files (patch for a fix, minor for a new prop, major for a rename), so an app can tell which version
+its copy came from and spot a copy that has drifted.
 
 **Design language** lives in `DESIGN.md` and is served at `/llms.txt` with generated lists of tokens,
 components (from `registry.json` descriptions) and icons. When a change alters how Flow should be used
