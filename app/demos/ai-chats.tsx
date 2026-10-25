@@ -151,7 +151,9 @@ function Panel() {
   )
 }
 
-function DialogDemo({ kind }: { kind: "rename" | "delete" }) {
+const refuse = () => new Promise<void>((_, reject) => setTimeout(() => reject(new Error("Server refused")), 400))
+
+function DialogDemo({ kind, fails = false }: { kind: "rename" | "delete"; fails?: boolean }) {
   const [open, setOpen] = React.useState(false)
   const [title, setTitle] = React.useState("Massing review")
   return (
@@ -161,9 +163,9 @@ function DialogDemo({ kind }: { kind: "rename" | "delete" }) {
       </Button>
       <span className="text-paragraph-xsmall text-texticons-secondary">{title}</span>
       {kind === "rename" ? (
-        <AIRenameChatDialog open={open} onOpenChange={setOpen} chatTitle={title} onRename={setTitle} />
+        <AIRenameChatDialog open={open} onOpenChange={setOpen} chatTitle={title} onRename={fails ? refuse : setTitle} />
       ) : (
-        <AIDeleteChatDialog open={open} onOpenChange={setOpen} chatTitle={title} onDelete={() => setTitle("(deleted)")} />
+        <AIDeleteChatDialog open={open} onOpenChange={setOpen} chatTitle={title} onDelete={fails ? refuse : () => setTitle("(deleted)")} />
       )}
     </div>
   )
@@ -292,6 +294,12 @@ export function AIChatsDemo() {
           </Labelled>
           <Labelled label="Dialog · Delete">
             <DialogDemo kind="delete" />
+          </Labelled>
+          <Labelled label="Dialog · Rename (server refuses)">
+            <DialogDemo kind="rename" fails />
+          </Labelled>
+          <Labelled label="Dialog · Delete (server refuses)">
+            <DialogDemo kind="delete" fails />
           </Labelled>
         </div>
       </div>
