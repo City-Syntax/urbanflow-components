@@ -4,12 +4,14 @@ import * as Icons from "@urbanflow/icons";
 import { ArrowRightIcon, DrawWallIcon, LayoutIcon, PencilIcon, SearchIcon, TrashIcon } from "@urbanflow/icons";
 
 import { CommentsDemo } from "@/app/demos/comments";
+import { AIDemo } from "@/app/demos/ai";
 import { ComplianceDemo } from "@/app/demos/compliance";
 import { FilesDemo } from "@/app/demos/files";
 import { InputsDemo } from "@/app/demos/inputs";
 import { NavigationDemo } from "@/app/demos/navigation";
 import { ShellDemo } from "@/app/demos/shell";
 import { OverlaysDemo } from "@/app/demos/overlays";
+import { PrimitivesDemo } from "@/app/demos/primitives";
 import { SmallDemo } from "@/app/demos/small";
 import { UrbanflowDemo } from "@/app/demos/urbanflow";
 import { Badge } from "@/registry/ui/badge";
@@ -198,6 +200,10 @@ export default function Home() {
         <OverlaysDemo />
       </Section>
 
+      <Section title="Spinner, progress, separator, hover card & command">
+        <PrimitivesDemo />
+      </Section>
+
       <Section title="Badge">
         <div className="flex flex-wrap items-center gap-3">
           {(["default", "info", "critical", "success", "caution"] as const).map((type) => (
@@ -244,6 +250,10 @@ export default function Home() {
             </Tooltip>
           ))}
         </div>
+      </Section>
+
+      <Section title="AI prompt input, context chips & usage">
+        <AIDemo />
       </Section>
 
       <Section title="Shell">

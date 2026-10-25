@@ -270,9 +270,10 @@
       "name": "action-list",
       "type": "registry:ui",
       "title": "Action List",
-      "description": "urbanflow Action List: static ActionList / ActionSection / ActionItem, and DropdownMenu built on the same styles (icon, help text, destructive, selected, disabled).",
+      "description": "urbanflow Action List: static ActionList / ActionSection / ActionItem, and DropdownMenu built on the same styles (icon, help text, destructive, selected, disabled), with DropdownMenuRadioGroup / DropdownMenuRadioItem for single-choice menus (checked item gets the medium fill and a check).",
       "dependencies": [
-        "radix-ui"
+        "radix-ui",
+        "@urbanflow/icons"
       ],
       "registryDependencies": [
         "https://components.urbanflow.co/r/utils.json"
@@ -893,6 +894,188 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "urbanflow Spinner (Figma AILoader): 16px ring, a 90° arc turning every 800ms; static when reduced motion is on. role=status, aria-label defaults to Loading.",
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/spinner.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "urbanflow Progress: 4px bar, background-medium track and texticons-primary fill (Radix Progress, value 0–100).",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/progress.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "urbanflow Separator: 1px stroke-subtle divider, horizontal or vertical (Radix Separator).",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/separator.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "title": "Hover Card",
+      "description": "urbanflow Hover Card: card that opens on hover or focus of its trigger (Radix HoverCard), white with shadow-md and a stroke-subtle edge.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/hover-card.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "description": "urbanflow Command: searchable list (cmdk) with Action List styling: input, groups, items, empty state, separator, shortcut. Use for pickers and palettes.",
+      "dependencies": [
+        "cmdk",
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/command.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "ai-context-chip",
+      "type": "registry:ui",
+      "title": "AI Context Chip",
+      "categories": [
+        "ai"
+      ],
+      "description": "urbanflow AI Context Chip: an object or file attached to a prompt. status attached / uploading (spinner) / sent (read-only) / error (retry), icon, label, detail, onRemove, onRetry. AIContextSelectionChip takes a generic { kind, label, count } selection; AIContextChipAdd starts picking context. The app owns uploads and passes the status.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/spinner.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-context-chip.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "ai-context-usage",
+      "type": "registry:ui",
+      "title": "AI Context Usage",
+      "categories": [
+        "ai"
+      ],
+      "description": "urbanflow AI Context Usage: 16px ring with % (from used / limit) that opens a hover card (context window %, bar, tokens used of limit, optional input, output, credits). AIContextUsageCard on its own. AIContextLimit shows the nearly-full banner (from nearlyFullAt, default 75%) and the full banner, with a New chat button only when onNewChat is passed. contextUsage() returns the same percent and state.",
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/banner.json",
+        "https://components.urbanflow.co/r/button.json",
+        "https://components.urbanflow.co/r/hover-card.json",
+        "https://components.urbanflow.co/r/progress.json",
+        "https://components.urbanflow.co/r/separator.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-context-usage.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "ai-prompt-input",
+      "type": "registry:ui",
+      "title": "AI Prompt Input",
+      "categories": [
+        "ai"
+      ],
+      "description": "urbanflow AI Prompt Input (AI Elements PromptInput on Flow): context chips row, auto-growing textarea (Enter sends, Shift+Enter new line, max 6 lines), toolbar with attach, mode / model / effort pills (a dropdown only when there are two or more options, a static label for one, hidden for none), context usage and Send / Stop (status ready / submitted / streaming / error, like useChat). Enter does not send while generating unless submitWhileGenerating is set. AIPromptInputPicker floats a Command list above it for @ and / pickers; give the textarea role=combobox, aria-expanded and aria-controls when you open one. Presentational: state and callbacks come from the app.",
+      "dependencies": [
+        "@urbanflow/icons@^0.4.0"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/action-list.json",
+        "https://components.urbanflow.co/r/button.json",
+        "https://components.urbanflow.co/r/command.json",
+        "https://components.urbanflow.co/r/icon-button.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-prompt-input.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
     }
   ]
 }
