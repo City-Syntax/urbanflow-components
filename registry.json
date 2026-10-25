@@ -1097,6 +1097,183 @@
       "meta": {
         "version": "1.0.0"
       }
+    },
+    {
+      "name": "ai-code-block",
+      "type": "registry:ui",
+      "title": "AI Code Block",
+      "categories": [
+        "ai"
+      ],
+      "description": "urbanflow AI Code Block (Figma AICodeBlock): plain monospace block for code and error details in AI output, Background/Light, 12px radius, wraps long lines. No syntax highlighting.",
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-code-block.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "ai-trace",
+      "type": "registry:ui",
+      "title": "AI Trace",
+      "categories": [
+        "ai"
+      ],
+      "description": "urbanflow AI Trace (Figma AITrace · Chain of thought): the tool calls of one assistant turn as a single collapsible summary with one level of steps. steps: { id, name, label, status pending / running / done / error, detail?, input?, output?, attempt? }. The summary reads Researching · Step n of N, Researched in N steps, Research stopped at step n, Retrying / Retry failed (attempt > 1); label overrides it. Opens while running or failed and closes when done, unless the user toggled it. A failed step opens its detail (AICodeBlock) and Retry (onRetry). toolRenderers maps a tool name to a renderer shown under that step, for rich output. toolPartStatus(state) maps an AI SDK tool part state to a step status.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/ai-code-block.json",
+        "https://components.urbanflow.co/r/button.json",
+        "https://components.urbanflow.co/r/collapsible.json",
+        "https://components.urbanflow.co/r/spinner.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-trace.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "ai-reasoning",
+      "type": "registry:ui",
+      "title": "AI Reasoning",
+      "categories": [
+        "ai"
+      ],
+      "description": "urbanflow AI Reasoning (Figma AITrace · Reasoning): Thinking with a spinner while status is running, Thought · 5s when complete (duration in seconds). Collapsed by default; children are the reasoning text (pass rendered markdown).",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/ai-trace.json",
+        "https://components.urbanflow.co/r/collapsible.json",
+        "https://components.urbanflow.co/r/spinner.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-reasoning.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "ai-sources",
+      "type": "registry:ui",
+      "title": "AI Sources",
+      "categories": [
+        "ai"
+      ],
+      "description": "urbanflow AI Sources (Figma AISources): Used N sources, expanding to one row per source (icon, title, detail). sources: { id, title, detail?, href?, icon? }; toAISource maps AI SDK source-url and source-document parts. onSelect makes rows buttons; otherwise rows with href open in a new tab.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/collapsible.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-sources.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "ai-citation-card",
+      "type": "registry:ui",
+      "title": "AI Citation Card",
+      "categories": [
+        "ai"
+      ],
+      "description": "urbanflow AI Citation (Figma AICitationCard): AICitation is an inline citation badge that opens a hover card (also on focus); AICitationCard lays out the card: icon, title, description and an optional action such as a plain Open in Costflow button. AICitations wraps a row of badges.",
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/badge.json",
+        "https://components.urbanflow.co/r/hover-card.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-citation-card.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "ai-message",
+      "type": "registry:ui",
+      "title": "AI Message",
+      "categories": [
+        "ai"
+      ],
+      "description": "urbanflow AI Message (Figma AIMessage): AIMessage from user (right-aligned bubble, put an AIContextChip with status sent above AIMessageContent) or assistant (no bubble). AIMessageContent takes the rendered body (e.g. a Streamdown element). AIMessageGenerating shows Thinking and skeleton lines; AIMessageActions holds AIMessageCopy (shows Copied for 2 s) and AIMessageRegenerate (latest reply only); AIMessageStopped and AIMessageError (connection lost, with Retry) end a reply that did not finish.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/button.json",
+        "https://components.urbanflow.co/r/icon-button.json",
+        "https://components.urbanflow.co/r/spinner.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-message.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "ai-conversation",
+      "type": "registry:ui",
+      "title": "AI Conversation",
+      "categories": [
+        "ai"
+      ],
+      "description": "urbanflow AI Conversation: the scrolling message list. Sticks to the latest message while you are at the bottom and stays put when you scroll up; AIConversationScrollButton (Figma Scroll to latest) shows only when scrolled up and smooth-scrolls back. Built on use-stick-to-bottom.",
+      "dependencies": [
+        "@urbanflow/icons",
+        "use-stick-to-bottom"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/icon-button.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-conversation.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
     }
   ]
 }
