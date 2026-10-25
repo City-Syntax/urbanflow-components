@@ -1376,6 +1376,130 @@
       "meta": {
         "version": "1.1.0"
       }
+    },
+    {
+      "name": "ai-chats-menu",
+      "type": "registry:ui",
+      "title": "AI Chats Menu",
+      "categories": [
+        "ai"
+      ],
+      "description": "urbanflow AI Chats Menu (Figma AIMenu · Chats): the chats of one project, grouped Today / Previous 7 days / Older by updatedAt in local time and sorted by latest activity. chats: { id, title?, updatedAt (Date, ISO string or ms) }; a missing title reads New chat. The current chat (currentId) is ticked. Search filters titles and lists N results, or No chats match with noResultsHint and a New chat row; no chats at all shows No chats yet. Each row has a More button (hover, keyboard focus or touch) with Rename and Delete when onRename / onDelete are set; they pass the chat so the app opens AIRenameChatDialog / AIDeleteChatDialog. Arrow keys move between the search and the rows, ArrowRight reaches a row's More button, Enter in the search opens the first result, typing on a row goes back to the search. labels overrides the bucket names; now fixes the date the buckets are counted from. groupAIChats(chats, now) and aiChatBucket(chat, now) do the grouping on their own. Usually opened from AIChatHeader; render it inside your own popover elsewhere and close it from the callbacks.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/action-list.json",
+        "https://components.urbanflow.co/r/field.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-chats-menu.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "ai-chat-header",
+      "type": "registry:ui",
+      "title": "AI Chat Header",
+      "categories": [
+        "ai"
+      ],
+      "description": "urbanflow AI Chat Header (Figma AI / Panel header): AI mark and the chat title (title, New chat when empty), then New chat (onNewChat), Show as and Close (onClose); each control shows only when its callback is set. chats takes the AIChatsMenu options and makes the title open the chats menu in a popover; the popover closes before onSelect, onNewChat, onRename or onDelete runs, so a dialog opened from onRename / onDelete returns focus to the title. showAs: { value, options: { value, label, icon? }[], onValueChange, label? } lists the panel modes (Floating / Sidebar) with the current one ticked. Below 240px the AI mark hides and the title truncates.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/action-list.json",
+        "https://components.urbanflow.co/r/ai-chats-menu.json",
+        "https://components.urbanflow.co/r/icon-button.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-chat-header.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "ai-rename-chat-dialog",
+      "type": "registry:ui",
+      "title": "AI Rename Chat Dialog",
+      "categories": [
+        "ai"
+      ],
+      "description": "urbanflow AI Rename Chat Dialog (Figma .AIModalContentRenameChat on the Modal): open / onOpenChange, chatTitle prefills the Chat name field (selected on open). Save trims the name and calls onRename(title) only when it changed, then closes; an empty name shows Enter a name for the chat. and a name over maxLength (default 80) shows Use 80 characters or fewer. Cancel, Escape and the close button leave it unchanged.",
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/button.json",
+        "https://components.urbanflow.co/r/modal.json",
+        "https://components.urbanflow.co/r/text-field.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-rename-chat-dialog.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "ai-delete-chat-dialog",
+      "type": "registry:ui",
+      "title": "AI Delete Chat Dialog",
+      "categories": [
+        "ai"
+      ],
+      "description": "urbanflow AI Delete Chat Dialog (Figma .AIModalContentDeleteChat on the Modal): Delete chat? with “title” will be removed from your chats. This can’t be undone. open / onOpenChange, chatTitle, onDelete (then closes). Focus starts on Cancel; Delete is primary critical.",
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/button.json",
+        "https://components.urbanflow.co/r/modal.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-delete-chat-dialog.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "ai-empty-state",
+      "type": "registry:ui",
+      "title": "AI Empty State",
+      "categories": [
+        "ai"
+      ],
+      "description": "urbanflow AI Empty State (Figma AIEmptyState): the new-chat state. AI mark (mark overrides the icon), heading, description, optional actions (buttons such as Upload drawings / Start from an address) and a Suggested list (suggestionsLabel) of { id, label, icon? } that calls onSuggestion(suggestion). children go between the actions and the suggestions.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-empty-state.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
     }
   ]
 }
