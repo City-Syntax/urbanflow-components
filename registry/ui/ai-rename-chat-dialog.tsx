@@ -12,54 +12,87 @@ const problem = (name: string, maxLength: number) => {
   return null
 }
 
-function RenameForm({
-  id,
-  input,
+function RenameContent({
   chatTitle,
   maxLength,
   onRename,
   onDone,
 }: {
-  id: string
-  input: React.RefObject<HTMLInputElement | null>
   chatTitle: string
   maxLength: number
-  onRename: (title: string) => void
+  onRename: (title: string) => void | Promise<void>
   onDone: () => void
 }) {
+  const formId = React.useId()
+  const input = React.useRef<HTMLInputElement>(null)
   const [value, setValue] = React.useState(chatTitle)
   const [tried, setTried] = React.useState(false)
+  const [saving, setSaving] = React.useState(false)
+  const [failed, setFailed] = React.useState(false)
   const name = value.trim()
   const error = problem(name, maxLength)
-  const shown = error != null && (tried || name.length > maxLength) ? error : null
+  const invalid = error != null && (tried || name.length > maxLength) ? error : null
+  const shown = invalid ?? (failed ? "Couldn’t rename the chat. Try again." : null)
   return (
-    <form
-      id={id}
-      noValidate
-      onSubmit={(event) => {
+    <ModalContent
+      title="Rename chat"
+      aria-describedby={undefined}
+      onOpenAutoFocus={(event) => {
         event.preventDefault()
-        setTried(true)
-        if (error != null) {
-          input.current?.focus()
-          return
-        }
-        if (name !== chatTitle.trim()) onRename(name)
-        onDone()
+        input.current?.select()
       }}
+      footer={
+        <>
+          <ModalClose asChild>
+            <Button type="button" variant="secondary">
+              Cancel
+            </Button>
+          </ModalClose>
+          <Button type="submit" form={formId} variant="primary" loading={saving}>
+            Save
+          </Button>
+        </>
+      }
     >
-      <TextField
-        ref={input}
-        label="Chat name"
-        name="title"
-        placeholder="New chat"
-        autoComplete="off"
-        value={value}
-        onChange={(event) => setValue(event.currentTarget.value)}
-        state={shown ? "error" : "default"}
-        helpText={shown ?? undefined}
-        className="gap-2 [&>label]:text-texticons-emphasis"
-      />
-    </form>
+      <form
+        id={formId}
+        noValidate
+        onSubmit={(event) => {
+          event.preventDefault()
+          setTried(true)
+          setFailed(false)
+          if (error != null) {
+            input.current?.focus()
+            return
+          }
+          if (name === chatTitle.trim()) return onDone()
+          const result = onRename(name)
+          if (!(result instanceof Promise)) return onDone()
+          setSaving(true)
+          result.then(onDone, () => {
+            setSaving(false)
+            setFailed(true)
+            input.current?.focus()
+          })
+        }}
+      >
+        <TextField
+          ref={input}
+          label="Chat name"
+          name="title"
+          placeholder="New chat"
+          autoComplete="off"
+          value={value}
+          onChange={(event) => {
+            setValue(event.currentTarget.value)
+            setFailed(false)
+          }}
+          state={shown ? "error" : "default"}
+          helpText={shown ?? undefined}
+          className="gap-2 [&>label]:text-texticons-emphasis"
+        />
+      </form>
+    </ModalContent>
   )
 }
 
@@ -73,42 +106,19 @@ function AIRenameChatDialog({
   open: boolean
   onOpenChange: (open: boolean) => void
   chatTitle?: string | null | undefined
-  onRename: (title: string) => void
-  maxLength?: number
+  onRename: (title: string) => void | Promise<void>
+  maxLength?: number | undefined
 }) {
-  const formId = React.useId()
-  const input = React.useRef<HTMLInputElement>(null)
   return (
     <Modal open={open} onOpenChange={onOpenChange}>
-      <ModalContent
-        title="Rename chat"
-        aria-describedby={undefined}
-        onOpenAutoFocus={(event) => {
-          event.preventDefault()
-          input.current?.select()
-        }}
-        footer={
-          <>
-            <ModalClose asChild>
-              <Button type="button" variant="secondary">
-                Cancel
-              </Button>
-            </ModalClose>
-            <Button type="submit" form={formId} variant="primary">
-              Save
-            </Button>
-          </>
-        }
-      >
-        <RenameForm
-          id={formId}
-          input={input}
+      {open && (
+        <RenameContent
           chatTitle={chatTitle ?? ""}
           maxLength={maxLength}
           onRename={onRename}
           onDone={() => onOpenChange(false)}
         />
-      </ModalContent>
+      )}
     </Modal>
   )
 }
