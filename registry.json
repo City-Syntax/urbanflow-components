@@ -1274,6 +1274,108 @@
       "meta": {
         "version": "1.0.0"
       }
+    },
+    {
+      "name": "ai-approval-card",
+      "type": "registry:ui",
+      "title": "AI Approval Card",
+      "categories": [
+        "ai"
+      ],
+      "description": "urbanflow AI Approval Card (Flux's approval card on Flow; no Figma frame yet): asks before the agent changes something. title (the tool or the change, e.g. Edit model.epJSON), detail (one sentence on why), an optional body as children (an AIApprovalDiff per file, a script, a list of paths) and actions, an ordered list of { id, label, variant primary / secondary / tertiary, tone default / critical / success, title?, disabled?, onSelect } so each app picks its buttons (Approve and Deny; or Allow once, Allow <tool> in this project, Full auto, Deny). Set disabled while a decision is in flight. Buttons sit in an auto-fit grid that stacks them when the panel is narrow, and long labels wrap. status requesting / decided / denied / stopped: once answered the card shrinks to a one-line record (title · outcome, default You allowed this. / You declined this. / Stopped before this was answered. Nothing was changed.), with an Auto badge when auto is set on a decided card; actions can be left out there. A keyboard user who answers lands on the record. AIApprovalDiff draws one file's unified diff: path, new file, +added / -removed and coloured lines. Presentational: the app owns the gate and the decision.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/badge.json",
+        "https://components.urbanflow.co/r/button.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-approval-card.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "ai-question-card",
+      "type": "registry:ui",
+      "title": "AI Question Card",
+      "categories": [
+        "ai"
+      ],
+      "description": "urbanflow AI Question Card (Flux's ask_user card on Flow; no Figma frame yet): the agent's questions inline in the chat. questions: { id, prompt, placeholder?, kind } with single { options, recommended?: string, allowOther? }, multi { options, recommended?: string[], allowOther? }, text { recommended?: string } or number { recommended?: number }; options are { value, label, description? }. title is the sentence on why it asks, image an optional { src, alt } above the questions. All questions show at once: single is a radio list, multi a checkbox list, text and number a field; allowOther adds one free-text field per question (typing in it clears a single choice). The starting answer is answers[id] when given, else recommended, which is also marked Recommended. Submit (onSubmit({ answers, skipped })) is disabled until something is answered; Enter in a text field or Ctrl/Cmd+Enter anywhere submits, while plain Enter on a choice does nothing. Skip shows when onSkip is set. status asking / timed-out (the form stays answerable under note, default The agent went ahead with the recommended answers. Answer now and it changes course.) / answered (each prompt with its answer label, or Skipped, from answers; a keyboard user lands on it). Key the card by request id so a new request starts fresh. The core app's ask_user (one question, 2-4 options, free text) is one single question with allowOther.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/button.json",
+        "https://components.urbanflow.co/r/text-field.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-question-card.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "ai-pending-banner",
+      "type": "registry:ui",
+      "title": "AI Pending Banner",
+      "categories": [
+        "ai"
+      ],
+      "description": "urbanflow AI Pending Banner: the sticky Waiting for you bar above the composer while an approval or question card waits for an answer. children says what is waiting (e.g. Approve Edit model.epJSON); count shows a number badge above 1, and at 0 the bar is gone; onJump (jumpLabel, default Show) is where the app scrolls to the card and focuses it. Keep it mounted at count 0: a hidden status region stays in place so screen readers announce each new wait. Sticks to the bottom of its scroll container.",
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/badge.json",
+        "https://components.urbanflow.co/r/button.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-pending-banner.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "ai-message-queue",
+      "type": "registry:ui",
+      "title": "AI Message Queue",
+      "categories": [
+        "ai"
+      ],
+      "description": "urbanflow AI Message Queue: messages typed while the agent works, waiting above the composer. items: { id, text, editable? }; the header reads N queued, with an optional note (e.g. sent when the agent is free), and collapses the list (open / defaultOpen true / onOpenChange). Each row has Move up and Move down (onReorder gets the whole new id order), Edit (onEdit(id, text); a growing field keeps line breaks, Enter saves, Shift+Enter adds a line, Escape cancels, leaving it unchanged or empty keeps the old text), Send now (onSendNow) and Remove (onRemove); a control shows only when its callback is set, the row actions appear on hover, keyboard focus or touch, and focus moves to the next row when one leaves. Renders nothing when the queue is empty.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/collapsible.json",
+        "https://components.urbanflow.co/r/field.json",
+        "https://components.urbanflow.co/r/icon-button.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-message-queue.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
     }
   ]
 }
