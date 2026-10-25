@@ -128,7 +128,6 @@ function InteractiveQuestions() {
   return (
     <div className="flex flex-col gap-2">
       <AIQuestionCard
-        key={result || skipped ? "done" : "asking"}
         title={why}
         questions={[purpose, systems, height]}
         status={result || skipped ? "answered" : "asking"}
@@ -157,7 +156,7 @@ function Banner({ count }: { count: number }) {
 
 const queued: AIQueuedMessage[] = [
   { id: "a", text: "Also check the roof insulation against Part L." },
-  { id: "b", text: "Use the 2024 weather file for Singapore." },
+  { id: "b", text: "Use the 2024 weather file for Singapore.\nKeep the design days from the old one." },
   { id: "c", text: "Then compare cooling loads with the baseline run, floor by floor, and flag any zone that is more than 10% above it." },
 ]
 
@@ -260,24 +259,23 @@ export function AICardsDemo() {
           <AIApprovalCard title="Edit model.epJSON" detail="Raise Zone 2’s occupancy." actions={fluxActions("edit_model")} />
         </Labelled>
         <Labelled label="Approval · Decided">
-          <AIApprovalCard title="Edit model.epJSON" status="decided" actions={[]} />
+          <AIApprovalCard title="Edit model.epJSON" status="decided" />
         </Labelled>
         <Labelled label="Approval · Decided, always">
           <AIApprovalCard
             title="Edit model.epJSON"
             status="decided"
             outcome="You allowed this, and every later call to this tool in this project."
-            actions={[]}
           />
         </Labelled>
         <Labelled label="Approval · Decided (auto)">
-          <AIApprovalCard title="Edit model.epJSON" status="decided" auto actions={[]} />
+          <AIApprovalCard title="Edit model.epJSON" status="decided" auto />
         </Labelled>
         <Labelled label="Approval · Denied">
-          <AIApprovalCard title="update_building" status="denied" actions={[]} />
+          <AIApprovalCard title="update_building" status="denied" />
         </Labelled>
         <Labelled label="Approval · Stopped">
-          <AIApprovalCard title="Edit model.epJSON" status="stopped" actions={[]} />
+          <AIApprovalCard title="Edit model.epJSON" status="stopped" />
         </Labelled>
         <Labelled label="Approval · Interactive (Flux)">
           <InteractiveApproval />

@@ -13,8 +13,9 @@ type AIApprovalAction = {
   id: string
   label: React.ReactNode
   variant?: "primary" | "secondary" | "tertiary"
-  tone?: "default" | "critical"
+  tone?: "default" | "critical" | "success"
   title?: string
+  disabled?: boolean
   onSelect: () => void
 }
 
@@ -27,30 +28,46 @@ const record: Record<Exclude<AIApprovalStatus, "requesting">, { icon: React.Reac
 function AIApprovalCard({
   title,
   detail,
-  actions,
+  actions = [],
   status = "requesting",
   outcome,
   auto = false,
+  ref,
   className,
   children,
   ...props
 }: Omit<React.ComponentProps<"div">, "title"> & {
   title: React.ReactNode
   detail?: React.ReactNode
-  actions: AIApprovalAction[]
+  actions?: AIApprovalAction[]
   status?: AIApprovalStatus
   outcome?: React.ReactNode
   auto?: boolean
 }) {
   const titleId = React.useId()
+  const root = React.useRef<HTMLDivElement>(null)
+  const refocus = React.useRef(false)
+  React.useLayoutEffect(() => {
+    const active = document.activeElement
+    if (!refocus.current || status === "requesting") return
+    refocus.current = false
+    if (active === document.body || root.current?.contains(active)) root.current?.focus({ preventScroll: true })
+  }, [status])
+  const setRef = (el: HTMLDivElement | null) => {
+    root.current = el
+    if (typeof ref === "function") ref(el)
+    else if (ref) ref.current = el
+  }
   if (status !== "requesting") {
     const { icon, outcome: fallback } = record[status]
     return (
       <div
+        ref={setRef}
+        tabIndex={-1}
         data-slot="ai-approval-card"
         data-status={status}
         className={cn(
-          "flex w-full items-start gap-1.5 rounded-lg bg-background-default px-3 py-2 text-paragraph-xsmall text-texticons-secondary inset-ring inset-ring-stroke-subtle",
+          "flex w-full items-start gap-1.5 rounded-lg bg-background-default px-3 py-2 text-paragraph-xsmall text-texticons-secondary inset-ring inset-ring-stroke-subtle outline-none",
           "[&_svg]:mt-px [&_svg]:size-3.5 [&_svg]:shrink-0",
           className
         )}
@@ -61,7 +78,7 @@ function AIApprovalCard({
         </span>
         <p className="min-w-0 flex-1">
           <span className="text-label-xsmall text-texticons-emphasis">{title}</span>
-          <span aria-hidden> · </span>
+          <span> · </span>
           {outcome ?? fallback}
         </p>
         {auto && status === "decided" && (
@@ -72,12 +89,14 @@ function AIApprovalCard({
   }
   return (
     <div
+      ref={setRef}
+      tabIndex={-1}
       data-slot="ai-approval-card"
       data-status={status}
       role="group"
       aria-labelledby={titleId}
       className={cn(
-        "flex w-full flex-col overflow-hidden rounded-lg border border-stroke-default bg-background-default shadow-xs",
+        "flex w-full flex-col overflow-hidden rounded-lg border border-stroke-default bg-background-default shadow-xs outline-none",
         className
       )}
       {...props}
@@ -104,7 +123,11 @@ function AIApprovalCard({
             variant={action.variant ?? "secondary"}
             tone={action.tone ?? "default"}
             title={action.title}
-            onClick={action.onSelect}
+            disabled={action.disabled}
+            onClick={() => {
+              refocus.current = true
+              action.onSelect()
+            }}
             className="h-auto min-h-7 w-full min-w-0 py-1 leading-tight whitespace-normal"
           >
             {action.label}
@@ -115,10 +138,10 @@ function AIApprovalCard({
   )
 }
 
-const diffLine = (line: string) => {
-  if (line.startsWith("+") && !line.startsWith("+++")) return "bg-background-success text-texticons-success-primary"
-  if (line.startsWith("-") && !line.startsWith("---")) return "bg-background-critical text-texticons-critical-primary"
-  if (line.startsWith("@@")) return "text-texticons-tertiary"
+const diffLine = (line: string, inHunk: boolean) => {
+  if (line.startsWith("@@") || !inHunk) return "text-texticons-tertiary"
+  if (line.startsWith("+")) return "bg-background-success text-texticons-success-primary"
+  if (line.startsWith("-")) return "bg-background-critical text-texticons-critical-primary"
   return "text-texticons-secondary"
 }
 
@@ -137,6 +160,8 @@ function AIApprovalDiff({
   added?: number
   removed?: number
 }) {
+  const lines = patch.replace(/\n$/, "").split("\n")
+  const firstHunk = lines.findIndex((line) => line.startsWith("@@"))
   return (
     <div data-slot="ai-approval-diff" className={cn("flex flex-col gap-1 not-last:mb-3", className)} {...props}>
       <div className="flex min-w-0 items-baseline gap-2 text-paragraph-xsmall">
@@ -147,8 +172,8 @@ function AIApprovalDiff({
       </div>
       <pre className="overflow-x-auto rounded-sm bg-background-light py-1 font-mono text-paragraph-xsmall">
         <code className="flex min-w-max flex-col">
-          {patch.split("\n").map((line, i) => (
-            <span key={i} className={cn("px-2", diffLine(line))}>
+          {lines.map((line, i) => (
+            <span key={i} className={cn("px-2", diffLine(line, firstHunk < 0 || i > firstHunk))}>
               {line === "" ? " " : line}
             </span>
           ))}

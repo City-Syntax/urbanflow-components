@@ -13,21 +13,18 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/registry/ui/button"
 import { TextField } from "@/registry/ui/text-field"
 
-type AIQuestionKind = "single" | "multi" | "text" | "number"
-
 type AIQuestionOption = { value: string; label: string; description?: string }
 
 type AIAnswer = string | number | string[]
 
-type AIQuestion = {
-  id: string
-  prompt: string
-  kind: AIQuestionKind
-  options?: AIQuestionOption[]
-  recommended?: AIAnswer
-  allowOther?: boolean
-  placeholder?: string
-}
+type AIQuestion = { id: string; prompt: string; placeholder?: string } & (
+  | { kind: "single"; options: AIQuestionOption[]; recommended?: string; allowOther?: boolean }
+  | { kind: "multi"; options: AIQuestionOption[]; recommended?: string[]; allowOther?: boolean }
+  | { kind: "text"; recommended?: string }
+  | { kind: "number"; recommended?: number }
+)
+
+type AIQuestionKind = AIQuestion["kind"]
 
 type AIAnswers = Record<string, AIAnswer>
 
@@ -37,7 +34,9 @@ type AIQuestionCardStatus = "asking" | "timed-out" | "answered"
 
 type Draft = { picked: string[]; other: string }
 
-const isOption = (q: AIQuestion, value: string) => q.options?.some((o) => o.value === value) ?? false
+const optionsOf = (q: AIQuestion) => (q.kind === "single" || q.kind === "multi" ? q.options : [])
+
+const isOption = (q: AIQuestion, value: string) => optionsOf(q).some((o) => o.value === value)
 
 function draftFrom(q: AIQuestion, answer: AIAnswer | undefined): Draft {
   if (answer == null) return { picked: [], other: "" }
@@ -49,8 +48,9 @@ function draftFrom(q: AIQuestion, answer: AIAnswer | undefined): Draft {
   }
 }
 
-function readAnswer(q: AIQuestion, { picked, other: raw }: Draft): AIAnswer | undefined {
-  const other = raw.trim()
+function readAnswer(q: AIQuestion, draft: Draft): AIAnswer | undefined {
+  const picked = draft.picked.filter((v) => isOption(q, v))
+  const other = draft.other.trim()
   switch (q.kind) {
     case "multi": {
       const all = other ? [...picked, other] : picked
@@ -78,13 +78,13 @@ function readAnswers(questions: AIQuestion[], draftOf: (q: AIQuestion) => Draft)
 
 function answerLabel(q: AIQuestion, answer: AIAnswer | undefined) {
   if (answer === undefined) return "Skipped"
-  const label = (v: string) => q.options?.find((o) => o.value === v)?.label ?? v
+  const label = (v: string) => optionsOf(q).find((o) => o.value === v)?.label ?? v
   if (typeof answer === "number") return String(answer)
   return typeof answer === "string" ? label(answer) : answer.map(label).join(", ")
 }
 
 const isRecommended = (q: AIQuestion, value: string) =>
-  Array.isArray(q.recommended) ? q.recommended.includes(value) : q.recommended === value
+  q.kind === "multi" ? (q.recommended?.includes(value) ?? false) : q.recommended === value
 
 function AIQuestionChoice({
   type,
@@ -109,6 +109,7 @@ function AIQuestionChoice({
       : checked
         ? CheckboxCheckedIcon
         : CheckboxUncheckedIcon
+  const id = React.useId()
   return (
     <label
       data-slot="ai-question-choice"
@@ -119,17 +120,29 @@ function AIQuestionChoice({
         name={name}
         value={option.value}
         checked={checked}
+        aria-labelledby={`${id}-label`}
+        aria-describedby={option.description != null ? `${id}-description` : undefined}
         onChange={(e) => onChange(e.currentTarget.checked)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.metaKey && !e.ctrlKey) e.preventDefault()
+        }}
         className="sr-only"
       />
       <Icon aria-hidden className="mt-0.5 size-4 shrink-0 text-texticons-primary" />
       <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-        <span className="text-paragraph-small text-texticons-primary">
+        <span id={`${id}-label`} className="text-paragraph-small text-texticons-primary">
           {option.label}
-          {recommended && <span className="ml-1.5 text-paragraph-xsmall text-texticons-secondary">Recommended</span>}
+          {recommended && (
+            <>
+              {" "}
+              <span className="ml-0.5 text-paragraph-xsmall text-texticons-secondary">Recommended</span>
+            </>
+          )}
         </span>
         {option.description != null && (
-          <span className="text-paragraph-xsmall text-texticons-secondary">{option.description}</span>
+          <span id={`${id}-description`} className="text-paragraph-xsmall text-texticons-secondary">
+            {option.description}
+          </span>
         )}
       </span>
     </label>
@@ -160,7 +173,6 @@ function AIQuestionField({
         <TextField
           aria-labelledby={promptId}
           type={q.kind}
-          inputMode={q.kind === "number" ? "decimal" : undefined}
           placeholder={q.placeholder}
           value={draft.other}
           onChange={(e) => onChange({ picked: [], other: e.currentTarget.value })}
@@ -178,7 +190,7 @@ function AIQuestionField({
       className="flex flex-col gap-2"
     >
       {prompt}
-      {q.options?.map((option) => (
+      {q.options.map((option) => (
         <AIQuestionChoice
           key={option.value}
           type={single ? "radio" : "checkbox"}
@@ -223,6 +235,7 @@ function AIQuestionCard({
   skipLabel = "Skip",
   onSubmit,
   onSkip,
+  ref,
   className,
   ...props
 }: Omit<React.ComponentProps<"div">, "title" | "onSubmit"> & {
@@ -238,15 +251,30 @@ function AIQuestionCard({
   onSkip?: () => void
 }) {
   const formId = React.useId()
+  const root = React.useRef<HTMLDivElement>(null)
+  const refocus = React.useRef(false)
+  React.useLayoutEffect(() => {
+    const active = document.activeElement
+    if (!refocus.current || status !== "answered") return
+    refocus.current = false
+    if (active === document.body || root.current?.contains(active)) root.current?.focus({ preventScroll: true })
+  }, [status])
+  const setRef = (el: HTMLDivElement | null) => {
+    root.current = el
+    if (typeof ref === "function") ref(el)
+    else if (ref) ref.current = el
+  }
   const [drafts, setDrafts] = React.useState<Record<string, Draft>>({})
   const draftOf = (q: AIQuestion) => drafts[q.id] ?? draftFrom(q, answers?.[q.id] ?? q.recommended)
   const result = readAnswers(questions, draftOf)
   return (
     <div
+      ref={setRef}
+      tabIndex={-1}
       data-slot="ai-question-card"
       data-status={status}
       className={cn(
-        "flex w-full flex-col overflow-hidden rounded-lg border border-stroke-default bg-background-default shadow-xs",
+        "flex w-full flex-col overflow-hidden rounded-lg border border-stroke-default bg-background-default shadow-xs outline-none",
         className
       )}
       {...props}
@@ -289,7 +317,9 @@ function AIQuestionCard({
           className="flex flex-col"
           onSubmit={(e) => {
             e.preventDefault()
-            if (result.skipped.length < questions.length) onSubmit(result)
+            if (result.skipped.length === questions.length) return
+            refocus.current = true
+            onSubmit(result)
           }}
           onKeyDown={(e) => {
             if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
@@ -311,7 +341,14 @@ function AIQuestionCard({
           </div>
           <div className="flex flex-wrap justify-end gap-2 border-t border-stroke-subtle bg-background-light px-3 py-2">
             {onSkip && (
-              <Button type="button" variant="tertiary" onClick={onSkip}>
+              <Button
+                type="button"
+                variant="tertiary"
+                onClick={() => {
+                  refocus.current = true
+                  onSkip()
+                }}
+              >
                 {skipLabel}
               </Button>
             )}

@@ -34,15 +34,16 @@ function AIMessageQueueEditor({
     onDone(next)
   }
   return (
-    <div className={cn(fieldBox, "h-7 min-w-0 flex-1 pl-2")}>
-      <input
+    <div className={cn(fieldBox, "h-auto min-h-7 min-w-0 flex-1 items-start py-1 pl-2")}>
+      <textarea
         aria-label="Edit queued message"
         autoFocus
+        rows={1}
         value={value}
         onChange={(e) => setValue(e.currentTarget.value)}
         onBlur={() => finish(value)}
         onKeyDown={(e) => {
-          if (e.key === "Enter") {
+          if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault()
             finish(value)
           }
@@ -51,7 +52,7 @@ function AIMessageQueueEditor({
             finish(null)
           }
         }}
-        className={cn(fieldInput, "text-paragraph-xsmall")}
+        className={cn(fieldInput, "field-sizing-content max-h-32 resize-none text-paragraph-xsmall")}
       />
     </div>
   )
@@ -67,6 +68,7 @@ function AIMessageQueue({
   open,
   defaultOpen = true,
   onOpenChange,
+  ref,
   className,
   ...props
 }: Omit<React.ComponentProps<"div">, "onChange"> & {
@@ -81,10 +83,32 @@ function AIMessageQueue({
   onOpenChange?: (open: boolean) => void
 }) {
   const [editing, setEditing] = React.useState<string | null>(null)
+  const root = React.useRef<HTMLDivElement>(null)
+  const refocus = React.useRef<{ id?: string; label: string } | null>(null)
+  React.useLayoutEffect(() => {
+    const pending = refocus.current
+    refocus.current = null
+    if (!pending || document.activeElement !== document.body) return
+    const { id, label } = pending
+    const target = id
+      ? root.current?.querySelector<HTMLElement>(`[data-id="${CSS.escape(id)}"] [aria-label="${label}"]`)
+      : root.current?.querySelector<HTMLElement>("[data-slot=collapsible-trigger]")
+    target?.focus()
+  })
   if (items.length === 0) return null
+  const setRef = (el: HTMLDivElement | null) => {
+    root.current = el
+    if (typeof ref === "function") ref(el)
+    else if (ref) ref.current = el
+  }
+  const leave = (index: number, label: string) => {
+    const id = items[index + 1]?.id ?? items[index - 1]?.id
+    refocus.current = id ? { id, label } : { label }
+  }
   const ids = items.map((item) => item.id)
   return (
     <Collapsible
+      ref={setRef}
       data-slot="ai-message-queue"
       open={open}
       defaultOpen={defaultOpen}
@@ -109,6 +133,7 @@ function AIMessageQueue({
             return (
               <li
                 key={item.id}
+                data-id={item.id}
                 data-slot="ai-message-queue-item"
                 className="group/item flex min-h-8 items-center gap-2 rounded-md px-1 py-0.5 hover:bg-background-light"
               >
@@ -118,12 +143,13 @@ function AIMessageQueue({
                     text={item.text}
                     onDone={(text) => {
                       setEditing(null)
-                      const trimmed = text?.trim()
-                      if (trimmed && trimmed !== item.text) onEdit?.(item.id, trimmed)
+                      refocus.current = { id: item.id, label: "Edit" }
+                      const trimmed = text === item.text ? null : text?.trim()
+                      if (trimmed) onEdit?.(item.id, trimmed)
                     }}
                   />
                 ) : (
-                  <span className="line-clamp-2 min-w-0 flex-1 text-paragraph-xsmall break-words text-texticons-primary">
+                  <span className="line-clamp-2 min-w-0 flex-1 text-paragraph-xsmall break-words whitespace-pre-line text-texticons-primary">
                     {item.text}
                   </span>
                 )}
@@ -173,7 +199,10 @@ function AIMessageQueue({
                       size="micro"
                       label="Send now"
                       className={actionClass}
-                      onClick={() => onSendNow(item.id)}
+                      onClick={() => {
+                        leave(index, "Send now")
+                        onSendNow(item.id)
+                      }}
                     >
                       <SendIcon />
                     </IconButton>
@@ -184,7 +213,10 @@ function AIMessageQueue({
                       size="micro"
                       label="Remove"
                       className={actionClass}
-                      onClick={() => onRemove(item.id)}
+                      onClick={() => {
+                        leave(index, "Remove")
+                        onRemove(item.id)
+                      }}
                     >
                       <CloseIcon />
                     </IconButton>
