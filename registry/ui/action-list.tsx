@@ -12,7 +12,7 @@ const sectionClass = "px-3 pt-1.5 pb-1 text-label-xsmall text-texticons-tertiary
 const itemClass =
   "flex min-h-7 w-full cursor-pointer items-center gap-2 rounded-md p-1.5 text-left text-paragraph-xsmall text-texticons-primary outline-none select-none hover:bg-background-light focus-visible:shadow-focus data-highlighted:bg-background-light active:bg-background-medium data-[selected=true]:bg-background-medium data-[selected=true]:text-texticons-emphasis data-[state=checked]:bg-background-medium data-[destructive=true]:text-texticons-critical-primary data-[destructive=true]:hover:bg-background-critical data-[destructive=true]:data-highlighted:bg-background-critical disabled:cursor-not-allowed disabled:bg-transparent disabled:text-texticons-disabled data-disabled:cursor-not-allowed data-disabled:text-texticons-disabled [&_svg]:size-4 [&_svg]:shrink-0"
 
-type ItemExtras = { icon?: React.ReactNode; help?: React.ReactNode; trailing?: React.ReactNode; destructive?: boolean }
+type ItemExtras = { icon?: React.ReactNode; help?: React.ReactNode; trailing?: React.ReactNode; destructive?: boolean | undefined }
 
 function ItemBody({ icon, help, trailing, destructive, children }: ItemExtras & { children?: React.ReactNode }) {
   const iconTone = destructive ? "text-texticons-critical-primary" : "text-texticons-secondary"

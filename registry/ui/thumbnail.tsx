@@ -16,7 +16,7 @@ function Thumbnail({
   ...props
 }: React.ComponentProps<"span"> & {
   size?: keyof typeof sizes
-  src?: string
+  src?: string | undefined
   alt?: string
   icon?: React.ReactNode
   transparent?: boolean

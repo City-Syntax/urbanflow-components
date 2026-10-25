@@ -19,7 +19,7 @@ type UrbanflowTopNavProps = Omit<React.ComponentProps<"div">, "title"> & {
   onMenuOpenChange?: (open: boolean) => void
   notifications?: boolean
   onNotifications?: () => void
-  collaborators?: Collaborator[]
+  collaborators?: Collaborator[] | undefined
   maxCollaborators?: number
   credits?: React.ReactNode
 }
@@ -55,7 +55,7 @@ function UrbanflowTopNav({
       {...props}
     >
       {menu ? (
-        <DropdownMenu open={menuOpen} onOpenChange={onMenuOpenChange}>
+        <DropdownMenu {...(menuOpen === undefined ? {} : { open: menuOpen })} {...(onMenuOpenChange === undefined ? {} : { onOpenChange: onMenuOpenChange })}>
           <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">{menu}</DropdownMenuContent>
         </DropdownMenu>

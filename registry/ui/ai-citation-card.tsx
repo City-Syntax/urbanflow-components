@@ -24,7 +24,7 @@ function AICitation({
     children: React.ReactNode
   }) {
   return (
-    <HoverCard open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
+    <HoverCard {...(open === undefined ? {} : { open })} {...(defaultOpen === undefined ? {} : { defaultOpen })} {...(onOpenChange === undefined ? {} : { onOpenChange })}>
       <HoverCardTrigger asChild>
         <button
           type="button"

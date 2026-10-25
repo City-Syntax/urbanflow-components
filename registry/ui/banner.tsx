@@ -41,7 +41,7 @@ function Banner({
   title?: React.ReactNode
   actions?: React.ReactNode
   inCard?: boolean
-  onDismiss?: () => void
+  onDismiss?: (() => void) | undefined
 }) {
   const role = tone === "critical" || tone === "warning" ? "alert" : "status"
   const heading = title ?? children

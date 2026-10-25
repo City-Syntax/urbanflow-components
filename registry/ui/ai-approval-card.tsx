@@ -32,6 +32,7 @@ function AIApprovalCard({
   status = "requesting",
   outcome,
   auto = false,
+  focusOnDecide = true,
   ref,
   className,
   children,
@@ -43,6 +44,7 @@ function AIApprovalCard({
   status?: AIApprovalStatus
   outcome?: React.ReactNode
   auto?: boolean
+  focusOnDecide?: boolean
 }) {
   const titleId = React.useId()
   const root = React.useRef<HTMLDivElement>(null)
@@ -51,8 +53,9 @@ function AIApprovalCard({
     const active = document.activeElement
     if (!refocus.current || status === "requesting") return
     refocus.current = false
+    if (!focusOnDecide) return
     if (active === document.body || root.current?.contains(active)) root.current?.focus({ preventScroll: true })
-  }, [status])
+  }, [status, focusOnDecide])
   const setRef = (el: HTMLDivElement | null) => {
     root.current = el
     if (typeof ref === "function") ref(el)

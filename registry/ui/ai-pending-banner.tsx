@@ -11,6 +11,7 @@ function AIPendingBanner({
   title = "Waiting for you",
   jumpLabel = "Show",
   onJump,
+  actions,
   className,
   children,
   ...props
@@ -19,6 +20,7 @@ function AIPendingBanner({
   title?: React.ReactNode
   jumpLabel?: React.ReactNode
   onJump: () => void
+  actions?: React.ReactNode
 }) {
   const waiting = count > 0
   return (
@@ -55,6 +57,7 @@ function AIPendingBanner({
               <span className="sr-only">{count} waiting</span>
             </Badge>
           )}
+          {actions}
           <Button type="button" variant="tertiary" size="micro" onClick={onJump}>
             {jumpLabel}
           </Button>

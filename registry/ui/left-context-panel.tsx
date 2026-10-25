@@ -48,7 +48,7 @@ function LeftContextPanel({
   const header = page != null && (
     <div className="flex items-center justify-between pt-1 pr-1 pl-2">
       {menu ? (
-        <DropdownMenu open={menuOpen} onOpenChange={onMenuOpenChange}>
+        <DropdownMenu {...(menuOpen === undefined ? {} : { open: menuOpen })} {...(onMenuOpenChange === undefined ? {} : { onOpenChange: onMenuOpenChange })}>
           <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
           <DropdownMenuContent className="w-50">{menu}</DropdownMenuContent>
         </DropdownMenu>

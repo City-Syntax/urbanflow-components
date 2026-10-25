@@ -65,9 +65,8 @@ function AIMessageQueue({
   onReorder,
   onRemove,
   onSendNow,
-  open,
+  onEditingChange,
   defaultOpen = true,
-  onOpenChange,
   ref,
   className,
   ...props
@@ -78,11 +77,16 @@ function AIMessageQueue({
   onReorder?: (ids: string[]) => void
   onRemove?: (id: string) => void
   onSendNow?: (id: string) => void
+  onEditingChange?: ((id: string | null) => void) | undefined
   open?: boolean
   defaultOpen?: boolean
   onOpenChange?: (open: boolean) => void
 }) {
-  const [editing, setEditing] = React.useState<string | null>(null)
+  const [editing, setEditingState] = React.useState<string | null>(null)
+  const setEditing = (id: string | null) => {
+    setEditingState(id)
+    onEditingChange?.(id)
+  }
   const root = React.useRef<HTMLDivElement>(null)
   const refocus = React.useRef<{ id?: string; label: string } | null>(null)
   React.useLayoutEffect(() => {
@@ -110,9 +114,7 @@ function AIMessageQueue({
     <Collapsible
       ref={setRef}
       data-slot="ai-message-queue"
-      open={open}
       defaultOpen={defaultOpen}
-      onOpenChange={onOpenChange}
       className={cn("w-full rounded-lg bg-background-default px-2 py-1.5 inset-ring inset-ring-stroke-subtle", className)}
       {...props}
     >

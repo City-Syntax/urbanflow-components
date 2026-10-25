@@ -8,12 +8,12 @@ import { cn } from "@/lib/utils"
 type FieldState = "default" | "error" | "alert"
 
 type FieldProps = {
-  label?: React.ReactNode
-  labelPosition?: "default" | "inline" | "hidden"
-  labelHelp?: string
-  labelAction?: React.ReactNode
-  helpText?: React.ReactNode
-  state?: FieldState
+  label?: React.ReactNode | undefined
+  labelPosition?: "default" | "inline" | "hidden" | undefined
+  labelHelp?: string | undefined
+  labelAction?: React.ReactNode | undefined
+  helpText?: React.ReactNode | undefined
+  state?: FieldState | undefined
 }
 
 function InlineError({
@@ -55,7 +55,7 @@ function Field({
   state = "default",
   className,
   children,
-}: FieldProps & { id: string; className?: string; children: React.ReactNode }) {
+}: FieldProps & { id: string; className?: string | undefined; children: React.ReactNode }) {
   return (
     <div
       data-slot="field"

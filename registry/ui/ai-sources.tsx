@@ -6,7 +6,7 @@ import { ChevronDownIcon, FilesIcon, GlobeIcon, ListIcon } from "@urbanflow/icon
 import { cn } from "@/lib/utils"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/registry/ui/collapsible"
 
-type AISource = { id: string; title: string; detail?: string; href?: string; icon?: React.ReactNode }
+type AISource = { id: string; title: string; detail?: string | undefined; href?: string; icon?: React.ReactNode }
 
 type AISourcePart =
   | { type: "source-url"; sourceId: string; url: string; title?: string }
@@ -24,7 +24,7 @@ function toAISource(part: AISourcePart): AISource {
 
 const iconClass = "[&_svg]:size-3.5 [&_svg]:shrink-0 [&_svg]:text-texticons-placeholder"
 
-function AISourceRow({ source, onSelect }: { source: AISource; onSelect?: (source: AISource) => void }) {
+function AISourceRow({ source, onSelect }: { source: AISource; onSelect?: ((source: AISource) => void) | undefined }) {
   const body = (
     <>
       {source.icon ?? (source.href ? <GlobeIcon aria-hidden /> : <FilesIcon aria-hidden />)}

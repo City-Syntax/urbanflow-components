@@ -94,12 +94,16 @@ function AIPromptInputToolbar({ className, ...props }: React.ComponentProps<"div
   return <div data-slot="ai-prompt-input-toolbar" className={cn("flex items-center gap-1", className)} {...props} />
 }
 
-function AIPromptInputTools({ className, ...props }: React.ComponentProps<"div">) {
+function AIPromptInputTools({ className, wrap = false, ...props }: React.ComponentProps<"div"> & { wrap?: boolean }) {
   return (
     <div
       data-slot="ai-prompt-input-tools"
+      data-wrap={wrap || undefined}
       className={cn(
-        "-my-0.5 mr-2 -ml-0.5 flex min-w-0 flex-1 items-center gap-1 overflow-x-auto py-0.5 pl-0.5 [mask-image:linear-gradient(to_right,black_calc(100%-24px),transparent)] [scrollbar-width:none]",
+        "-my-0.5 mr-2 -ml-0.5 flex min-w-0 flex-1 items-center gap-1 py-0.5 pl-0.5",
+        wrap
+          ? "flex-wrap gap-y-1"
+          : "overflow-x-auto [mask-image:linear-gradient(to_right,black_calc(100%-24px),transparent)] [scrollbar-width:none]",
         className
       )}
       {...props}
@@ -175,9 +179,9 @@ function AIPromptInputSelect({
       </DropdownMenuTrigger>
       <DropdownMenuContent side="top" className="w-60">
         {title && <DropdownMenuLabel className="px-1.5 text-texticons-primary">{title}</DropdownMenuLabel>}
-        <DropdownMenuRadioGroup value={value} onValueChange={onValueChange}>
+        <DropdownMenuRadioGroup {...(value === undefined ? {} : { value })} {...(onValueChange === undefined ? {} : { onValueChange })}>
           {options.map((o) => (
-            <DropdownMenuRadioItem key={o.value} value={o.value} help={o.description} disabled={o.disabled}>
+            <DropdownMenuRadioItem key={o.value} value={o.value} help={o.description} {...(o.disabled === undefined ? {} : { disabled: o.disabled })}>
               {o.label}
             </DropdownMenuRadioItem>
           ))}

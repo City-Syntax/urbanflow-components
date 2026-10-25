@@ -19,11 +19,36 @@ function AIConversation({ className, ...props }: React.ComponentProps<typeof Sti
   )
 }
 
+function useFollowOnResize() {
+  const { scrollRef, state, scrollToBottom } = useStickToBottomContext()
+  React.useEffect(() => {
+    const box = scrollRef.current
+    if (!box || typeof ResizeObserver === "undefined") return
+    let previous: number | undefined
+    const observer = new ResizeObserver(([entry]) => {
+      const height = entry?.contentRect.height ?? 0
+      const difference = height - (previous ?? height)
+      previous = height
+      if (difference === 0 || state.escapedFromLock) return
+      state.resizeDifference = difference
+      void scrollToBottom("instant")
+      requestAnimationFrame(() =>
+        setTimeout(() => {
+          if (state.resizeDifference === difference) state.resizeDifference = 0
+        }, 1)
+      )
+    })
+    observer.observe(box)
+    return () => observer.disconnect()
+  }, [scrollRef, state, scrollToBottom])
+}
+
 function AIConversationContent({
   className,
   scrollClassName,
   ...props
 }: React.ComponentProps<typeof StickToBottom.Content>) {
+  useFollowOnResize()
   return (
     <StickToBottom.Content
       data-slot="ai-conversation-content"
