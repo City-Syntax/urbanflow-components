@@ -58,7 +58,7 @@ function AIEmptyState({
                 <button
                   type="button"
                   data-slot="ai-empty-state-suggestion"
-                  className="flex min-h-7 w-full cursor-pointer items-center gap-1.5 rounded-md p-1.5 text-left text-paragraph-xsmall text-texticons-primary outline-none hover:bg-background-light focus-visible:shadow-focus active:bg-background-medium [&_svg]:size-4 [&_svg]:shrink-0 [&_svg:not([class*='text-'])]:text-texticons-secondary"
+                  className="flex min-h-7 w-full cursor-pointer items-center gap-1.5 rounded-md p-1.5 text-left text-paragraph-xsmall text-texticons-primary outline-none hover:bg-background-light focus-visible:shadow-focus active:bg-background-medium [&_svg]:size-4 [&_svg]:shrink-0 [&_svg:not([class*='text-'])]:text-texticons-placeholder"
                   onClick={() => onSuggestion?.(suggestion)}
                 >
                   {suggestion.icon}

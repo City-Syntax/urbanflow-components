@@ -38,6 +38,8 @@ const time = (chat: AIChat) => {
   return Number.isNaN(t) ? -Infinity : t
 }
 
+const fold = (text: string) => text.normalize("NFD").replace(/\p{M}/gu, "").toLocaleLowerCase()
+
 const byActivity = (chats: AIChat[]) => [...chats].sort((a, b) => time(b) - time(a))
 
 function aiChatBucket(chat: AIChat, now: Date = new Date()): AIChatBucket {
@@ -78,7 +80,8 @@ function ChatRow({
   onRename?: ((chat: AIChat) => void) | undefined
   onDelete?: ((chat: AIChat) => void) | undefined
 }) {
-  const chose = React.useRef(false)
+  const chosen = React.useRef<(() => void) | null>(null)
+  const more = React.useRef<HTMLButtonElement>(null)
   const title = aiChatTitle(chat)
   const actions = onRename != null || onDelete != null
   return (
@@ -89,10 +92,10 @@ function ChatRow({
         tabIndex={tabbable ? 0 : -1}
         aria-current={current || undefined}
         title={title}
-        className={cn(rowClass, "group-has-[[data-state=open]]/row:bg-background-light")}
+        className={cn(rowClass, actions && "pointer-coarse:pr-7", "group-has-[[data-state=open]]/row:bg-background-light")}
         onClick={() => onSelect?.(chat.id)}
       >
-        <MessageIcon className="text-texticons-secondary" />
+        <MessageIcon className="text-texticons-placeholder" />
         <span className="min-w-0 flex-1 truncate">{title}</span>
         {(current || actions) && (
           <CheckIcon
@@ -100,21 +103,22 @@ function ChatRow({
             className={cn(
               "text-texticons-placeholder",
               !current && "invisible",
-              actions && "group-focus-within/row:invisible group-hover/row:invisible pointer-coarse:invisible"
+              actions && "pointer-fine:group-focus-within/row:invisible pointer-fine:group-hover/row:invisible"
             )}
           />
         )}
       </button>
       {actions && (
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <button
+              ref={more}
               type="button"
               data-slot="ai-chats-menu-more"
               tabIndex={tabbable ? 0 : -1}
               aria-label={`More actions for ${title}`}
               title="More actions"
-              className="absolute top-1/2 right-1 inline-flex size-5 -translate-y-1/2 cursor-pointer items-center justify-center rounded-sm text-texticons-secondary opacity-0 outline-none group-focus-within/row:opacity-100 group-hover/row:opacity-100 hover:bg-background-medium focus-visible:opacity-100 focus-visible:shadow-focus data-[state=open]:opacity-100 pointer-coarse:opacity-100 [&_svg]:size-4"
+              className="absolute top-1/2 right-1 inline-flex size-5 -translate-y-1/2 cursor-pointer items-center justify-center rounded-sm text-texticons-placeholder opacity-0 hover:text-texticons-secondary outline-none group-focus-within/row:opacity-100 group-hover/row:opacity-100 hover:bg-background-medium focus-visible:opacity-100 focus-visible:shadow-focus data-[state=open]:opacity-100 pointer-coarse:opacity-100 [&_svg]:size-4"
             >
               <EllipsisHorizontalIcon />
             </button>
@@ -126,16 +130,19 @@ function ChatRow({
             alignOffset={-6}
             className="min-w-0"
             onCloseAutoFocus={(event) => {
-              if (chose.current) event.preventDefault()
-              chose.current = false
+              const run = chosen.current
+              chosen.current = null
+              if (!run) return
+              event.preventDefault()
+              more.current?.focus()
+              run()
             }}
           >
             {onRename && (
               <DropdownMenuItem
                 icon={<PencilIcon />}
                 onSelect={() => {
-                  chose.current = true
-                  onRename(chat)
+                  chosen.current = () => onRename(chat)
                 }}
               >
                 Rename
@@ -146,8 +153,7 @@ function ChatRow({
                 destructive
                 icon={<TrashIcon className="text-texticons-secondary" />}
                 onSelect={() => {
-                  chose.current = true
-                  onDelete(chat)
+                  chosen.current = () => onDelete(chat)
                 }}
               >
                 Delete
@@ -170,7 +176,7 @@ function NewChatRow({ tabbable, onNewChat }: { tabbable: boolean; onNewChat: () 
         className={rowClass}
         onClick={onNewChat}
       >
-        <AddIcon className="text-texticons-secondary" />
+        <AddIcon className="text-texticons-placeholder" />
         <span className="min-w-0 flex-1 truncate">New chat</span>
       </button>
     </div>
@@ -207,8 +213,8 @@ function AIChatsMenu({
   const root = React.useRef<HTMLDivElement>(null)
   const search = React.useRef<HTMLInputElement>(null)
   const headingId = React.useId()
-  const needle = query.trim().toLocaleLowerCase()
-  const results = needle ? byActivity(chats.filter((chat) => aiChatTitle(chat).toLocaleLowerCase().includes(needle))) : []
+  const needle = fold(query.trim())
+  const results = needle ? byActivity(chats.filter((chat) => fold(aiChatTitle(chat)).includes(needle))) : []
   const groups: { id: string; label: string; chats: AIChat[] }[] = needle
     ? results.length > 0
       ? [{ id: "results", label: `${results.length} ${results.length === 1 ? "result" : "results"}`, chats: results }]
