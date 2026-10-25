@@ -56,7 +56,7 @@ function tracePhase(steps: AITraceStep[], stopped = false): AITracePhase {
     phase: failed >= 0 ? "error" : stopped ? "stopped" : "running",
     step: current + 1,
     total,
-    retry: (steps[current].attempt ?? 1) > 1,
+    retry: (steps[current]?.attempt ?? 1) > 1,
   }
 }
 
@@ -113,9 +113,9 @@ function AITraceStepRow({
   onRetry,
 }: {
   step: AITraceStep
-  renderer?: React.ComponentType<{ step: AITraceStep }>
+  renderer?: React.ComponentType<{ step: AITraceStep }> | undefined
   stopped: boolean
-  onRetry?: (step: AITraceStep) => void
+  onRetry?: ((step: AITraceStep) => void) | undefined
 }) {
   const [details, setDetails] = React.useState(false)
   const label = <span className="line-clamp-2 min-w-0 flex-1">{step.label}</span>

@@ -83,7 +83,7 @@ function AppShell({
   React.useEffect(() => {
     const el = bodyRef.current
     if (!el) return
-    const observer = new ResizeObserver(([entry]) => setBody(entry.contentRect.width + 2 * inset))
+    const observer = new ResizeObserver(([entry]) => entry && setBody(entry.contentRect.width + 2 * inset))
     observer.observe(el)
     return () => observer.disconnect()
   }, [])

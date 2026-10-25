@@ -103,7 +103,7 @@ function Select({
         </SelectPrimitive.Trigger>
         <SelectContent>
           {items.map((o) => (
-            <SelectItem key={o.value} value={o.value} disabled={o.disabled}>
+            <SelectItem key={o.value} value={o.value} {...(o.disabled === undefined ? {} : { disabled: o.disabled })}>
               {o.label}
             </SelectItem>
           ))}

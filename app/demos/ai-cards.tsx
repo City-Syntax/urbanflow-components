@@ -5,6 +5,7 @@ import * as React from "react"
 import { AIApprovalCard, AIApprovalDiff, type AIApprovalAction, type AIApprovalStatus } from "@/registry/ui/ai-approval-card"
 import { AIMessageQueue, type AIQueuedMessage } from "@/registry/ui/ai-message-queue"
 import { AIPendingBanner } from "@/registry/ui/ai-pending-banner"
+import { Button } from "@/registry/ui/button"
 import { AIQuestionCard, type AIAnswers, type AIQuestion, type AIQuestionResult } from "@/registry/ui/ai-question-card"
 
 const patch = `@@ -12,7 +12,7 @@
@@ -145,10 +146,10 @@ function InteractiveQuestions() {
 const timedOutAnswers: AIAnswers = { use: "office" }
 const answered: AIAnswers = { use: "meeting", systems: ["vav", "dhw", "Heat recovery wheel"], height: 4.2 }
 
-function Banner({ count }: { count: number }) {
+function Banner({ count, actions }: { count: number; actions?: React.ReactNode }) {
   const [jumps, setJumps] = React.useState(0)
   return (
-    <AIPendingBanner data-jumps={jumps} count={count} onJump={() => setJumps((n) => n + 1)}>
+    <AIPendingBanner data-jumps={jumps} count={count} actions={actions} onJump={() => setJumps((n) => n + 1)}>
       {count > 1 ? "2 approvals and a question" : "Approve Edit model.epJSON"}
     </AIPendingBanner>
   )
@@ -329,6 +330,16 @@ export function AICardsDemo() {
         </Labelled>
         <Labelled label="Pending banner · Three waiting">
           <Banner count={3} />
+        </Labelled>
+        <Labelled label="Pending banner · With a second action">
+          <Banner
+            count={1}
+            actions={
+              <Button type="button" variant="tertiary" size="micro">
+                Notify me
+              </Button>
+            }
+          />
         </Labelled>
         <Labelled label="Pending banner · In a chat panel (scroll, then Show)">
           <InPanel />

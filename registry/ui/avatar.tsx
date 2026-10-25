@@ -23,16 +23,16 @@ const sizes = {
 }
 
 type AvatarProps = Omit<React.ComponentProps<"span">, "color"> & {
-  name?: string
-  initials?: string
-  src?: string
+  name?: string | undefined
+  initials?: string | undefined
+  src?: string | undefined
   size?: keyof typeof sizes
   color?: (typeof palette)[number]
   index?: number
 }
 
 function Avatar({ name, initials, src, size = "M", color, index = 0, className, ...props }: AvatarProps) {
-  const tone = color ?? palette[index % palette.length]
+  const tone = color ?? palette[index % palette.length] ?? palette[0]
   const letters =
     initials ??
     (name ?? "?")

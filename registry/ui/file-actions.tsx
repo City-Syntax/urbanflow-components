@@ -28,7 +28,7 @@ function FileActions({
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-46">
         {items.map((it) => (
-          <DropdownMenuItem key={it.label} icon={it.icon} onSelect={it.onSelect}>
+          <DropdownMenuItem key={it.label} icon={it.icon} {...(it.onSelect === undefined ? {} : { onSelect: it.onSelect })}>
             {it.label}
           </DropdownMenuItem>
         ))}

@@ -53,6 +53,7 @@ function Composer({
   context,
   disabled,
   picker,
+  wrap,
 }: {
   initial?: string
   placeholder?: string
@@ -60,6 +61,7 @@ function Composer({
   context?: React.ReactNode
   disabled?: boolean
   picker?: React.ReactNode
+  wrap?: boolean
 }) {
   const [text, setText] = React.useState(initial)
   const [mode, setMode] = React.useState("auto")
@@ -76,7 +78,7 @@ function Composer({
         disabled={disabled}
       />
       <AIPromptInputToolbar>
-        <AIPromptInputTools>
+        <AIPromptInputTools wrap={wrap}>
           <AIPromptInputAttach />
           <AIPromptInputSelect title="Mode" options={modes} value={mode} onValueChange={setMode} />
           <AIPromptInputSelect title="Model" options={models} value={model} onValueChange={setModel} />
@@ -187,6 +189,12 @@ const states: [string, React.ReactNode][] = [
       initial="Compare this floor with"
       context={<>{selection}{file("Floor 3 cost plan.pdf")}{file("Cost assumptions.pdf")}</>}
     />,
+  ],
+  [
+    "Narrow, tools wrap",
+    <div key="wrap" className="w-80">
+      <Composer wrap />
+    </div>,
   ],
 ]
 

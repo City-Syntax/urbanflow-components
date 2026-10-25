@@ -26,8 +26,8 @@ function SegmentedControl({
     <ToggleGroupPrimitive.Root
       data-slot="segmented-control"
       type="single"
-      value={value}
-      defaultValue={defaultValue}
+      {...(value === undefined ? {} : { value })}
+      {...(defaultValue === undefined ? {} : { defaultValue })}
       onValueChange={(v) => v && onValueChange?.(v)}
       className={cn(
         "inline-flex gap-1 rounded-md bg-background-light p-1 shadow-sm inset-ring inset-ring-stroke-default",

@@ -14,7 +14,7 @@ type AIContextUsageState = "ok" | "nearly-full" | "full"
 type AIContextUsageValue = {
   used: number
   limit: number
-  nearlyFullAt?: number
+  nearlyFullAt?: number | undefined
 }
 
 type AIContextUsageDetails = {
@@ -65,7 +65,7 @@ function AIContextUsageTrigger({
       type="button"
       aria-label={`Context used: ${percent}%`}
       className={cn(
-        "inline-flex h-7 shrink-0 cursor-default items-center gap-1 rounded-md px-1.5 text-label-xsmall text-texticons-secondary outline-none hover:bg-background-light focus-visible:shadow-focus data-[state=open]:bg-background-light",
+        "inline-flex h-7 shrink-0 cursor-pointer items-center gap-1 rounded-md px-1.5 text-label-xsmall text-texticons-secondary outline-none hover:bg-background-light focus-visible:shadow-focus data-[state=open]:bg-background-light",
         className
       )}
       {...props}

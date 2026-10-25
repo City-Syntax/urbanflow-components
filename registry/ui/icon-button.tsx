@@ -17,7 +17,7 @@ function IconButton({
 }: Omit<ButtonProps, "size" | "aria-label"> & {
   label: string
   size?: keyof typeof iconSize
-  selected?: boolean
+  selected?: boolean | undefined
 }) {
   return (
     <Button

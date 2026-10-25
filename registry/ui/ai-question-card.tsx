@@ -168,9 +168,10 @@ function AIQuestionField({
   )
   if (q.kind === "text" || q.kind === "number") {
     return (
-      <div data-slot="ai-question" data-kind={q.kind} className="flex flex-col gap-2">
+      <div data-slot="ai-question" data-kind={q.kind} data-question-id={q.id} className="flex flex-col gap-2">
         {prompt}
         <TextField
+          name={name}
           aria-labelledby={promptId}
           type={q.kind}
           placeholder={q.placeholder}
@@ -185,6 +186,7 @@ function AIQuestionField({
     <div
       data-slot="ai-question"
       data-kind={q.kind}
+      data-question-id={q.id}
       role={single ? "radiogroup" : "group"}
       aria-labelledby={promptId}
       className="flex flex-col gap-2"
@@ -235,6 +237,7 @@ function AIQuestionCard({
   skipLabel = "Skip",
   onSubmit,
   onSkip,
+  focusOnDecide = true,
   ref,
   className,
   ...props
@@ -249,6 +252,7 @@ function AIQuestionCard({
   skipLabel?: React.ReactNode
   onSubmit: (result: AIQuestionResult) => void
   onSkip?: () => void
+  focusOnDecide?: boolean
 }) {
   const formId = React.useId()
   const root = React.useRef<HTMLDivElement>(null)
@@ -257,8 +261,9 @@ function AIQuestionCard({
     const active = document.activeElement
     if (!refocus.current || status !== "answered") return
     refocus.current = false
+    if (!focusOnDecide) return
     if (active === document.body || root.current?.contains(active)) root.current?.focus({ preventScroll: true })
-  }, [status])
+  }, [status, focusOnDecide])
   const setRef = (el: HTMLDivElement | null) => {
     root.current = el
     if (typeof ref === "function") ref(el)

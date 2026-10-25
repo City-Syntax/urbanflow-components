@@ -9,9 +9,9 @@ function NumberStepper({
   onDecrement,
   disabled,
 }: {
-  onIncrement?: () => void
-  onDecrement?: () => void
-  disabled?: boolean
+  onIncrement?: (() => void) | undefined
+  onDecrement?: (() => void) | undefined
+  disabled?: boolean | undefined
 }) {
   const half =
     "flex h-2.5 w-4 items-center justify-center rounded-xs text-texticons-secondary not-disabled:hover:bg-background-medium disabled:text-texticons-disabled"
