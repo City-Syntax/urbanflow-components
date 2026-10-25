@@ -999,6 +999,27 @@
       }
     },
     {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "description": "urbanflow Collapsible (Radix): Collapsible, CollapsibleTrigger (focus ring, pointer) and CollapsibleContent (collapsible-up / -down animation, none with reduced motion). Unstyled otherwise; the AI trace, reasoning and sources build their rows on it.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/collapsible.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "version": "1.0.0"
+      }
+    },
+    {
       "name": "ai-context-chip",
       "type": "registry:ui",
       "title": "AI Context Chip",
