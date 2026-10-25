@@ -5,6 +5,7 @@ import { ArrowRightIcon, DrawWallIcon, LayoutIcon, PencilIcon, SearchIcon, Trash
 
 import { CommentsDemo } from "@/app/demos/comments";
 import { AIDemo } from "@/app/demos/ai";
+import { AICardsDemo } from "@/app/demos/ai-cards";
 import { AIMessagesDemo } from "@/app/demos/ai-messages";
 import { ComplianceDemo } from "@/app/demos/compliance";
 import { FilesDemo } from "@/app/demos/files";
@@ -259,6 +260,10 @@ export default function Home() {
 
       <Section title="AI messages, trace, reasoning, sources & conversation">
         <AIMessagesDemo />
+      </Section>
+
+      <Section title="AI approvals, questions, waiting banner & queue">
+        <AICardsDemo />
       </Section>
 
       <Section title="Shell">
