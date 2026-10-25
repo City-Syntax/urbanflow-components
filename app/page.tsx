@@ -6,6 +6,7 @@ import { ArrowRightIcon, DrawWallIcon, LayoutIcon, PencilIcon, SearchIcon, Trash
 import { CommentsDemo } from "@/app/demos/comments";
 import { AIDemo } from "@/app/demos/ai";
 import { AICardsDemo } from "@/app/demos/ai-cards";
+import { AIChatsDemo } from "@/app/demos/ai-chats";
 import { AIMessagesDemo } from "@/app/demos/ai-messages";
 import { ComplianceDemo } from "@/app/demos/compliance";
 import { FilesDemo } from "@/app/demos/files";
@@ -264,6 +265,10 @@ export default function Home() {
 
       <Section title="AI approvals, questions, waiting banner & queue">
         <AICardsDemo />
+      </Section>
+
+      <Section title="AI chat header, chats menu, rename & delete, empty state">
+        <AIChatsDemo />
       </Section>
 
       <Section title="Shell">
