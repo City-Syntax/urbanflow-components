@@ -1,9 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { CopyIcon, FloorIcon, PencilIcon, ZoneIcon } from "@urbanflow/icons"
+import { ChevronDownIcon, CopyIcon, FloorIcon, PencilIcon, ZoneIcon } from "@urbanflow/icons"
 
 import { Button } from "@/registry/ui/button"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/registry/ui/collapsible"
 import {
   Command,
   CommandEmpty,
@@ -89,6 +90,18 @@ export function PrimitivesDemo() {
             </CommandGroup>
           </CommandList>
         </Command>
+      </div>
+      <div className="flex w-64 flex-col gap-3" data-demo="Collapsible">
+        <span className="text-label-xsmall text-texticons-secondary">Collapsible</span>
+        <Collapsible defaultOpen className="flex flex-col gap-2">
+          <CollapsibleTrigger className="group flex items-center gap-1 self-start text-label-xsmall">
+            Floor 3 details
+            <ChevronDownIcon size={14} className="transition-transform group-data-[state=open]:rotate-180" />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="text-paragraph-xsmall text-texticons-secondary">
+            6 zones, 1,240 m² GFA, last simulated today.
+          </CollapsibleContent>
+        </Collapsible>
       </div>
     </div>
   )
