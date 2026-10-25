@@ -5,6 +5,7 @@ import { ArrowRightIcon, DrawWallIcon, LayoutIcon, PencilIcon, SearchIcon, Trash
 
 import { CommentsDemo } from "@/app/demos/comments";
 import { AIDemo } from "@/app/demos/ai";
+import { AIMessagesDemo } from "@/app/demos/ai-messages";
 import { ComplianceDemo } from "@/app/demos/compliance";
 import { FilesDemo } from "@/app/demos/files";
 import { InputsDemo } from "@/app/demos/inputs";
@@ -200,7 +201,7 @@ export default function Home() {
         <OverlaysDemo />
       </Section>
 
-      <Section title="Spinner, progress, separator, hover card & command">
+      <Section title="Spinner, progress, separator, hover card, command & collapsible">
         <PrimitivesDemo />
       </Section>
 
@@ -254,6 +255,10 @@ export default function Home() {
 
       <Section title="AI prompt input, context chips & usage">
         <AIDemo />
+      </Section>
+
+      <Section title="AI messages, trace, reasoning, sources & conversation">
+        <AIMessagesDemo />
       </Section>
 
       <Section title="Shell">

@@ -104,7 +104,7 @@ Then add an item to `registry.json`:
 ```
 and add a section for it with every variant to `app/page.tsx`.
 
-The AI items and the primitives added with them (`spinner`, `progress`, `separator`, `hover-card`, `command`)
+The AI items and the primitives added with them (`spinner`, `progress`, `separator`, `hover-card`, `command`, `collapsible`)
 carry `"meta": { "version": "1.0.0" }` in `registry.json`. Bump it in the same PR as any change to the
 item's files (patch for a fix, minor for a new prop, major for a rename), so an app can tell which version
 its copy came from and spot a copy that has drifted.
