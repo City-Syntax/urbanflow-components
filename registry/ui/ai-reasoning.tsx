@@ -41,7 +41,7 @@ function AIReasoning({
       {...props}
     >
       <AITraceTrigger
-        icon={running ? <Spinner aria-label="Thinking" /> : <ListIcon aria-hidden />}
+        icon={running ? <Spinner aria-hidden role={undefined} /> : <ListIcon aria-hidden />}
         chevron={!running || open}
       >
         {running ? "Thinking" : duration != null ? `Thought · ${formatSeconds(duration)}` : "Thought"}

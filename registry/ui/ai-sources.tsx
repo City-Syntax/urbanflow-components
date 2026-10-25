@@ -12,6 +12,10 @@ type AISourcePart =
   | { type: "source-url"; sourceId: string; url: string; title?: string }
   | { type: "source-document"; sourceId: string; title: string; filename?: string }
 
+function isAISourcePart(part: { type: string }): part is AISourcePart {
+  return part.type === "source-url" || part.type === "source-document"
+}
+
 function toAISource(part: AISourcePart): AISource {
   return part.type === "source-url"
     ? { id: part.sourceId, title: part.title ?? part.url, href: part.url }
@@ -82,4 +86,4 @@ function AISources({
   )
 }
 
-export { AISources, toAISource, type AISource, type AISourcePart }
+export { AISources, isAISourcePart, toAISource, type AISource, type AISourcePart }

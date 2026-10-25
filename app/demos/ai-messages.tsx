@@ -60,6 +60,8 @@ const traces: [string, AITraceStep[], Partial<React.ComponentProps<typeof AITrac
     "Retrying",
     [read("done"), step("compare_costflow", "Comparing the Costflow breakdown", "running", { attempt: 2 }), average("pending")],
   ],
+  ["Stopped by the user", [read("done"), compare("running"), average("pending")], { stopped: true }],
+  ["Failed step, then the model carried on", [read("done"), compare("error", { detail: timeout }), average("done")]],
   [
     "Retry failed",
     [read("done"), step("compare_costflow", "Costflow comparison timed out again", "error", { attempt: 2, detail: timeoutAgain }), average("pending")],
@@ -75,7 +77,7 @@ const layers = [
 ]
 
 const toolRenderers: AITraceRenderers = {
-  list_constructions: (s) =>
+  list_constructions: ({ step: s }) =>
     (s.output as string[]).map((name) => (
       <p key={name} className="truncate">
         {name}
@@ -167,7 +169,7 @@ const userMessage = (
 function Citations() {
   return (
     <AICitations>
-      <AICitation label="Costflow">
+      <AICitation label="Costflow" onClick={() => {}}>
         <AICitationCard
           icon={<CoinIcon />}
           title="Costflow · Elemental breakdown"
@@ -179,7 +181,7 @@ function Citations() {
           }
         />
       </AICitation>
-      <AICitation label="Floor 3">
+      <AICitation label="Floor 3" onClick={() => {}}>
         <AICitationCard icon={<FloorIcon />} title="Floor 3 · Properties" description="Gross floor area and zone areas." />
       </AICitation>
     </AICitations>

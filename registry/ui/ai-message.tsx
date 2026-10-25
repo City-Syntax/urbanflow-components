@@ -48,10 +48,15 @@ function AIMessageGenerating({
   ...props
 }: React.ComponentProps<"div"> & { label?: React.ReactNode }) {
   return (
-    <div data-slot="ai-message-generating" className={cn("flex w-full flex-col gap-2", className)} {...props}>
+    <div
+      data-slot="ai-message-generating"
+      role="status"
+      className={cn("flex w-full flex-col gap-2", className)}
+      {...props}
+    >
       {label != null && (
         <div className="flex items-center gap-1.5 text-paragraph-xsmall text-texticons-secondary">
-          <Spinner aria-label="Generating" />
+          <Spinner aria-hidden role={undefined} />
           {label}
         </div>
       )}
@@ -74,12 +79,13 @@ function AIMessageCopy({
   className,
   ...props
 }: Omit<React.ComponentProps<typeof IconButton>, "label" | "onCopy" | "onClick"> & { text?: string; onCopy?: () => void }) {
-  const [copied, setCopied] = React.useState(false)
+  const [copiedAt, setCopiedAt] = React.useState(0)
   React.useEffect(() => {
-    if (!copied) return
-    const timer = setTimeout(() => setCopied(false), 2000)
+    if (!copiedAt) return
+    const timer = setTimeout(() => setCopiedAt(0), 2000)
     return () => clearTimeout(timer)
-  }, [copied])
+  }, [copiedAt])
+  const copied = copiedAt > 0
   return (
     <IconButton
       data-slot="ai-message-copy"
@@ -88,9 +94,13 @@ function AIMessageCopy({
       label={copied ? "Copied" : "Copy"}
       className={cn(actionClass, className)}
       onClick={async () => {
-        if (text != null) await navigator.clipboard?.writeText(text)
+        try {
+          if (text != null) await navigator.clipboard.writeText(text)
+        } catch {
+          return
+        }
         onCopy?.()
-        setCopied(true)
+        setCopiedAt(Date.now())
       }}
       {...props}
     >

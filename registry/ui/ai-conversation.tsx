@@ -11,7 +11,6 @@ function AIConversation({ className, ...props }: React.ComponentProps<typeof Sti
   return (
     <StickToBottom
       data-slot="ai-conversation"
-      role="log"
       initial="smooth"
       resize="smooth"
       className={cn("relative flex-1 overflow-y-hidden", className)}
@@ -28,6 +27,7 @@ function AIConversationContent({
   return (
     <StickToBottom.Content
       data-slot="ai-conversation-content"
+      role="log"
       className={cn("flex flex-col gap-4 p-3", className)}
       scrollClassName={cn("[scrollbar-gutter:stable]!", scrollClassName)}
       {...props}

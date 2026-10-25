@@ -22,29 +22,38 @@ type AITraceStep = {
   attempt?: number
 }
 
-type AITraceRenderers = Record<string, (step: AITraceStep) => React.ReactNode>
+type AITraceRenderers = Record<string, React.ComponentType<{ step: AITraceStep }>>
+
+type AIToolPartState =
+  | "input-streaming"
+  | "input-available"
+  | "approval-requested"
+  | "approval-responded"
+  | "output-available"
+  | "output-error"
+  | "output-denied"
 
 type AITracePhase =
-  | { phase: "running" | "error"; step: number; total: number; retry: boolean }
+  | { phase: "running" | "error" | "stopped"; step: number; total: number; retry: boolean }
   | { phase: "done"; total: number }
 
-const toolStatus: Record<string, AITraceStepStatus> = {
+const toolStatus: Partial<Record<AIToolPartState, AITraceStepStatus>> = {
   "output-available": "done",
   "output-error": "error",
   "output-denied": "error",
 }
 
-function toolPartStatus(state: string): AITraceStepStatus {
-  return toolStatus[state] ?? "running"
+function toolPartStatus(part: { state: AIToolPartState; preliminary?: boolean }): AITraceStepStatus {
+  return part.preliminary ? "running" : (toolStatus[part.state] ?? "running")
 }
 
-function tracePhase(steps: AITraceStep[]): AITracePhase {
+function tracePhase(steps: AITraceStep[], stopped = false): AITracePhase {
   const total = steps.length
-  const failed = steps.findIndex((s) => s.status === "error")
-  const current = failed >= 0 ? failed : steps.findIndex((s) => s.status !== "done")
+  const failed = steps.findIndex((s, i) => s.status === "error" && steps.slice(i + 1).every((t) => t.status === "pending"))
+  const current = failed >= 0 ? failed : steps.findIndex((s) => s.status === "running" || s.status === "pending")
   if (current < 0) return { phase: "done", total }
   return {
-    phase: failed >= 0 ? "error" : "running",
+    phase: failed >= 0 ? "error" : stopped ? "stopped" : "running",
     step: current + 1,
     total,
     retry: (steps[current].attempt ?? 1) > 1,
@@ -54,6 +63,7 @@ function tracePhase(steps: AITraceStep[]): AITracePhase {
 function traceLabel(p: AITracePhase) {
   if (p.phase === "done") return `Researched in ${p.total} ${p.total === 1 ? "step" : "steps"}`
   if (p.phase === "error") return p.retry ? `Retry failed at step ${p.step}` : `Research stopped at step ${p.step}`
+  if (p.phase === "stopped") return `Stopped at step ${p.step} of ${p.total}`
   return `${p.retry ? "Retrying" : "Researching"} · Step ${p.step} of ${p.total}`
 }
 
@@ -92,21 +102,22 @@ const stepIcon: Record<Exclude<AITraceStepStatus, "error">, React.ReactNode> = {
       <span className="size-1.5 rounded-full bg-neutral-20" />
     </span>
   ),
-  running: <Spinner aria-label="Running" />,
+  running: <Spinner aria-hidden role={undefined} />,
   done: <CheckIcon aria-hidden />,
 }
 
 function AITraceStepRow({
   step,
-  renderer,
+  renderer: Renderer,
+  stopped,
   onRetry,
 }: {
   step: AITraceStep
-  renderer?: (step: AITraceStep) => React.ReactNode
+  renderer?: React.ComponentType<{ step: AITraceStep }>
+  stopped: boolean
   onRetry?: (step: AITraceStep) => void
 }) {
   const [details, setDetails] = React.useState(false)
-  const output = renderer?.(step)
   const label = <span className="line-clamp-2 min-w-0 flex-1">{step.label}</span>
   const expandable = step.status === "error" && (step.detail != null || onRetry != null)
   return (
@@ -139,11 +150,15 @@ function AITraceStepRow({
         </Collapsible>
       ) : (
         <div className={cn("flex items-center gap-1.5 text-paragraph-xsmall text-texticons-secondary", placeholderIcon)}>
-          {stepIcon[step.status]}
+          {stepIcon[stopped && step.status === "running" ? "pending" : step.status]}
           {label}
         </div>
       )}
-      {output != null && output !== false && <div className="flex flex-col gap-1.5 pl-5 text-paragraph-xsmall text-texticons-secondary">{output}</div>}
+      {Renderer && (
+        <div className="flex flex-col gap-1.5 pl-5 text-paragraph-xsmall text-texticons-secondary empty:hidden">
+          <Renderer step={step} />
+        </div>
+      )}
     </li>
   )
 }
@@ -152,6 +167,7 @@ function AITrace({
   steps,
   label,
   toolRenderers,
+  stopped = false,
   onRetry,
   open: openProp,
   defaultOpen,
@@ -162,12 +178,13 @@ function AITrace({
   steps: AITraceStep[]
   label?: React.ReactNode
   toolRenderers?: AITraceRenderers
+  stopped?: boolean
   onRetry?: (step: AITraceStep) => void
 }) {
   const [userOpen, setUserOpen] = React.useState(defaultOpen)
   if (steps.length === 0) return null
-  const phase = tracePhase(steps)
-  const open = openProp ?? userOpen ?? phase.phase !== "done"
+  const phase = tracePhase(steps, stopped)
+  const open = openProp ?? userOpen ?? (phase.phase === "running" || phase.phase === "error")
   return (
     <Collapsible
       data-slot="ai-trace"
@@ -181,7 +198,7 @@ function AITrace({
       {...props}
     >
       <AITraceTrigger
-        icon={phase.phase === "running" && !open ? <Spinner aria-label="Researching" /> : <ListIcon aria-hidden />}
+        icon={phase.phase === "running" && !open ? <Spinner aria-hidden role={undefined} /> : <ListIcon aria-hidden />}
         critical={phase.phase === "error"}
       >
         {label ?? traceLabel(phase)}
@@ -189,7 +206,13 @@ function AITrace({
       <CollapsibleContent>
         <ol className="flex flex-col gap-1.5 pt-2 pl-5">
           {steps.map((step) => (
-            <AITraceStepRow key={step.id} step={step} renderer={toolRenderers?.[step.name]} onRetry={onRetry} />
+            <AITraceStepRow
+              key={step.id}
+              step={step}
+              renderer={toolRenderers?.[step.name]}
+              stopped={stopped}
+              onRetry={onRetry}
+            />
           ))}
         </ol>
       </CollapsibleContent>
@@ -203,6 +226,7 @@ export {
   toolPartStatus,
   tracePhase,
   type AITracePhase,
+  type AIToolPartState,
   type AITraceRenderers,
   type AITraceStep,
   type AITraceStepStatus,

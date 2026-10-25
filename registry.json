@@ -1126,7 +1126,7 @@
       "categories": [
         "ai"
       ],
-      "description": "urbanflow AI Trace (Figma AITrace · Chain of thought): the tool calls of one assistant turn as a single collapsible summary with one level of steps. steps: { id, name, label, status pending / running / done / error, detail?, input?, output?, attempt? }. The summary reads Researching · Step n of N, Researched in N steps, Research stopped at step n, Retrying / Retry failed (attempt > 1); label overrides it. Opens while running or failed and closes when done, unless the user toggled it. A failed step opens its detail (AICodeBlock) and Retry (onRetry). toolRenderers maps a tool name to a renderer shown under that step, for rich output. toolPartStatus(state) maps an AI SDK tool part state to a step status.",
+      "description": "urbanflow AI Trace (Figma AITrace · Chain of thought): the tool calls of one assistant turn as a single collapsible summary with one level of steps. steps: { id, name, label, status pending / running / done / error, detail?, input?, output?, attempt? }; toolPartStatus(part) maps an AI SDK tool part (state, preliminary) to a status. The summary reads Researching · Step n of N, Researched in N steps, Research stopped at step n (only while the failed step blocks the rest), Retrying / Retry failed (attempt > 1), or Stopped at step n when stopped is set after the user stops the reply; label overrides it. Opens while running or failed and closes otherwise, unless the user toggled it. A failed step opens to its detail (AICodeBlock) and Retry (onRetry). toolRenderers maps a tool name to a component ({ step }) drawn under that step at any status.",
       "dependencies": [
         "@urbanflow/icons"
       ],
@@ -1181,7 +1181,7 @@
       "categories": [
         "ai"
       ],
-      "description": "urbanflow AI Sources (Figma AISources): Used N sources, expanding to one row per source (icon, title, detail). sources: { id, title, detail?, href?, icon? }; toAISource maps AI SDK source-url and source-document parts. onSelect makes rows buttons; otherwise rows with href open in a new tab.",
+      "description": "urbanflow AI Sources (Figma AISources): Used N sources, expanding to one row per source (icon, title, detail). sources: { id, title, detail?, href?, icon? }; parts.filter(isAISourcePart).map(toAISource) maps AI SDK source-url and source-document parts. onSelect makes rows buttons; otherwise rows with href open in a new tab.",
       "dependencies": [
         "@urbanflow/icons"
       ],
@@ -1206,7 +1206,7 @@
       "categories": [
         "ai"
       ],
-      "description": "urbanflow AI Citation (Figma AICitationCard): AICitation is an inline citation badge that opens a hover card (also on focus); AICitationCard lays out the card: icon, title, description and an optional action such as a plain Open in Costflow button. AICitations wraps a row of badges.",
+      "description": "urbanflow AI Citation (Figma AICitationCard): AICitation is an inline citation badge that previews a hover card on hover or focus; AICitationCard lays out the card: icon, title, description and an optional action such as a plain Open in Costflow button. The card can't be reached by keyboard or touch, so also give AICitation an onClick that opens the source. AICitations wraps a row of badges.",
       "registryDependencies": [
         "https://components.urbanflow.co/r/badge.json",
         "https://components.urbanflow.co/r/hover-card.json",
