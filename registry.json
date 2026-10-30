@@ -1376,6 +1376,127 @@
       "meta": {
         "version": "1.1.0"
       }
+    },
+    {
+      "name": "chart",
+      "type": "registry:ui",
+      "title": "Chart",
+      "description": "Nine Flux chart forms using Flow tokens: bar, line, scatter, range, matrix, psychrometric, wind rose, sun path and hourly. Accepts data, never queries Flux. Import the current @urbanflow/theme stylesheet; use chart-card for Details and an accessible data table.",
+      "meta": {
+        "version": "1.0.0"
+      },
+      "dependencies": [
+        "chart.js@4.4.7",
+        "chartjs-chart-matrix@3.0.0",
+        "@urbanflow/theme"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/chart.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/chart-types.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "lib/chart-config.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "lib/chart-theme.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "lib/chart-plugins.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "lib/chart-hourly.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "lib/chart-date.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "chart-card",
+      "type": "registry:ui",
+      "title": "Chart Card",
+      "description": "Flat chart card with title, optional remove action, loading, error, empty and truncation states. Details opens the Flow Modal with a larger chart, description, query and keyboard-accessible data table.",
+      "meta": {
+        "version": "1.0.0"
+      },
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/chart.json",
+        "https://components.urbanflow.co/r/modal.json",
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/chart-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "weather-charts",
+      "type": "registry:ui",
+      "title": "Weather Charts",
+      "description": "The 18 Flux weather analyses in five sections. Pass normalized hourly weather columns with missing readings as null; EPW parsing and project queries stay in the app. Comfort overlays are indicative, not compliance assessments.",
+      "meta": {
+        "version": "1.0.0"
+      },
+      "dependencies": [],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/chart-card.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/weather-charts.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/chart-weather-catalog.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "lib/chart-weather-chart-data.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "lib/chart-weather-comfort.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "lib/chart-weather-quality.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "lib/chart-weather-sun.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "lib/chart-weather-temperature.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "lib/chart-weather-types.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "lib/chart-weather-wind.ts",
+          "type": "registry:lib"
+        }
+      ]
     }
   ]
 }
