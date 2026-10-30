@@ -1,8 +1,10 @@
+import Link from "next/link";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import * as Icons from "@urbanflow/icons";
 import { ArrowRightIcon, DrawWallIcon, LayoutIcon, PencilIcon, SearchIcon, TrashIcon } from "@urbanflow/icons";
 
+import { ChartsDemo } from "@/app/demos/charts";
 import { CommentsDemo } from "@/app/demos/comments";
 import { AIDemo } from "@/app/demos/ai";
 import { AICardsDemo } from "@/app/demos/ai-cards";
@@ -32,10 +34,10 @@ const tokens = (prefix: string, css = themeCss) =>
 
 // Grouped like Figma: Background, TextIcons, Stroke, then the Semantic, Neutrals and Misc palettes.
 const figmaGroup = (name: string) =>
-  ["background", "texticons", "stroke", "neutral", "misc"].find((g) => name.startsWith(`${g}-`)) ?? "semantic";
+  ["background", "texticons", "stroke", "neutral", "misc", "chart-ramp"].find((g) => name.startsWith(`${g}-`)) ?? "semantic";
 const colorGroups = Object.groupBy(tokens("color"), ({ name }) => figmaGroup(name));
 const groupTitles: Record<string, string> = {
-  background: "Background", texticons: "TextIcons", stroke: "Stroke", semantic: "Semantic", neutral: "Neutrals", misc: "Misc",
+  "chart-ramp": "Chart ramps", background: "Background", texticons: "TextIcons", stroke: "Stroke", semantic: "Semantic", neutral: "Neutrals", misc: "Misc",
 };
 const iconEntries = Object.entries(Icons).filter(([name]) => name.endsWith("Icon"));
 
@@ -65,6 +67,11 @@ export default function Home() {
           for the design language, setup, tokens, components and icons.
         </p>
       </header>
+
+      <Section title="Charts">
+        <p className="text-paragraph-small text-texticons-secondary">Flux charts using Flow tokens. <Link href="/charts" className="text-texticons-link-primary underline">View all charts, weather analyses and states →</Link></p>
+        <ChartsDemo compact />
+      </Section>
 
       <Section title="Colours">
         {Object.keys(groupTitles).map((g) => [g, colorGroups[g]] as const).map(([group, colors]) => (
