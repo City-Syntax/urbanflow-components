@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { AddIcon, ArrowUpStraightIcon, ChevronDownIcon, StopIcon } from "@urbanflow/icons"
+import { AddIcon, ArrowUpStraightIcon, CheckIcon, ChevronDownIcon, StopIcon } from "@urbanflow/icons"
 
 import { cn } from "@/lib/utils"
 import {
@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/registry/ui/action-list"
 import { Button } from "@/registry/ui/button"
-import { Command, CommandList } from "@/registry/ui/command"
+import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from "@/registry/ui/command"
 import { IconButton } from "@/registry/ui/icon-button"
 
 type AIPromptInputStatus = "ready" | "submitted" | "streaming" | "error"
@@ -130,6 +130,18 @@ function AIPromptInputAttach({
   )
 }
 
+const plainText = (node: React.ReactNode) => (typeof node === "string" || typeof node === "number" ? String(node) : "")
+
+const matchesEveryWord = (value: string, search: string, keywords?: string[]) => {
+  const text = [value, ...(keywords ?? [])].join(" ").toLowerCase()
+  return search.toLowerCase().split(/\s+/).every((word) => text.includes(word)) ? 1 : 0
+}
+
+const scrollToChecked = (list: HTMLDivElement | null) => {
+  const item = list?.querySelector<HTMLElement>("[data-checked=true]")
+  if (list && item) list.scrollTop = item.offsetTop + item.offsetHeight / 2 - list.clientHeight / 2
+}
+
 function AIPromptInputSelect({
   title,
   options,
@@ -138,6 +150,7 @@ function AIPromptInputSelect({
   placeholder = "Select",
   disabled,
   className,
+  searchAt = 8,
   "aria-label": ariaLabel,
 }: {
   title?: string
@@ -147,8 +160,10 @@ function AIPromptInputSelect({
   placeholder?: React.ReactNode
   disabled?: boolean
   className?: string
+  searchAt?: number
   "aria-label"?: string
 }) {
+  const [open, setOpen] = React.useState(false)
   const selected = options.find((o) => o.value === value) ?? (options.length === 1 ? options[0] : undefined)
   if (options.length === 0) return null
   if (options.length === 1) {
@@ -162,8 +177,9 @@ function AIPromptInputSelect({
       </span>
     )
   }
+  const searchable = options.length >= searchAt
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild disabled={disabled}>
         <Button
           type="button"
@@ -177,15 +193,60 @@ function AIPromptInputSelect({
           <ChevronDownIcon className="-mx-0.75 size-5 text-texticons-placeholder" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent side="top" className="w-60">
-        {title && <DropdownMenuLabel className="px-1.5 text-texticons-primary">{title}</DropdownMenuLabel>}
-        <DropdownMenuRadioGroup {...(value === undefined ? {} : { value })} {...(onValueChange === undefined ? {} : { onValueChange })}>
-          {options.map((o) => (
-            <DropdownMenuRadioItem key={o.value} value={o.value} help={o.description} {...(o.disabled === undefined ? {} : { disabled: o.disabled })}>
-              {o.label}
-            </DropdownMenuRadioItem>
-          ))}
-        </DropdownMenuRadioGroup>
+      <DropdownMenuContent
+        side="top"
+        className={cn(
+          "max-h-[min(24rem,var(--radix-dropdown-menu-content-available-height,24rem))] w-60",
+          searchable ? "overflow-hidden p-0" : "overflow-y-auto"
+        )}
+      >
+        {title && (
+          <DropdownMenuLabel className={searchable ? "pt-3 text-texticons-primary" : "px-1.5 text-texticons-primary"}>{title}</DropdownMenuLabel>
+        )}
+        {searchable ? (
+          <Command
+            label={ariaLabel ?? title ?? "Options"}
+            filter={matchesEveryWord}
+            {...(value === undefined ? {} : { defaultValue: value })}
+            className="min-h-0"
+            onKeyDown={(event) => {
+              if (event.key !== "Escape") event.stopPropagation()
+            }}
+          >
+            <CommandInput autoFocus placeholder="Search" />
+            <CommandList ref={scrollToChecked} className="relative max-h-none min-h-0 flex-1">
+              <CommandEmpty>No matches</CommandEmpty>
+              {options.map((o) => (
+                <CommandItem
+                  key={o.value}
+                  value={o.value}
+                  keywords={[plainText(o.label), plainText(o.description)]}
+                  data-checked={o.value === value || undefined}
+                  className="data-[checked=true]:bg-background-medium"
+                  {...(o.disabled === undefined ? {} : { disabled: o.disabled })}
+                  onSelect={() => {
+                    onValueChange?.(o.value)
+                    setOpen(false)
+                  }}
+                >
+                  <span className="flex flex-1 flex-col">
+                    <span>{o.label}</span>
+                    {o.description && <span className="text-texticons-tertiary">{o.description}</span>}
+                  </span>
+                  {o.value === value && <CheckIcon className="text-texticons-placeholder" />}
+                </CommandItem>
+              ))}
+            </CommandList>
+          </Command>
+        ) : (
+          <DropdownMenuRadioGroup {...(value === undefined ? {} : { value })} {...(onValueChange === undefined ? {} : { onValueChange })}>
+            {options.map((o) => (
+              <DropdownMenuRadioItem key={o.value} value={o.value} help={o.description} {...(o.disabled === undefined ? {} : { disabled: o.disabled })}>
+                {o.label}
+              </DropdownMenuRadioItem>
+            ))}
+          </DropdownMenuRadioGroup>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   )
