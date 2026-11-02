@@ -1381,7 +1381,7 @@
       "name": "chart",
       "type": "registry:ui",
       "title": "Chart",
-      "description": "Nine Flux chart forms using Flow tokens: bar, line, scatter, range, matrix, psychrometric, wind rose, sun path and hourly. Accepts data, never queries Flux. Import the current @urbanflow/theme stylesheet; use chart-card for Details and an accessible data table.",
+      "description": "Nine Flux chart forms using Flow tokens: bar, line, scatter, range, matrix, psychrometric, wind rose, sun path and hourly. Accepts data, never queries Flux. chartImage exports any chart as a PNG. Import the current @urbanflow/theme stylesheet; use chart-card for Details and an accessible data table.",
       "meta": {
         "version": "1.0.0"
       },

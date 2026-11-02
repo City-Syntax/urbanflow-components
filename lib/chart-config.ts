@@ -1,8 +1,11 @@
 import type { Chart, ChartConfiguration } from 'chart.js';
-import type { ChartKind } from '@/lib/chart-types';
+import type { ChartKind, ChartSpec } from '@/lib/chart-types';
 import type { ChartData, Problem } from '@/lib/chart-types';
+import { isProblem } from '@/lib/chart-types';
 import type { ChartTheme } from '@/lib/chart-theme';
 import { fade, ramp } from '@/lib/chart-theme';
+import { timeConfig } from '@/lib/chart-hourly';
+import { comfortZone, sunPathFrame } from '@/lib/chart-plugins';
 export const isSquare = (kind: ChartKind): boolean => kind === 'rose' || kind === 'sunpath';
 export { fade };
 const numberAt = (row: readonly (number | string | null)[], i: number): number | null => {
@@ -317,4 +320,62 @@ function sunPathConfig(options: ConfigOptions): BuiltConfig {
         },
     };
     return { config };
+}
+
+export function withTheme(config: ChartConfiguration, theme: ChartTheme): ChartConfiguration {
+    const options = config.options ?? {};
+    const font = { family: theme.font, size: theme.fontSize };
+    const tooltip = options.plugins?.tooltip;
+    return {
+        ...config,
+        options: {
+            animation: false,
+            maintainAspectRatio: false,
+            color: theme.text,
+            borderColor: theme.grid,
+            ...options,
+            font: { ...font, ...options.font },
+            plugins: {
+                ...options.plugins,
+                legend: {
+                    ...options.plugins?.legend,
+                    labels: { boxWidth: 8, boxHeight: 8, color: theme.text, font, ...options.plugins?.legend?.labels },
+                },
+                tooltip: {
+                    ...tooltip,
+                    titleFont: { ...font, ...tooltip?.titleFont },
+                    bodyFont: { ...font, ...tooltip?.bodyFont },
+                    footerFont: { ...font, ...tooltip?.footerFont },
+                },
+            },
+            scales: Object.fromEntries(Object.entries(options.scales ?? {}).map(([key, axis]) => {
+                const scale = (axis ?? {}) as { ticks?: object; grid?: object; border?: object; pointLabels?: object };
+                return [key, {
+                    ...scale,
+                    ticks: { color: theme.text, font, ...scale.ticks },
+                    grid: { color: theme.grid, ...scale.grid },
+                    border: { color: theme.grid, ...scale.border },
+                    ...(key === 'r' ? { pointLabels: { color: theme.text, font, ...scale.pointLabels } } : {}),
+                }];
+            })),
+        },
+    } as ChartConfiguration;
+}
+export function specConfig(spec: ChartSpec, theme: ChartTheme): BuiltConfig {
+    let config: ChartConfiguration;
+    if (spec.kind === 'hourly') {
+        if (!spec.figure.lines.some(line => line.points.some(p => Number.isFinite(p.x) && p.y !== null && Number.isFinite(p.y))))
+            return { problem: 'There is nothing to plot.' };
+        config = timeConfig(spec.figure, spec.unit ?? '', theme);
+    }
+    else {
+        if (isProblem(spec.data))
+            return spec.data;
+        const built = chartConfig({ kind: spec.kind, data: spec.data, theme, ...(spec.linearX === undefined ? {} : { linearX: spec.linearX }) });
+        if ('problem' in built)
+            return built;
+        config = built.config;
+    }
+    const plugins = spec.kind === 'psychro' ? [comfortZone(theme)] : spec.kind === 'sunpath' ? [sunPathFrame(theme)] : [];
+    return { config: { ...withTheme(config, theme), plugins } };
 }

@@ -5,15 +5,12 @@ import {
   Chart as ChartJS, ArcElement, BarController, BarElement, CategoryScale,
   Decimation, Filler, Legend, LinearScale, LineController, LineElement,
   PointElement, PolarAreaController, RadialLinearScale, ScatterController, Tooltip,
-  type ChartConfiguration,
 } from "chart.js"
 import { MatrixController, MatrixElement } from "chartjs-chart-matrix"
 import { cn } from "@/lib/utils"
-import { chartConfig, isSquare } from "@/lib/chart-config"
-import { timeConfig } from "@/lib/chart-hourly"
-import { comfortZone, sunPathFrame } from "@/lib/chart-plugins"
-import { readChartTheme, type ChartTheme } from "@/lib/chart-theme"
-import { isProblem, type ChartSpec } from "@/lib/chart-types"
+import { isSquare, specConfig } from "@/lib/chart-config"
+import { muteTheme, readChartTheme } from "@/lib/chart-theme"
+import type { ChartSpec } from "@/lib/chart-types"
 
 ChartJS.register(ArcElement, BarController, BarElement, CategoryScale, Decimation,
   Filler, Legend, LinearScale, LineController, LineElement, PointElement,
@@ -26,26 +23,32 @@ type ChartProps = ChartSpec & {
   themeKey?: string | number | undefined
 }
 
-function withTheme(config: ChartConfiguration, theme: ChartTheme): ChartConfiguration {
-  const options = config.options ?? {}
-  return { ...config, options: {
-    animation: false, maintainAspectRatio: false, color: theme.text, borderColor: theme.grid,
-    ...options,
-    font: { family: theme.font, size: theme.fontSize, ...options.font },
-    plugins: { ...options.plugins, legend: { ...options.plugins?.legend,
-      labels: { boxWidth: 8, boxHeight: 8, color: theme.text,
-        font: { family: theme.font, size: theme.fontSize }, ...options.plugins?.legend?.labels } } },
-    scales: Object.fromEntries(Object.entries(options.scales ?? {}).map(([key, axis]) => [key, {
-      ...axis, ticks: { color: theme.text, font: { family: theme.font, size: theme.fontSize }, ...axis?.ticks },
-    }])),
-  } }
+interface ChartImageOptions {
+  width?: number | undefined
+  height?: number | undefined
+  pixelRatio?: number | undefined
+  fontSize?: number | undefined
+  muted?: boolean | undefined
+  element?: Element | undefined
+}
+
+async function chartImage(spec: ChartSpec, { width = 800, height = 400, pixelRatio = 2, fontSize = 13, muted = false, element }: ChartImageOptions = {}): Promise<string> {
+  await document.fonts?.ready
+  const read = readChartTheme(element ?? document.documentElement)
+  const built = specConfig(spec, { ...(muted ? muteTheme(read) : read), fontSize })
+  if ("problem" in built) throw new Error(built.problem)
+  const canvas = document.createElement("canvas")
+  canvas.width = width
+  canvas.height = height
+  const chart = new ChartJS(canvas, { ...built.config, options: { ...built.config.options, responsive: false, animation: false, devicePixelRatio: pixelRatio } })
+  try { return chart.toBase64Image() } finally { chart.destroy() }
 }
 
 function Chart(props: ChartProps) {
   const { kind, label, large = false, className, themeKey } = props
   const data = props.kind === "hourly" ? undefined : props.data
   const figure = props.kind === "hourly" ? props.figure : undefined
-  const unit = props.kind === "hourly" ? props.unit ?? "" : ""
+  const unit = props.kind === "hourly" ? props.unit : undefined
   const linearX = props.kind === "hourly" ? undefined : props.linearX
   const canvas = React.useRef<HTMLCanvasElement>(null)
   const [problem, setProblem] = React.useState<string>()
@@ -58,22 +61,13 @@ function Chart(props: ChartProps) {
       const element = canvas.current
       if (disposed || !element) return
       try {
-        const theme = readChartTheme(element)
-        let config: ChartConfiguration
-        if (kind === "hourly" && figure) {
-          if (!figure.lines.some(line => line.points.some(p => Number.isFinite(p.x) && p.y !== null && Number.isFinite(p.y)))) {
-            setProblem("There is nothing to plot."); return
-          }
-          config = timeConfig(figure, unit, theme)
-        } else {
-          if (!data) return
-          if (isProblem(data)) { setProblem(data.problem); return }
-          const built = chartConfig({ kind: kind as Exclude<typeof kind, "hourly">, data, theme, ...(linearX === undefined ? {} : { linearX }) })
-          if ("problem" in built) { setProblem(built.problem); return }
-          config = built.config
-        }
-        const plugins = kind === "psychro" ? [comfortZone(theme)] : kind === "sunpath" ? [sunPathFrame(theme)] : []
-        chart = new ChartJS(element, { ...withTheme(config, theme), plugins })
+        const spec: ChartSpec | undefined = kind === "hourly"
+          ? figure && { kind, figure, unit }
+          : data && { kind, data, linearX }
+        if (!spec) return
+        const built = specConfig(spec, readChartTheme(element))
+        if ("problem" in built) { setProblem(built.problem); return }
+        chart = new ChartJS(element, built.config)
         setProblem(undefined)
       } catch (error) { if (!disposed) setProblem(error instanceof Error ? error.message : "The chart could not be drawn.") }
     }
@@ -90,6 +84,6 @@ function Chart(props: ChartProps) {
   </div>
 }
 
-export { Chart }
-export type { ChartProps }
+export { Chart, chartImage }
+export type { ChartProps, ChartImageOptions }
 export type { ChartData, ChartKind, ChartSpec, Figure, FigureLine } from "@/lib/chart-types"

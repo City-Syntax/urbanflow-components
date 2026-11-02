@@ -51,6 +51,16 @@ Hourly lines have `{ label, role, slot, baseline?, points: [{ x, y }] }`. Roles 
 
 Colors, grid strokes, chart text styles and both 21-stop color ramps come from Flow CSS variables, resolved on each canvas so scoped themes work. If your application changes the theme dynamically, change `themeKey` on the chart/card/weather collection to redraw the canvas. No global Chart.js defaults are changed. Missing chart tokens produce an explicit setup message.
 
+## Image export
+
+`chartImage(spec, options)` from the chart item draws any `ChartSpec` off screen and resolves to a PNG data URL, for reports and documents. The defaults are 800 × 400 px at a pixel ratio of 2 with 13 px text. Pass `muted: true` for the quieter report palette: every series colour and ramp stop is pulled 45% toward its own grey. Tokens are read from `options.element`, or from the document root. It throws with the chart's problem text when there is nothing to draw.
+
+```tsx
+import { chartImage } from "@/components/ui/chart"
+
+const png = await chartImage({ kind: "bar", data }, { muted: true })
+```
+
 ## Weather charts
 
 ```tsx

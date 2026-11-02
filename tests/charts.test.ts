@@ -1,10 +1,10 @@
 import assert from "node:assert/strict"
 import { readFileSync } from "node:fs"
 import { test } from "node:test"
-import { chartConfig } from "../lib/chart-config"
+import { chartConfig, specConfig } from "../lib/chart-config"
 import { hourLabel } from "../lib/chart-date"
 import { timeConfig } from "../lib/chart-hourly"
-import { ramp, type ChartTheme } from "../lib/chart-theme"
+import { mute, muteTheme, ramp, type ChartTheme } from "../lib/chart-theme"
 import { WEATHER_CHARTS, buildWeatherCharts } from "../lib/chart-weather-catalog"
 import { demoWeather, EXAMPLES } from "../app/demos/chart-fixtures"
 
@@ -105,4 +105,33 @@ test("ramps clamp to the Flow stops, and every chart registry import ships trans
       assert.ok(files.has(`${match[1]}.ts`) || files.has(`${match[1]}.tsx`), `${file} has unpackaged import ${match[1]}`)
     }
   }
+})
+
+test("every chart carries the Flow font and stroke on tooltips, rose labels and axis borders", () => {
+  const font = { family: "Figtree", size: 10 }
+  const range = specConfig({ kind: "range", data: { columns: ["Month", "Low", "High"], rows: [[1, 18, 30], [2, 19, 31]] } }, theme)
+  assert.ok("config" in range)
+  const tooltip = range.config.options?.plugins?.tooltip
+  assert.deepEqual([tooltip?.titleFont, tooltip?.bodyFont, tooltip?.footerFont], [font, font, font])
+  const scales = range.config.options?.scales as Record<string, { border?: { color?: string } }>
+  assert.equal(scales.x?.border?.color, theme.grid)
+  const rose = specConfig({ kind: "rose", data: { columns: ["Direction", "All"], rows: [["N", 3], ["E", 5]] } }, theme)
+  assert.ok("config" in rose)
+  const r = (rose.config.options?.scales as Record<string, { pointLabels?: { color?: string; font?: object } }>).r
+  assert.deepEqual(r?.pointLabels, { color: theme.text, font })
+  const psychro = specConfig({ kind: "psychro", data: { columns: ["°C", "g/kg", "Hours"], rows: [[22, 8, 4]] } }, theme)
+  assert.ok("config" in psychro)
+  assert.deepEqual(psychro.config.plugins?.map(plugin => plugin.id), ["comfortZone"])
+  assert.deepEqual(specConfig({ kind: "bar", data: { problem: "No run." } }, theme), { problem: "No run." })
+  assert.deepEqual(specConfig({ kind: "hourly", figure: { min: 1, max: 2, lines: [] } }, theme), { problem: "There is nothing to plot." })
+})
+
+test("an exported image uses the quieter palette: each colour pulled 45% toward its own grey", () => {
+  assert.equal(mute("#004299"), "rgb(33, 69, 117)")
+  assert.equal(mute("rgb(200, 100, 0)"), "rgb(155, 100, 45)")
+  const muted = muteTheme(theme)
+  assert.deepEqual(muted.series, theme.series.map(mute))
+  assert.equal(muted.sequential.length, 21)
+  assert.equal(muted.text, theme.text)
+  assert.equal(ramp(0.5, true, muted), mute(ramp(0.5, true, theme)))
 })
