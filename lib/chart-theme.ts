@@ -45,6 +45,16 @@ export function fade(color: string, alpha: number): string {
   return `rgba(${channels(color).join(", ")}, ${alpha})`
 }
 
+export function mute(color: string): string {
+  const rgb = channels(color)
+  const gray = rgb.reduce((total, value) => total + value, 0) / 3
+  return `rgb(${rgb.map(value => Math.round(value * 0.55 + gray * 0.45)).join(", ")})`
+}
+
+export function muteTheme(theme: ChartTheme): ChartTheme {
+  return { ...theme, series: theme.series.map(mute), sequential: theme.sequential.map(mute), diverging: theme.diverging.map(mute) }
+}
+
 export function ramp(t: number, sequential: boolean, theme: Pick<ChartTheme, "sequential" | "diverging">): string {
   const stops = sequential ? theme.sequential : theme.diverging
   const scaled = Math.min(1, Math.max(0, Number.isFinite(t) ? t : 0)) * (stops.length - 1)
