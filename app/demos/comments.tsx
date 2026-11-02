@@ -3,6 +3,7 @@
 import * as React from "react"
 
 import { DropdownMenuItem } from "@/registry/ui/action-list"
+import { Avatar } from "@/registry/ui/avatar"
 import { CommentPin } from "@/registry/ui/comment-pin"
 import { CommentSearch, CommentSection } from "@/registry/ui/comment-section"
 import { CommentThread } from "@/registry/ui/comment-thread"
@@ -120,12 +121,20 @@ export function CommentsDemo() {
         <ImageZoomSelector value={zoom} onValueChange={setZoom} />
       </div>
       <div className="flex flex-wrap items-end gap-3">
+        <Photo src="/demo/floor-plan.svg" />
+        <Photo src="/demo/floor-plan.svg" selected />
+        <Photo src="/demo/floor-plan.svg" onRemove={() => {}} />
         <Photo />
-        <Photo selected />
-        <Photo more={3} />
-        <Photo onRemove={() => {}} />
-        <Photo size="L" />
-        <Photo size="L" more={1} />
+        <Photo size="L" src="/demo/floor-plan.svg" />
+        <Photo size="L" src="/demo/floor-plan.svg" more={1} />
+      </div>
+      <div className="flex flex-wrap items-center gap-3">
+        {(["L", "M", "S", "XS"] as const).map((size) => (
+          <React.Fragment key={size}>
+            <Avatar size={size} name="Ryan Tan" color="orange" />
+            <Avatar size={size} name="Ryan Tan" src="/brand/urbanflow-mark.svg" />
+          </React.Fragment>
+        ))}
       </div>
     </div>
   )

@@ -174,6 +174,7 @@ function EmojiPickerPopover({
   align?: React.ComponentProps<typeof PopoverPrimitive.Content>["align"]
 }) {
   const [uncontrolled, setUncontrolled] = React.useState(false)
+  const picked = React.useRef(false)
   const isOpen = open ?? uncontrolled
   const setOpen = onOpenChange ?? setUncontrolled
   return (
@@ -187,9 +188,14 @@ function EmojiPickerPopover({
           sideOffset={4}
           collisionPadding={8}
           className="z-50 outline-none"
+          onCloseAutoFocus={(event) => {
+            if (picked.current) event.preventDefault()
+            picked.current = false
+          }}
         >
           <EmojiPicker
             onEmojiSelect={(emoji) => {
+              picked.current = true
               onEmojiSelect(emoji)
               setOpen(false)
             }}

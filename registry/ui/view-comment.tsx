@@ -13,7 +13,7 @@ import { Photo } from "@/registry/ui/photo"
 
 const keepDraftForCallerToReport = () => undefined
 
-const rowAction = "size-5 data-[state=open]:bg-background-medium"
+const rowAction = "size-5 aria-expanded:bg-background-medium!"
 
 type ViewCommentPerson = { name: string; src?: string | undefined; index?: number | undefined }
 
@@ -135,7 +135,7 @@ function ViewCommentMessage({
                   label="React"
                   className={cn(
                     rowAction,
-                    "opacity-0 group-focus-within/message:opacity-100 group-hover/message:opacity-100 data-[state=open]:opacity-100"
+                    "opacity-0 group-focus-within/message:opacity-100 group-hover/message:opacity-100 aria-expanded:opacity-100"
                   )}
                 >
                   <SmileIcon />
