@@ -9,6 +9,8 @@ import { CommentPin } from "@/registry/ui/comment-pin"
 import { IconButton } from "@/registry/ui/icon-button"
 import { Photo } from "@/registry/ui/photo"
 
+const keepDraftForCallerToReport = () => undefined
+
 type CommentMessage = { author: string; time?: React.ReactNode; body: React.ReactNode; photos?: string[]; index?: number }
 
 function ViewComment({
@@ -25,7 +27,7 @@ function ViewComment({
 }: React.ComponentProps<"div"> & {
   me: string
   messages: CommentMessage[]
-  onReply?: (text: string) => void
+  onReply?: (text: string) => Promise<void> | void
   onResolve?: () => void
   onClose?: () => void
   onMore?: () => void
@@ -33,6 +35,13 @@ function ViewComment({
   showPin?: boolean
 }) {
   const [draft, setDraft] = React.useState("")
+  const [sending, setSending] = React.useState(false)
+  const send = async () => {
+    if (!onReply) return
+    setSending(true)
+    await Promise.resolve(onReply(draft)).then(() => setDraft(""), keepDraftForCallerToReport)
+    setSending(false)
+  }
   return (
     <div data-slot="view-comment" className={cn("flex items-start gap-2", className)} {...props}>
       {showPin && <CommentPin state="selected" users={[me]} index={5} />}
@@ -40,12 +49,16 @@ function ViewComment({
         <div className="flex items-center justify-between py-2 pr-2 pl-4 text-label-small text-texticons-emphasis shadow-[inset_0_-1px_0_var(--color-stroke-subtle)]">
           <span>Comment</span>
           <span className="inline-flex gap-0.5">
-            <IconButton variant="tertiary" size="micro" label="More" onClick={onMore}>
-              <EllipsisHorizontalIcon />
-            </IconButton>
-            <IconButton variant="tertiary" size="micro" label="Resolve" onClick={onResolve}>
-              <CheckIcon />
-            </IconButton>
+            {onMore && (
+              <IconButton variant="tertiary" size="micro" label="More" onClick={onMore}>
+                <EllipsisHorizontalIcon />
+              </IconButton>
+            )}
+            {onResolve && (
+              <IconButton variant="tertiary" size="micro" label="Resolve" onClick={onResolve}>
+                <CheckIcon />
+              </IconButton>
+            )}
             <IconButton variant="tertiary" size="micro" label="Close" onClick={onClose}>
               <CloseIcon />
             </IconButton>
@@ -70,36 +83,37 @@ function ViewComment({
             </div>
           </div>
         ))}
-        <div className="flex gap-2 px-4 py-3 shadow-[inset_0_1px_0_var(--color-stroke-subtle)]">
-          <Avatar size="M" name={me} index={5} />
-          <div className="flex flex-1 flex-col gap-1 rounded-md px-2 py-1.5 inset-ring inset-ring-stroke-default focus-within:inset-ring-stroke-info focus-within:shadow-focus">
-            <textarea
-              rows={2}
-              aria-label="Reply"
-              placeholder="Add a comment"
-              value={draft}
-              onChange={(e) => setDraft(e.target.value)}
-              className="resize-none bg-transparent text-paragraph-small text-texticons-primary outline-none placeholder:text-texticons-placeholder"
-            />
-            <div className="flex justify-end gap-1">
-              <IconButton variant="tertiary" size="micro" label="Attach image" onClick={onAttach}>
-                <PhotoIcon />
-              </IconButton>
-              <IconButton
-                variant="primary"
-                size="micro"
-                label="Send"
-                disabled={!draft.trim()}
-                onClick={() => {
-                  onReply?.(draft)
-                  setDraft("")
-                }}
-              >
-                <SendIcon />
-              </IconButton>
+        {onReply && (
+          <div className="flex gap-2 px-4 py-3 shadow-[inset_0_1px_0_var(--color-stroke-subtle)]">
+            <Avatar size="M" name={me} index={5} />
+            <div className="flex flex-1 flex-col gap-1 rounded-md px-2 py-1.5 inset-ring inset-ring-stroke-default focus-within:inset-ring-stroke-info focus-within:shadow-focus">
+              <textarea
+                rows={2}
+                aria-label="Reply"
+                placeholder="Add a comment"
+                value={draft}
+                onChange={(e) => setDraft(e.target.value)}
+                className="resize-none bg-transparent text-paragraph-small text-texticons-primary outline-none placeholder:text-texticons-placeholder"
+              />
+              <div className="flex justify-end gap-1">
+                {onAttach && (
+                  <IconButton variant="tertiary" size="micro" label="Attach image" onClick={onAttach}>
+                    <PhotoIcon />
+                  </IconButton>
+                )}
+                <IconButton
+                  variant="primary"
+                  size="micro"
+                  label="Send"
+                  disabled={sending || !draft.trim()}
+                  onClick={() => void send()}
+                >
+                  <SendIcon />
+                </IconButton>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   )
