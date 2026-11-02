@@ -38,13 +38,14 @@ export function CommentsDemo() {
               author={["Ryan Tan", "Ana Lim", "Wei Jie"][i]}
               authorIndex={i + 1}
               location={`#${i + 3} · Building 1 · Floor ${7 + i} · Zone A`}
-              time={`${i + 1}h`}
+              time={`${(i + 1) * 20} minutes ago`}
               unread={i === 0}
               selected={selected === i}
               resolved={i === 1 && resolved}
               onResolve={() => i === 1 && setResolved(!resolved)}
+              onMore={() => {}}
               onClick={() => setSelected(i)}
-              replies={i === 2 ? "2 replies" : undefined}
+              replies={i === 2 ? "3 replies · 2 images" : undefined}
             >
               Can we check the setback on the east side?
             </CommentThread>
