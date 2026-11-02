@@ -85,8 +85,8 @@ function CommentPin({
         data-state={state}
         aria-label={label}
         className={cn(
-          "group/pin relative inline-flex size-12 cursor-pointer items-center justify-center rounded-full p-0 shadow-xs outline-none hover:shadow-sm focus-visible:shadow-focus",
-          unread ? "bg-info-primary text-texticons-inverse-primary" : "bg-background-default text-texticons-secondary",
+          "group/pin relative inline-flex size-12 cursor-pointer items-center justify-center rounded-full p-0 outline-none focus-visible:shadow-focus shadow-xs hover:shadow-sm",
+          unread ? "bg-info-primary text-texticons-inverse-primary" : "bg-background-default text-texticons-primary",
           className
         )}
         {...props}
@@ -107,7 +107,7 @@ function CommentPin({
             />
           ))}
         </span>
-        <span className="hidden text-paragraph-xsmall font-medium group-hover/pin:inline group-focus-visible/pin:inline">
+        <span className="hidden text-label-xsmall group-hover/pin:inline group-focus-visible/pin:inline">
           {count}
         </span>
       </button>
@@ -122,10 +122,10 @@ function CommentPin({
       data-state={state}
       aria-label={label}
       className={cn(
-        "relative inline-flex cursor-pointer items-center rounded-full rounded-bl-none shadow-xs outline-none focus-visible:shadow-focus",
-        shown.length > 1 ? "px-0.5 py-px" : "size-8 p-0.5",
+        "relative inline-flex cursor-pointer items-center rounded-full rounded-bl-none outline-none focus-visible:shadow-focus shadow-xs",
+        shown.length > 1 ? "p-0.5" : "size-8 p-0.5",
         unread ? "bg-info-primary" : "bg-background-default",
-        state === "selected" && "inset-ring inset-ring-texticons-link-primary",
+        state === "selected" && "inset-ring inset-ring-stroke-info",
         state === "resolved" && "opacity-50",
         className
       )}
@@ -161,47 +161,32 @@ function CommentPinPreview({
   age?: React.ReactNode
   replies?: React.ReactNode
 }) {
+  const shown = users.slice(0, 2)
   return (
     <button
       type="button"
       data-slot="comment-pin-preview"
       data-state={unread ? "unread" : "read"}
       className={cn(
-        "flex w-75 cursor-pointer flex-col items-start gap-2.5 overflow-hidden rounded-[16px_16px_16px_0] px-4 py-3 text-left shadow-md outline-none focus-visible:shadow-focus",
-        unread ? "bg-info-primary text-texticons-inverse-primary" : "bg-background-default text-texticons-primary",
+        "flex w-75 cursor-pointer flex-col items-start gap-3 overflow-hidden rounded-lg rounded-bl-none px-4 py-3 text-left text-label-xsmall shadow-sm outline-none focus-visible:shadow-focus",
+        unread ? "bg-info-primary text-texticons-inverse-primary" : "bg-background-default text-texticons-emphasis",
         className
       )}
       {...props}
     >
-      <span className="flex w-full items-center gap-2">
+      <span className={cn("flex w-full items-center", shown.length > 1 ? "gap-2" : "gap-1")}>
         <span className="flex gap-0.5">
-          {users.slice(0, 2).map((user, i) => {
+          {shown.map((user, i) => {
             const p = person(user, i)
             return <Avatar key={i} size="XS" name={p.name} src={p.src} index={p.index} />
           })}
         </span>
-        <span className="text-label-xsmall">{author}</span>
-        {age && (
-          <span
-            className={cn(
-              "text-paragraph-xsmall font-medium",
-              unread ? "text-texticons-inverse-secondary" : "text-texticons-tertiary"
-            )}
-          >
-            {age}
-          </span>
-        )}
+        <span>{author}</span>
+        {age && <span className={unread ? "text-neutral-10" : "text-neutral-30"}>{age}</span>}
       </span>
-      <span className="w-full text-paragraph-xsmall font-medium wrap-break-word">{children}</span>
+      <span className="w-full wrap-break-word">{children}</span>
       {replies && (
-        <span
-          className={cn(
-            "pt-1 text-label-xsmall",
-            unread ? "text-texticons-inverse-primary" : "text-texticons-link-primary"
-          )}
-        >
-          {replies}
-        </span>
+        <span className={cn("pt-1", unread ? "text-neutral-10" : "text-texticons-link-primary")}>{replies}</span>
       )}
     </button>
   )
