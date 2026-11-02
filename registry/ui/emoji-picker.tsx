@@ -33,6 +33,10 @@ const tabs: { key: keyof typeof tabPaths; label: string; category?: RegExp }[] =
 
 const defaultFrequent = ["👍", "🔥", "🏆", "💯", "😄", "🎉", "✅"]
 
+// The Emojibase data is self-hosted, not fetched from jsDelivr: the app serves
+// emojibase-data's `en/data.json` and `en/messages.json` under this path.
+const defaultEmojibaseUrl = "/emojibase-data"
+
 const emojiButton =
   "flex h-7 flex-1 cursor-pointer items-center justify-center rounded-sm font-[family-name:var(--frimousse-emoji-font)] text-paragraph-large outline-none hover:bg-background-light focus-visible:shadow-focus"
 
@@ -49,11 +53,13 @@ function categoryTop(viewport: HTMLElement, pattern: RegExp) {
 function EmojiPicker({
   onEmojiSelect,
   frequent = defaultFrequent,
+  emojibaseUrl = defaultEmojibaseUrl,
   className,
   ...props
 }: Omit<React.ComponentProps<"div">, "onSelect"> & {
   onEmojiSelect: (emoji: string) => void
   frequent?: string[]
+  emojibaseUrl?: string
 }) {
   const viewport = React.useRef<HTMLDivElement>(null)
   const [search, setSearch] = React.useState("")
@@ -86,6 +92,7 @@ function EmojiPicker({
     <Picker.Root
       data-slot="emoji-picker"
       columns={8}
+      emojibaseUrl={emojibaseUrl}
       sticky={false}
       onEmojiSelect={({ emoji }) => onEmojiSelect(emoji)}
       className={cn(

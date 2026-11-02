@@ -818,7 +818,7 @@
       "categories": [
         "comments"
       ],
-      "description": "↪ Comments Emoji Picker: category tabs, search, a Frequently used row and every emoji by category (frimousse data). EmojiPickerPopover opens it from any trigger and closes on pick.",
+      "description": "↪ Comments Emoji Picker: category tabs, search, a Frequently used row and every emoji by category (frimousse, with the Emojibase data served by your app under /emojibase-data, or set emojibaseUrl). EmojiPickerPopover opens it from any trigger and closes on pick.",
       "dependencies": [
         "frimousse",
         "radix-ui",
