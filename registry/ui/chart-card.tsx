@@ -32,7 +32,7 @@ function ChartDataTable({ chart }: { chart: ChartSpec }) {
     {open && <div className="mt-2 max-h-64 overflow-auto">
       {data.rows.length > 500 && <p className="text-paragraph-xsmall">Showing the first 500 of {data.rows.length.toLocaleString()} rows.</p>}
       <table className="w-full text-left text-paragraph-xsmall"><thead><tr>{data.columns.map((column, i) => <th key={i} scope="col" className="border-b border-stroke-default px-2 py-1 font-semibold">{column}</th>)}</tr></thead>
-        <tbody>{data.rows.slice(0, 500).map((row, i) => <tr key={i}>{data.columns.map((_, k) => <td key={k} className="border-b border-stroke-subtle px-2 py-1">{row[k] ?? "Missing"}</td>)}</tr>)}</tbody>
+        <tbody>{data.rows.slice(0, 500).map((row, i) => <tr key={i}>{data.columns.map((_, k) => <td key={k} className="border-b border-stroke-subtle px-2 py-1">{typeof row[k] === "number" ? row[k].toLocaleString(undefined, { maximumFractionDigits: 3 }) : row[k] ?? "Missing"}</td>)}</tr>)}</tbody>
       </table>
     </div>}
   </details>
