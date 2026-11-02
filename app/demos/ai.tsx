@@ -25,6 +25,17 @@ const modes = [
   { value: "yolo", label: "YOLO", description: "Runs everything without asking" },
 ]
 const models = ["GPT-5", "GPT-5 mini", "Claude Sonnet 4.5", "Claude Haiku 4.5"].map((m) => ({ value: m, label: m }))
+const manyModels = Object.entries({
+  anthropic: ["Claude Opus 4.5", "Claude Sonnet 4.5", "Claude Haiku 4.5", "Claude Opus 4.1", "Claude Sonnet 4"],
+  openai: ["GPT-5", "GPT-5 mini", "GPT-5 nano", "GPT-4.1", "GPT-4.1 mini", "o3", "o4-mini"],
+  google: ["Gemini 2.5 Pro", "Gemini 2.5 Flash", "Gemini 2.5 Flash Lite"],
+  xai: ["Grok 4", "Grok 4 Fast", "Grok Code Fast"],
+  mistral: ["Mistral Large", "Mistral Medium", "Codestral"],
+  deepseek: ["DeepSeek V3.1", "DeepSeek R1"],
+  moonshot: ["Kimi K2"],
+}).flatMap(([provider, names]) =>
+  names.map((name) => ({ value: `${provider}/${name.toLowerCase().replaceAll(" ", "-")}`, label: name, description: provider }))
+)
 const efforts = ["Low", "Medium", "High"].map((e) => ({ value: e.toLowerCase(), label: e }))
 const usage = { used: 84_000, limit: 200_000, inputTokens: 61_240, outputTokens: 22_760, credits: "1.8" }
 const mentions = [
@@ -54,6 +65,7 @@ function Composer({
   disabled,
   picker,
   wrap,
+  modelOptions = models,
 }: {
   initial?: string
   placeholder?: string
@@ -62,10 +74,11 @@ function Composer({
   disabled?: boolean
   picker?: React.ReactNode
   wrap?: boolean
+  modelOptions?: typeof models
 }) {
   const [text, setText] = React.useState(initial)
   const [mode, setMode] = React.useState("auto")
-  const [model, setModel] = React.useState("GPT-5")
+  const [model, setModel] = React.useState(modelOptions[0]?.value ?? "")
   const [effort, setEffort] = React.useState("medium")
   return (
     <AIPromptInput onSubmit={() => setText("")}>
@@ -81,7 +94,7 @@ function Composer({
         <AIPromptInputTools wrap={wrap}>
           <AIPromptInputAttach />
           <AIPromptInputSelect title="Mode" options={modes} value={mode} onValueChange={setMode} />
-          <AIPromptInputSelect title="Model" options={models} value={model} onValueChange={setModel} />
+          <AIPromptInputSelect title="Model" options={modelOptions} value={model} onValueChange={setModel} />
           <AIPromptInputSelect title="Effort" options={efforts} value={effort} onValueChange={setEffort} />
         </AIPromptInputTools>
         <AIContextUsage {...usage} />
@@ -190,6 +203,7 @@ const states: [string, React.ReactNode][] = [
       context={<>{selection}{file("Floor 3 cost plan.pdf")}{file("Cost assumptions.pdf")}</>}
     />,
   ],
+  ["Many models: search and scroll", <Composer key="many" modelOptions={manyModels} />],
   [
     "Narrow, tools wrap",
     <div key="wrap" className="w-80">
