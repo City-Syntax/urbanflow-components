@@ -18,7 +18,7 @@ const bg: Record<(typeof palette)[number], string> = {
 const sizes = {
   L: "size-7 text-label-xsmall",
   M: "size-6 text-label-xsmall",
-  S: "size-5 text-[10px] leading-3",
+  S: "size-[22px] text-[10px] leading-3",
   XS: "size-[18px] text-[9px] leading-3",
 }
 
