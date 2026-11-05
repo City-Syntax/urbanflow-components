@@ -1,0 +1,3 @@
+en/data.json and en/messages.json are copied unchanged from emojibase-data 18.0.0
+(https://github.com/milesj/emojibase, MIT licence, see LICENSE).
+The emoji picker reads them from here instead of jsDelivr.
