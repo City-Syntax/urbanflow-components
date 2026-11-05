@@ -748,7 +748,7 @@
       "categories": [
         "comments"
       ],
-      "description": "↪ Comments Comment Thread: panel row with location, author, time, first message and replies; unread dot; more and resolve on hover.",
+      "description": "↪ Comments Comment Thread: panel row with number and location, author, time, first message and replies; read rows at 60%, unread dot, selected light blue, filled check when resolved; more (menu trigger slot) and resolve on hover.",
       "dependencies": [
         "@urbanflow/icons"
       ],

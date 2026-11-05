@@ -1,12 +1,15 @@
 "use client"
 
 import * as React from "react"
-import { CheckIcon, CloseIcon, EllipsisHorizontalIcon, MessageIcon, SearchIcon } from "@urbanflow/icons"
+import { CheckIcon, CloseIcon, EllipsisHorizontalCircleIcon, MessageIcon, SearchIcon } from "@urbanflow/icons"
 
 import { cn } from "@/lib/utils"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/registry/ui/action-list"
 import { IconButton } from "@/registry/ui/icon-button"
 import { TextField } from "@/registry/ui/text-field"
+
+const headerAction =
+  "size-4 rounded-sm text-texticons-primary aria-pressed:bg-neutral-10 aria-pressed:text-texticons-primary not-disabled:active:bg-neutral-10 [&_svg:not([class*='size-'])]:size-4"
 
 function CommentSection({
   title = "Comments",
@@ -25,20 +28,26 @@ function CommentSection({
   return (
     <div
       data-slot="comment-section"
-      className={cn("flex items-center justify-between gap-4 bg-background-default px-6 py-4", className)}
+      className={cn("flex h-13.5 items-center justify-between gap-4 bg-background-default px-6", className)}
       {...props}
     >
       <span className="text-label-xsmall text-texticons-emphasis">{title}</span>
-      <span className="inline-flex gap-2">
+      <span className="inline-flex items-center gap-2">
         <DropdownMenu open={open} onOpenChange={setOpen}>
           <DropdownMenuTrigger asChild>
-            <IconButton variant="tertiary" size="micro" label="Filter comments" selected={open || showResolved}>
-              <EllipsisHorizontalIcon />
+            <IconButton
+              variant="tertiary"
+              size="micro"
+              label="Filter comments"
+              selected={open || showResolved}
+              className={headerAction}
+            >
+              <EllipsisHorizontalCircleIcon />
             </IconButton>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="min-w-50">
+          <DropdownMenuContent align="end">
             <DropdownMenuItem
-              trailing={showResolved ? <CheckIcon /> : undefined}
+              trailing={showResolved ? <CheckIcon /> : <span className="size-4" />}
               onSelect={() => onShowResolvedChange?.(!showResolved)}
             >
               Show resolved comments
@@ -46,7 +55,7 @@ function CommentSection({
           </DropdownMenuContent>
         </DropdownMenu>
         {onClose && (
-          <IconButton variant="tertiary" size="micro" label="Close comments" onClick={onClose}>
+          <IconButton variant="tertiary" size="micro" label="Close comments" onClick={onClose} className={headerAction}>
             <CloseIcon />
           </IconButton>
         )}
@@ -72,7 +81,7 @@ function CommentSearch({
 }) {
   return (
     <div data-slot="comment-search" className={cn("flex flex-col", className)}>
-      <div className="px-6 py-3 shadow-[inset_0_-1px_0_var(--color-stroke-subtle)]">
+      <div className="px-4 py-2 shadow-[inset_0_-1px_0_var(--color-stroke-subtle)]">
         <TextField
           label="Search comments"
           labelPosition="hidden"
@@ -85,11 +94,11 @@ function CommentSearch({
       {(noMatch || empty) && !children && (
         <div
           className={cn(
-            "flex items-start gap-2 px-6 py-4 text-label-xsmall [&_svg]:size-5 [&_svg]:shrink-0",
-            noMatch ? "text-neutral-30" : "text-texticons-primary"
+            "flex gap-2 px-6 py-4 text-label-xsmall [&_svg]:size-5 [&_svg]:shrink-0",
+            noMatch ? "items-center text-neutral-30" : "items-start text-texticons-primary"
           )}
         >
-          <MessageIcon />
+          <MessageIcon className={cn(noMatch && "text-neutral-20")} />
           <span>
             {noMatch
               ? "No comments matched your search"
