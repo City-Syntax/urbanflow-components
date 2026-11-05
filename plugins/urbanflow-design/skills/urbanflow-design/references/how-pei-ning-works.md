@@ -14,7 +14,7 @@ Follow this checklist for every design task.
    - If Pei Ning provides an approved local component board for the task, reuse those components. Do not replace them with library components or recreated look-alikes unless explicitly requested.
    - Promote a component only after Pei Ning explicitly approves/finalises it, unless the task explicitly requests promotion.
    - Reusable across products: promote to the global Flow Design System.
-   - Product-specific shell pattern: document it on a dedicated page under Shell in the design system.
+   - In Flow Design System, every feature page uses the child-arrow prefix `↪` and belongs in the feature-page group below `Shell`, including `↪ AI` when shared by urbanflow and Flux. Keep unrelated pages in their existing order. See `references/principles/reading-the-ds.md` for page organisation.
    - After promotion, replace local instances with the published Flow instances and verify the result.
    - For Flow icon maintenance, flatten outline icon geometry while preserving its visible stroke treatment and transparent background. Do not automatically change genuinely filled, mixed fill/stroke, or stateful icons; identify and report them for confirmation first.
 7. Arrange annotated journeys as a tree:
