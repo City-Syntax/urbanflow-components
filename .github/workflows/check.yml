@@ -14,6 +14,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+      - run: python3 scripts/validate-design-plugin.py
       # Every PR needs a changeset (use `npx changeset --empty` for changes that don't ship).
       # Skipped on the Version Packages PR, which consumes the changesets by design.
       - if: github.head_ref != 'changeset-release/main'

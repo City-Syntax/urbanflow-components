@@ -1,0 +1,20 @@
+{
+  "name": "urbanflow-plugins",
+  "interface": {
+    "displayName": "urbanflow plugins"
+  },
+  "plugins": [
+    {
+      "name": "urbanflow-design",
+      "source": {
+        "source": "local",
+        "path": "./plugins/urbanflow-design"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
