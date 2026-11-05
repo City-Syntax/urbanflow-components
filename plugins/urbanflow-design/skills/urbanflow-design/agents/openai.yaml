@@ -1,0 +1,14 @@
+interface:
+  display_name: Urbanflow Design
+  short_description: Build and analyse Figma designs with Flow rules
+  default_prompt: Use $urbanflow-design to build or analyse this Figma design using
+    the Flow Design System.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

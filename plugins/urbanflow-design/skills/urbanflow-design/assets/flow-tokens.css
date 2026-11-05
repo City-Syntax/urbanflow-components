@@ -1,0 +1,127 @@
+/* Flow Design System tokens — generated from the Flow artifact's tokens.json (Figma NQpg4P9K158sjcEKmMLd8w), 30 Sep 2026.
+   Names = Figma variable names with '/' → '-'. Paste into an HTML prototype's <style>. */
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+:root{
+  --Neutrals-neutral-0:#ffffff;
+  --Neutrals-neutral-1:#fdfdfd;
+  --Neutrals-neutral-2:#fafafa;
+  --Neutrals-neutral-3:#f7f7f7;
+  --Neutrals-neutral-10:#e3e3e3;
+  --Neutrals-neutral-20:#cccccc;
+  --Neutrals-neutral-30:#b5b5b5;
+  --Neutrals-neutral-80:#616161;
+  --Neutrals-neutral-90:#4a4a4a;
+  --Neutrals-neutral-100:#303030;
+  --Neutrals-neutral-120:#1a1a1a;
+  --Semantic-info-xxxlight:#fcfdff;
+  --Semantic-info-xxlight:#e2e7ff;
+  --Semantic-info-xlight:#d5dcff;
+  --Semantic-info-light:#c5d0ff;
+  --Semantic-info-primary:#005bd3;
+  --Semantic-info-heavy:#004299;
+  --Semantic-info-xheavy:#002e6a;
+  --Semantic-success-xxxlight:#f8fffb;
+  --Semantic-success-xxlight:#cdfee1;
+  --Semantic-success-light:#29845a;
+  --Semantic-success-primary:#136f45;
+  --Semantic-success-heavy:#0c5132;
+  --Semantic-success-xheavy:#083d25;
+  --Semantic-success-xxheavy:#092a1b;
+  --Semantic-caution-xxlight:#fff1e3;
+  --Semantic-caution-light:#ffbd14;
+  --Semantic-caution-primary:#e6aa12;
+  --Semantic-caution-heavy:#332e00;
+  --Semantic-caution-xheavy:#1f1c00;
+  --Semantic-critical-xxxlight:#fffbfb;
+  --Semantic-critical-light:#fee9e8;
+  --Semantic-critical-primary:#e51c00;
+  --Semantic-critical-heavy:#8e1f0b;
+  --Semantic-critical-xxheavy:#5f1507;
+  --Semantic-critical-xxxheavy:#2f0a04;
+  --Semantic-magic-xxxlight:#fdfdff;
+  --Semantic-magic-primary:#7126ff;
+  --Semantic-magic-heavy:#5700d1;
+  --Misc-misc-red:#ff383c;
+  --Misc-misc-orange:#ff8d28;
+  --Misc-misc-yellow:#ffcc00;
+  --Misc-misc-green:#34c759;
+  --Misc-misc-cyan:#00c0e8;
+  --Misc-misc-indigo:#cb30e0;
+  --Misc-misc-pink:#ff2d55;
+  --Misc-misc-brown:#ac7f5e;
+  --TextIcons-Emphasis:#202020;
+  --TextIcons-Primary:rgba(32, 32, 32, 0.8);
+  --TextIcons-Secondary:rgba(32, 32, 32, 0.7);
+  --TextIcons-Tertiary:rgba(32, 32, 32, 0.5);
+  --TextIcons-Placeholder:rgba(32, 32, 32, 0.4);
+  --TextIcons-Disabled:rgba(32, 32, 32, 0.3);
+  --TextIcons-InversePrimary:#ffffff;
+  --TextIcons-InverseSecondary:rgba(255, 255, 255, 0.7);
+  --TextIcons-InverseDisabled:rgba(255, 255, 255, 0.5);
+  --TextIcons-CriticalPrimary:var(--Semantic-critical-heavy);
+  --TextIcons-CriticalSecondary:var(--Semantic-critical-xxheavy);
+  --TextIcons-SuccessPrimary:var(--Semantic-success-light);
+  --TextIcons-CautionPrimary:var(--Semantic-caution-light);
+  --TextIcons-CautionSecondary:var(--Semantic-caution-primary);
+  --TextIcons-LinkPrimary:var(--Semantic-info-primary);
+  --TextIcons-LinkSecondary:var(--Semantic-info-heavy);
+  --Background-Default:var(--Neutrals-neutral-0);
+  --Background-Light:var(--Neutrals-neutral-3);
+  --Background-Medium:#efefef;
+  --Background-Card:#fdfdfa;
+  --Background-Overlay:rgba(0, 0, 0, 0.4);
+  --Background-Inverse:var(--Neutrals-neutral-120);
+  --Background-Inverse-Secondary:#4b4b48;
+  --Background-Info:var(--Semantic-info-xxlight);
+  --Background-Critical:var(--Semantic-critical-light);
+  --Background-Caution:var(--Semantic-caution-xxlight);
+  --Background-Success:var(--Semantic-success-xxlight);
+  --Stroke-subtle:#ecece6;
+  --Stroke-default:#e3e3dc;
+  --Stroke-strong:#d1d1ca;
+  --Stroke-selected:rgba(32, 32, 32, 0.8);
+  --Stroke-critical:var(--Semantic-critical-heavy);
+  --Stroke-info:var(--Semantic-info-primary);
+  --spacing-0:0px;
+  --spacing-2:2px;
+  --spacing-4:4px;
+  --spacing-6:6px;
+  --spacing-8:8px;
+  --spacing-12:12px;
+  --spacing-16:16px;
+  --spacing-24:24px;
+  --spacing-32:32px;
+  --radius-none:0px;
+  --radius-xs:2px;
+  --radius-sm:4px;
+  --radius-md:8px;
+  --radius-lg:12px;
+  --radius-full:9999px;
+  --Shadow-xs:0 1px 2px 0 rgba(28, 28, 28, 0.05);
+  --Shadow-sm:0 2px 6px 1px rgba(28, 28, 28, 0.06), 0 1px 2px 0 rgba(28, 28, 28, 0.04);
+  --Shadow-md:0 4px 20px -4px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(28, 28, 28, 0.05);
+  --Shadow-lg:0 24px 48px -12px rgba(0, 0, 0, 0.18), 0 4px 8px -2px rgba(28, 28, 28, 0.06);
+  --Shadow-float:0 12px 32px -8px rgba(0, 0, 0, 0.35);
+  --shadow-focus:0 0 0 2px #005bd3;
+  --font-sans:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:"DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+.header-xxlarge{font-family:var(--font-sans);font-size:32px;line-height:36px;font-weight:600;letter-spacing:0}
+.header-xlarge{font-family:var(--font-sans);font-size:28px;line-height:32px;font-weight:600;letter-spacing:0}
+.header-large{font-family:var(--font-sans);font-size:24px;line-height:28px;font-weight:600;letter-spacing:0}
+.header-medium{font-family:var(--font-sans);font-size:20px;line-height:24px;font-weight:600;letter-spacing:0}
+.header-small{font-family:var(--font-sans);font-size:16px;line-height:20px;font-weight:600;letter-spacing:0}
+.header-xsmall{font-family:var(--font-sans);font-size:14px;line-height:20px;font-weight:600;letter-spacing:0}
+.header-xxsmall{font-family:var(--font-sans);font-size:12px;line-height:16px;font-weight:600;letter-spacing:0}
+.paragraph-large{font-family:var(--font-sans);font-size:18px;line-height:28px;font-weight:400;letter-spacing:0}
+.paragraph-medium{font-family:var(--font-sans);font-size:16px;line-height:24px;font-weight:400;letter-spacing:0}
+.paragraph-small{font-family:var(--font-sans);font-size:14px;line-height:20px;font-weight:400;letter-spacing:0}
+.paragraph-xsmall{font-family:var(--font-sans);font-size:12px;line-height:16px;font-weight:400;letter-spacing:0}
+.label-large{font-family:var(--font-sans);font-size:18px;line-height:24px;font-weight:600;letter-spacing:0}
+.label-medium{font-family:var(--font-sans);font-size:16px;line-height:20px;font-weight:600;letter-spacing:0}
+.label-small{font-family:var(--font-sans);font-size:14px;line-height:16px;font-weight:600;letter-spacing:0}
+.label-xsmall{font-family:var(--font-sans);font-size:12px;line-height:16px;font-weight:600;letter-spacing:0}
+.metric-large{font-family:var(--font-mono);font-size:28px;line-height:32px;font-weight:400;letter-spacing:0}
+.metric-medium{font-family:var(--font-mono);font-size:24px;line-height:32px;font-weight:400;letter-spacing:0}
+.metric-small{font-family:var(--font-mono);font-size:18px;line-height:24px;font-weight:400;letter-spacing:0}
+.metric-xsmall{font-family:var(--font-mono);font-size:16px;line-height:20px;font-weight:400;letter-spacing:0}

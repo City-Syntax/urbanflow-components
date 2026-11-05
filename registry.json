@@ -727,16 +727,46 @@
       "categories": [
         "comments"
       ],
-      "description": "↪ Comments Comment Pin: 32px canvas pin; read, unread, selected, resolved, typing; stacked avatars or a group count.",
-      "dependencies": [
-        "@urbanflow/icons"
-      ],
+      "description": "↪ Comments Comment Pin: canvas pin with a sharp bottom-left tip. Single or multi-user (max 2 avatars) in read, unread (blue), selected (blue ring), resolved (50%) and typing (blue bubble); a 48px group circle (max 3 avatars, count on hover) when `count` is set; CommentPinPreview is the hover card.",
       "registryDependencies": [
         "https://components.urbanflow.co/r/avatar.json"
       ],
       "files": [
         {
           "path": "registry/ui/comment-pin.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "send-button",
+      "type": "registry:ui",
+      "title": "Send Button",
+      "categories": [
+        "comments"
+      ],
+      "description": "↪ Comments SendButton: 28px round arrow-up submit button; blue when active, grey when disabled.",
+      "files": [
+        {
+          "path": "registry/ui/send-button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "comment-icon-button",
+      "type": "registry:ui",
+      "title": "Comment Icon Button",
+      "categories": [
+        "comments"
+      ],
+      "description": "↪ Comments CommentIconButton: 32px toolbar button for the comment tool; inverse when selected, red dot when there are unread comments.",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/comment-icon-button.tsx",
           "type": "registry:ui"
         }
       ]

@@ -1,0 +1,28 @@
+{
+  "name": "urbanflow-design",
+  "version": "0.1.1",
+  "description": "Build and analyse Flux and urbanflow designs using the Flow Design System.",
+  "author": {
+    "name": "urbanflow"
+  },
+  "keywords": [
+    "figma",
+    "design-system",
+    "flux",
+    "urbanflow"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "urbanflow Design",
+    "shortDescription": "Design and review Flux and urbanflow with Flow guidelines",
+    "longDescription": "Shared Flow Design System guidance, Figma workflows, design reviews and handoff references for Flux and urbanflow. Requires separately authorized Figma tools for live design work.",
+    "developerName": "urbanflow",
+    "category": "Productivity",
+    "defaultPrompt": [
+      "Use urbanflow Design to review this Figma screen against the Flow Design System.",
+      "Use urbanflow Design to design this Flux flow using existing Flow components."
+    ],
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/logo.png"
+  }
+}

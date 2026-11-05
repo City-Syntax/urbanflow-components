@@ -4,12 +4,14 @@ import * as React from "react"
 
 import { DropdownMenuItem } from "@/registry/ui/action-list"
 import { Avatar } from "@/registry/ui/avatar"
-import { CommentPin } from "@/registry/ui/comment-pin"
+import { CommentIconButton } from "@/registry/ui/comment-icon-button"
+import { CommentPin, CommentPinPreview } from "@/registry/ui/comment-pin"
 import { CommentSearch, CommentSection } from "@/registry/ui/comment-section"
 import { CommentThread } from "@/registry/ui/comment-thread"
 import { EmojiPicker } from "@/registry/ui/emoji-picker"
 import { ImageZoomSelector } from "@/registry/ui/image-zoom-selector"
 import { Photo } from "@/registry/ui/photo"
+import { SendButton } from "@/registry/ui/send-button"
 import { ViewComment, ViewCommentMessage } from "@/registry/ui/view-comment"
 
 export function CommentsDemo() {
@@ -37,14 +39,35 @@ export function CommentsDemo() {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-wrap items-center gap-4">
-        <CommentPin users={["Pei Ning"]} />
-        <CommentPin state="unread" users={["Ryan Tan"]} index={2} />
-        <CommentPin state="selected" users={["Ana Lim"]} index={3} />
-        <CommentPin state="resolved" users={["Wei Jie"]} index={4} />
         <CommentPin state="typing" />
-        <CommentPin users={["Pei Ning", "Ryan Tan", "Ana Lim"]} />
-        <CommentPin count={4} />
-        <CommentPin count={4} state="selected" />
+        <CommentPin users={["Pei Ning"]} />
+        <CommentPin state="selected" users={["Ana Lim"]} index={3} />
+        <CommentPin state="unread" users={["Ryan Tan"]} index={2} />
+        <CommentPin state="resolved" users={["Wei Jie"]} index={4} />
+        <CommentPin users={["Pei Ning", "Ryan Tan"]} />
+        <CommentPin state="selected" users={["Pei Ning", "Ryan Tan"]} />
+        <CommentPin state="unread" users={["Pei Ning", "Ryan Tan"]} />
+        <CommentPin state="resolved" users={["Pei Ning", "Ryan Tan"]} />
+        <CommentPin count={2} users={["Pei Ning", "Ryan Tan"]} />
+        <CommentPin count={2} state="unread" users={["Pei Ning", "Ryan Tan"]} />
+        <CommentPin count={5} users={["Pei Ning", "Ryan Tan", "Ana Lim"]} />
+        <CommentPin count={5} state="unread" users={["Pei Ning", "Ryan Tan", "Ana Lim"]} />
+      </div>
+      <div className="flex flex-wrap items-start gap-4">
+        <CommentPinPreview users={["Pei Ning"]} author="Pei Ning" age="3 mo. ago" replies="3 replies">
+          What does the clock icon represent in this design?
+        </CommentPinPreview>
+        <CommentPinPreview unread users={["Pei Ning", "Ryan Tan"]} author="Pei Ning" age="2d ago" replies="3 replies">
+          What does the clock icon represent in this design?
+        </CommentPinPreview>
+      </div>
+      <div className="flex flex-wrap items-center gap-4">
+        <SendButton />
+        <SendButton disabled />
+        <CommentIconButton />
+        <CommentIconButton unread />
+        <CommentIconButton selected />
+        <CommentIconButton selected unread />
       </div>
       <div className="flex flex-wrap items-start gap-8">
         <div className="w-80 overflow-hidden rounded-lg bg-background-default ring-1 ring-stroke-default">
