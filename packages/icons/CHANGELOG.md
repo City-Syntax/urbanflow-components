@@ -1,5 +1,11 @@
 # @urbanflow/icons
 
+## 1.0.0
+
+### Minor Changes
+
+- 82b678f: Add `smile`, `at`, `paperclip`, `link` and `ellipsis-horizontal-circle` icons for the comments composer and thread header.
+
 ## 0.5.0
 
 No changes in this release.

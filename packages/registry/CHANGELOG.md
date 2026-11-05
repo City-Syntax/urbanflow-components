@@ -1,5 +1,57 @@
 # @urbanflow/registry
 
+## 1.0.0
+
+### Major Changes
+
+- 8292388: Comment Pin now follows the Flow ↪ Comments page (Comment set `6007:10414`).
+  
+  - `selected` and `unread` swapped looks: `selected` is now white with a blue ring, `unread` is filled blue. If you passed `state="selected"` to mean "this pin's thread is unread", pass `state="unread"`.
+  - Multi-user pins show at most 2 avatars (was 3). `users` also takes `{ name, src, index }` so a pin can show photos.
+  - `typing` is the filled blue speech bubble.
+  - Pins use `shadow-xs`; a selected pin has a 1px `stroke-info` ring; multi-user pins have 2px padding all round.
+  - `count` draws the 48px group circle with up to 3 avatars, and shows the count on hover.
+  - New `CommentPinPreview`: the hover card (avatars, author, age, first comment, replies; blue when unread), 12px radius with a sharp bottom-left corner, `shadow-sm`, `label-xsmall` text.
+  
+  New components:
+  
+  - `send-button`: 28px round arrow-up submit button, blue when active, grey when disabled.
+  - `comment-icon-button`: the comment tool button, inverse when `selected`, with a red dot when `unread`.
+
+### Minor Changes
+
+- ab7852b: AI chats: the panel header, the chats menu, rename and delete dialogs, and the new-chat empty state, from the Figma AI Refresh section. They are presentational. Your app keeps the chats and passes them in with callbacks. Install with `npx shadcn add @urbanflow/<name>`:
+  
+  - `ai-chat-header`: `AIChatHeader` shows the chat `title` (New chat when it is empty), then New chat (`onNewChat`), Show as (`showAs: { value, options: { value, label, icon? }[], onValueChange }`) and Close (`onClose`). Each control appears only when you pass it. Pass `chats` (the `AIChatsMenu` options below) and the title opens the chats menu. The menu closes before your callback runs, so a dialog you open from `onRename` or `onDelete` returns focus to the title. Below 240px the AI mark hides and the title truncates.
+  - `ai-chats-menu`: `AIChatsMenu` takes `chats: { id, title?, updatedAt }[]` (a Date, an ISO string or milliseconds) and groups them into Today, Previous 7 days and Older by local calendar day, newest first. Rename the groups with `labels`. `currentId` gets a tick. Search filters titles, ignoring case and accents. Rows call `onSelect(id)`. A row's More button offers Rename and Delete when you pass `onRename(chat)` or `onDelete(chat)`. With no results, or no chats at all, it offers New chat (`onNewChat`). Arrow keys, Home and End move between the search and the rows, ArrowRight reaches More, and Enter in the search opens the first result. `groupAIChats(chats, now)` exposes the grouping. Pass `now` when you server-render the menu, so the server and the browser pick the same groups.
+  - `ai-rename-chat-dialog`: `AIRenameChatDialog` (`open`, `onOpenChange`, `chatTitle`, `onRename(title)`, `maxLength` default 80). It trims the name, refuses an empty name or one over the limit with a message, and calls `onRename` only when the name changed. If `onRename` returns a promise, Save shows a spinner and the dialog stays open until it resolves; a rejection keeps it open with "Couldn’t rename the chat. Try again."
+  - `ai-delete-chat-dialog`: `AIDeleteChatDialog` (`open`, `onOpenChange`, `chatTitle`, `onDelete`). Focus starts on Cancel. `onDelete` may return a promise, handled the same way as rename.
+  - `ai-empty-state`: `AIEmptyState` shows the AI mark, an optional `heading` and `description`, optional `actions` (for example Upload drawings and Start from an address) and a Suggested list of `{ id, label, icon? }` that calls `onSuggestion(suggestion)`.
+  
+  `modal`: a Modal opened without a `ModalTrigger` now returns focus to the element that had it when it opened, instead of dropping focus to the page.
+- b2fe7b7: `AIPromptInputSelect` handles long option lists. The dropdown now scrolls inside the space on screen, up to 24rem tall. From eight options it opens on a search field that is focused straight away and matches each option's label, description and value, so typing a provider such as `anthropic` finds its models. Arrow keys and Enter pick, the current option keeps its check mark, and an empty search says "No matches". Lists under eight options look and work as before. Set `searchAt` to change the threshold, or `searchAt={Infinity}` to turn search off. Reinstall `ai-prompt-input` (item version 1.2.0) to get it; no other change is needed.
+- 82b678f: The comments panel now matches the Comments page in Figma.
+  
+  - **`CommentThread`.** Read rows sit at 60% opacity and come back to full on hover; unread rows keep full opacity and show the blue dot, which gives way to the "…" and resolve buttons on hover. Resolved rows rest like read rows. The selected row is light blue (`bg-background-info`) with emphasis text and keeps its buttons showing. The resolve button shows a filled check on a resolved thread and an outlined check otherwise. Both buttons are 20px with a 4px rounded hover. New props: `authorSrc` for a photo avatar, and `more` for a menu trigger. Put `CommentThreadMore` (new export) inside your own `DropdownMenu` trigger and pass it as `more`; the row keeps its buttons visible while that menu is open. `onMore` still works for a plain button.
+  - **`CommentSection`.** The filter button uses the new `ellipsis-horizontal-circle` icon, and both header buttons are 16px with a 4px rounded hover and a `neutral-10` pressed state. The "Show resolved comments" item keeps space for its check when it is off, so the menu does not change width. The header is 54px tall.
+  - **`CommentSearch`.** The search field has 16px side padding and 8px top and bottom. In the no-match message, the icon is `neutral-20`.
+  
+  Needs `@urbanflow/icons` with `EllipsisHorizontalCircleIcon` (#50). Re-run `npx shadcn add` for `comment-thread` and `comment-section`.
+- 82b678f: Comments thread view, matched to the Figma `↪ Comments` page.
+  
+  - New `emoji-picker`: `EmojiPicker` (category tabs, search, a Frequently used row, every emoji by category) and `EmojiPickerPopover`, which opens it from any trigger and closes on pick. Emoji data comes from `frimousse` 0.4.0. It reads the Emojibase JSON from your own site, not from jsDelivr: serve `en/data.json` and `en/messages.json` from `emojibase-data` (MIT) under `/emojibase-data`, or pass `emojibaseUrl` to point somewhere else. This site serves them from `public/emojibase-data`.
+  - New `image-zoom-selector`: the "− 100% +" control for an image viewer. It steps by 10%, and you can tap the value to type a percent from 1 to 100.
+  - `view-comment`: messages are now `ViewCommentMessage` rows, which you can pass as children. Each row takes a `menu` (the "…" options, for example Edit and Delete), `onReact` (a React button on hover that opens the emoji picker), `reactions` with `onToggleReaction` (tap a chip again to unreact), `photos` (up to three, "+N" on the third) with `onOpenPhoto`, and an `editor` that replaces the row while editing. The header takes `moreMenu` for the thread options and `resolved` to fill the resolve check. Pass your composer as `reply`; the old `onReply` text box still works. `me` can be `{ name, src, index }` so your own avatar keeps its colour. The card follows the Figma spacing and type, and it is at most 90% of the viewport tall with the messages scrolling. Reinstall `view-comment` (it now needs `action-list` and `emoji-picker`).
+  - `view-comment` also takes the app's reply behaviour: the box keeps its text until `onReply`'s promise resolves, and More, Resolve and Attach show only when their handler is given.
+  - `photo`: L is 76px (was 120×90). Hover darkens the image, the remove button shows on hover only and sits on the corner, and `selected` draws a blue border.
+  - `avatar`: size S is 22px (was 20px).
+
+### Patch Changes
+
+- 82b678f: Preserve edits made in the comment reply box while a previous reply is sending. A successful send clears the box only if it has not been edited; failed sends keep the draft and allow retrying.
+  
+  The Photo remove button stays keyboard-focusable, appears on hover or focus, and remains visible on touch devices. Reinstall `view-comment` and `photo` to update existing copies.
+
 ## 0.5.0
 
 ### Minor Changes
