@@ -32,6 +32,8 @@ function ModalContent({
   showClose = true,
   className,
   children,
+  onOpenAutoFocus,
+  onCloseAutoFocus,
   ...props
 }: Omit<React.ComponentProps<typeof DialogPrimitive.Content>, "title"> & {
   title: React.ReactNode
@@ -40,6 +42,7 @@ function ModalContent({
   size?: "default" | "small"
   showClose?: boolean
 }) {
+  const opener = React.useRef<HTMLElement | null>(null)
   return (
     <DialogPrimitive.Portal>
       <DialogPrimitive.Overlay data-slot="modal-overlay" className={dimmerClass} />
@@ -50,6 +53,18 @@ function ModalContent({
           size === "small" ? "w-90" : "w-155",
           className
         )}
+        onOpenAutoFocus={(event) => {
+          opener.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
+          onOpenAutoFocus?.(event)
+        }}
+        onCloseAutoFocus={(event) => {
+          onCloseAutoFocus?.(event)
+          const target = opener.current
+          opener.current = null
+          if (event.defaultPrevented || !target?.isConnected || target === document.body) return
+          event.preventDefault()
+          target.focus()
+        }}
         {...props}
       >
         <div className="flex items-center justify-between gap-2 bg-background-light px-4 py-3">
