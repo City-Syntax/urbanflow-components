@@ -4,6 +4,10 @@ Use the bundled 1 October 2026 snapshot for orientation: `references/principles/
 
 For current component keys, variables, styles and missing values, inspect Flow Design System in Figma: https://www.figma.com/design/NQpg4P9K158sjcEKmMLd8w/Flow-Design-System . Discovery hints: Components `723:6170`, Shell `6077:605`, AppShell `6085:5003`, Colours `2146:21181`, Typography `1711:12198`, Shadow `1712:12819`, Radius `6009:2928`, Icons `1726:14351` and feature pages named `↪ …`. Verify the hints before using them.
 
+## Feature pages
+
+In Flow Design System, every feature page uses the child-arrow prefix `↪` and sits in the feature-page group below `Shell` in the page list. This includes `↪ AI` even when the feature is shared by urbanflow and Flux. When creating or moving a feature page, keep it in that group and preserve the order of unrelated pages. Keep foundations and shared primitives on their existing pages.
+
 Load `figma:figma-use` before programmatic inspection. Read variables, styles and components with supported tools; discover available libraries before scoped asset searches. Import verified published keys. Inspect the library read-only unless the user explicitly requests an update.
 
 The Flow artifact at https://claude.ai/artifact/6tDZ6LvaJMBTknUeUNmgjg is optional supporting material when an available integration can read it. Its source paths are `project/README.md`, `project/tokens.json`, `project/components/index.d.ts` and component README files. Do not claim those files are bundled here or accessible without checking.

@@ -103,8 +103,8 @@ disposable Figma frame or other explicitly requested destination.
 
 ## Maintenance and validation
 
-The uploaded skill content is unchanged. `source-snapshot.json` records its file
-hashes. Its dated design snapshots are not a claim about today's live design
+The skill and its assets are maintained in this repository. `source-snapshot.json`
+records the approved file hashes. Its dated design snapshots are not a claim about today's live design
 system. Follow current repository instructions and verify live Figma definitions;
 in particular, the components repo's AGENTS.md restricts legacy Platform usage to
 the documented AI Refresh exception. For implementation work, read the current

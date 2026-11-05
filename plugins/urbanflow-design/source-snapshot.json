@@ -1,7 +1,7 @@
 {
   "exportedAt": "2026-10-30",
   "sourceName": "urbanflow-design",
-  "note": "Original workspace skill exported without content changes. Bundled design references retain their original snapshot dates.",
+  "note": "Approved workspace skill maintained in this repository. Bundled design references retain their original snapshot dates.",
   "files": {
     "SKILL.md": "820dd0b2febb4adda53c4c02878ab461fde3ef69a4525826fe6510d82b33c550",
     "agents/openai.yaml": "159aa2b36461a985efe15f0764a35a2cef60278e1b88cffcd64732c5a357c189",
@@ -99,15 +99,16 @@
     "references/handoff/review-mode.md": "70d528aab7faffc5cfe31aa86686342aaef08dff0be150679c78e394d010b38d",
     "references/handoff/writing-rules.md": "f1b8807f0c0b76fd1d4ec8b6e8141c60e3d47c5553b8f5ae42e6bd92d2828825",
     "references/handoff.md": "c64d5f282da855d729e7245295f96e02a0df1284635b5c5fcaa3eaad29021afc",
-    "references/how-pei-ning-works.md": "c679857866ada4193425b2d0234afd04d5349a1a7297881c7e1e5fb893c294c6",
+    "references/how-pei-ning-works.md": "5a63e662133f7d38c5693f9e076ccf0ee99dc5ad864d6fdaede8a1a734219481",
     "references/principles/components.md": "abb6d50cf385a130e03dd608a016cabebb96be0422d5e551a99335a86410dc71",
     "references/principles/contrast.md": "4a67d95c28dc07e44815f70897bcf01ca616af0561ac504a863aa34e5f684ce4",
     "references/principles/domain-glossary.md": "3a42f56b517c8d3c46439aa4957ac51709247c74c4b52483c7ebd53911f25d44",
     "references/principles/patterns.md": "b5ab54e49683bae825dcf2d8b8f7d1907bece904292878feda835e6d86c278c4",
-    "references/principles/reading-the-ds.md": "39e5ecb0d4693c7a6a335edea0f779afdd5f0c0b33b2bb8dbaae44e7bc6cf018",
+    "references/principles/reading-the-ds.md": "24d3b9377991d8d920785779dc0289305d7f83e3d0a11415e3bb3696215f9312",
     "references/principles/tokens.md": "1247732bd8127a255b630b7b6b9b79ec5e30f68c776acce97f29190fa1b2a0c3",
     "references/principles.md": "3b396a71af82b3f6bcd71cc04c87b638ccd3c90bb1b96f5593cfc5fd6871fec6",
     "references/qa/agent-issue-template.md": "f6b246ea02ebc22920c5715c38972ccee7b9612ab631a4308c7bf3a4ab8cb901",
     "references/qa.md": "7f6e0b9937e656401ad2c7667fa8b2ed79afd822bcaeb53ab645b366d20ff518"
-  }
+  },
+  "updatedAt": "2026-11-05"
 }

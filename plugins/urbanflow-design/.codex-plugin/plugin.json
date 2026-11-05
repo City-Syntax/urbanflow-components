@@ -1,6 +1,6 @@
 {
   "name": "urbanflow-design",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Build and analyse Flux and urbanflow designs using the Flow Design System.",
   "author": {
     "name": "urbanflow"
