@@ -706,7 +706,7 @@
       "categories": [
         "comments"
       ],
-      "description": "↪ Comments Photo: image attachment tile (S 60px or L 120×90), selected ring, +N overflow, optional remove.",
+      "description": "↪ Comments Photo: image attachment tile (S 60px or L 76px) with a dark hover overlay, blue selected border, +N overflow and a remove button shown on hover.",
       "dependencies": [
         "@urbanflow/icons"
       ],
@@ -778,7 +778,7 @@
       "categories": [
         "comments"
       ],
-      "description": "↪ Comments Comment Thread: panel row with location, author, time, first message and replies; unread dot; more and resolve on hover.",
+      "description": "↪ Comments Comment Thread: panel row with number and location, author, time, first message and replies; read rows at 60%, unread dot, selected light blue, filled check when resolved; more (menu trigger slot) and resolve on hover.",
       "dependencies": [
         "@urbanflow/icons"
       ],
@@ -822,19 +822,65 @@
       "categories": [
         "comments"
       ],
-      "description": "↪ Comments View Comment: open thread popover beside its pin — header actions, messages with photos and a reply composer.",
+      "description": "↪ Comments View Comment: open thread popover beside its pin. Header with options menu, resolve (filled when resolved) and close; ViewCommentMessage rows with a per-message options menu, hover React button with the emoji picker, reaction chips, up to three photos with +N, and an edit slot; a reply slot for the composer. Max height 90% of the viewport; messages scroll.",
       "dependencies": [
         "@urbanflow/icons"
       ],
       "registryDependencies": [
+        "https://components.urbanflow.co/r/action-list.json",
         "https://components.urbanflow.co/r/avatar.json",
         "https://components.urbanflow.co/r/comment-pin.json",
+        "https://components.urbanflow.co/r/emoji-picker.json",
         "https://components.urbanflow.co/r/icon-button.json",
         "https://components.urbanflow.co/r/photo.json"
       ],
       "files": [
         {
           "path": "registry/ui/view-comment.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "emoji-picker",
+      "type": "registry:ui",
+      "title": "Emoji Picker",
+      "categories": [
+        "comments"
+      ],
+      "description": "↪ Comments Emoji Picker: category tabs, search, a Frequently used row and every emoji by category (frimousse, with the Emojibase data served by your app under /emojibase-data, or set emojibaseUrl). EmojiPickerPopover opens it from any trigger and closes on pick.",
+      "dependencies": [
+        "frimousse",
+        "radix-ui",
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/emoji-picker.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "image-zoom-selector",
+      "type": "registry:ui",
+      "title": "Image Zoom Selector",
+      "categories": [
+        "comments"
+      ],
+      "description": "↪ Comments Image Zoom Selector: − 100% + control for the image viewer. Steps by 10%; tap the value to type a percent, clamped to min and max (1 to 100 by default).",
+      "dependencies": [
+        "@urbanflow/icons"
+      ],
+      "registryDependencies": [
+        "https://components.urbanflow.co/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/image-zoom-selector.tsx",
           "type": "registry:ui"
         }
       ]
