@@ -44,6 +44,18 @@ Stock shadcn components don't pick up the theme (it has no shadcn colours), so u
 **AI agents.** Point them at https://components.urbanflow.co/llms.txt: the design language
 ([DESIGN.md](DESIGN.md)), setup, and every token, component and icon, generated from this repo.
 
+**urbanflow Design skill.** Install the Figma workflows, Flow references and handoff
+guidance into local Codex with [skills.sh](https://skills.sh):
+
+```sh
+npx skills add City-Syntax/urbanflow-components --skill urbanflow-design -a codex -g
+```
+
+Use the command after the skill is available on `main`. The skill includes its
+supporting files; `-g` makes it available across projects. For plugin installation,
+ChatGPT workspace sharing and Figma setup, see the
+[urbanflow Design plugin guide](plugins/urbanflow-design/README.md).
+
 Release notes live in each package's `CHANGELOG.md` ([theme](packages/theme/CHANGELOG.md),
 [icons](packages/icons/CHANGELOG.md), [components](packages/registry/CHANGELOG.md)). All packages share one version number.
 
