@@ -179,12 +179,20 @@ function ViewComment({
 }) {
   const person = typeof me === "string" ? { name: me, index: 5 } : me
   const [draft, setDraft] = React.useState("")
+  const draftRevision = React.useRef(0)
   const [sending, setSending] = React.useState(false)
   const send = async () => {
-    if (!onReply) return
+    if (!onReply || sending || !draft.trim()) return
+    const submittedRevision = draftRevision.current
     setSending(true)
-    await Promise.resolve(onReply(draft)).then(() => setDraft(""), keepDraftForCallerToReport)
-    setSending(false)
+    try {
+      await onReply(draft)
+      if (draftRevision.current === submittedRevision) setDraft("")
+    } catch {
+      keepDraftForCallerToReport()
+    } finally {
+      setSending(false)
+    }
   }
   const moreButton = (
     <IconButton variant="tertiary" size="micro" label="More" onClick={onMore} className={rowAction}>
@@ -200,7 +208,10 @@ function ViewComment({
           aria-label="Reply"
           placeholder="Add a comment"
           value={draft}
-          onChange={(e) => setDraft(e.target.value)}
+          onChange={(e) => {
+            draftRevision.current += 1
+            setDraft(e.target.value)
+          }}
           className="resize-none bg-transparent text-paragraph-small text-texticons-primary outline-none placeholder:text-texticons-placeholder"
         />
         <div className="flex justify-end gap-1">

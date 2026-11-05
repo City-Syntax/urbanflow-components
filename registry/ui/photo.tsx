@@ -54,7 +54,7 @@ function Photo({
           type="button"
           aria-label="Remove image"
           onClick={onRemove}
-          className="absolute -top-[5px] -right-[3px] hidden size-4 cursor-pointer items-center justify-center rounded-full bg-background-inverse text-texticons-inverse-primary outline-none group-hover/photo:inline-flex group-focus-within/photo:inline-flex focus-visible:shadow-focus [&_svg]:size-3"
+          className="absolute -top-[5px] -right-[3px] inline-flex size-4 cursor-pointer items-center justify-center rounded-full bg-background-inverse text-texticons-inverse-primary opacity-0 outline-none group-hover/photo:opacity-100 group-focus-within/photo:opacity-100 focus-visible:opacity-100 focus-visible:shadow-focus pointer-coarse:opacity-100 [&_svg]:size-3"
         >
           <CloseIcon />
         </button>
