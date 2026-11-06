@@ -44,8 +44,9 @@ Stock shadcn components don't pick up the theme (it has no shadcn colours), so u
 **AI agents.** Point them at https://components.urbanflow.co/llms.txt: the design language
 ([DESIGN.md](DESIGN.md)), setup, and every token, component and icon, generated from this repo.
 
-**urbanflow Design skill.** Install the Figma workflows, Flow references and handoff
-guidance into local Codex with [skills.sh](https://skills.sh):
+**urbanflow Design skill.** One workflow for Figma and DS design, local frontend
+explorations, design QA fixes, code checks and requested PR handoff across Flux
+and urbanflow. Install it into local Codex with [skills.sh](https://skills.sh):
 
 ```sh
 npx skills add City-Syntax/urbanflow-components --skill urbanflow-design -a codex -g

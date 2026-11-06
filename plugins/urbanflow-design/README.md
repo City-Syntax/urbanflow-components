@@ -1,11 +1,26 @@
 # urbanflow Design plugin
 
-Shared design instructions for Flux and urbanflow, packaged from the existing
-urbanflow-design workspace skill. Includes all 106 original skill files: Flow
-references, Figma workflows, handoff guidance, tokens, icons and logos.
+One design plugin for Flux and urbanflow: Figma and design-system work, local
+frontend previews, design explorations, design QA fixes and engineering handoff.
+The existing `urbanflow-design` skill routes ordinary requests to the appropriate
+workflow. The designer does not need to switch plugins or name an internal mode.
+All original Flow reference assets remain bundled.
 
 This is a skills-only plugin. It does not add a runtime dependency to either
 application, publish an npm package, or automatically connect anyone's accounts.
+
+## Designer workflow
+
+- **Design:** create or update the requested Figma screens, components and DS.
+- **Explore:** test alternatives in the local app with a labelled Design exploration selector and repeatable sample scenarios.
+- **Implement / QA:** change the requested frontend, show a working preview and a short change list, and honor a request to review it first.
+- **Hand off:** isolate the selected production change, run the six-step [frontend branch checklist](skills/urbanflow-design/references/frontend-workflow.md), and create a PR only when requested. Request the authorized reviewer and run the repository's branch CI.
+
+Local preview controls, saved fixtures and unselected alternatives stay separate
+from production PRs. Validation must cover the exact final branch; the handoff
+states any checks that could not run. Repository instructions determine the base
+branch and check commands: the components repo uses main, while the monorepo
+normally uses develop. Figma-only requests stay in Figma.
 
 ## Install the skill with skills.sh
 
@@ -49,7 +64,7 @@ codex plugin list --json
 Use this after the plugin is merged to `main`. To test a local checkout, replace
 the GitHub URL with its absolute path, quoted if it contains spaces. Installation
 is user-level, so you can use it while working in either Flux or the monorepo.
-Open a new conversation after installing and request urbanflow Design explicitly.
+Open a new conversation after installing or updating. You can invoke urbanflow Design explicitly; automatic skill selection is also enabled for matching design and frontend requests.
 
 Alternatively, open the repository as a project in the desktop app. In Plugins,
 select the **urbanflow plugins** marketplace and install **urbanflow Design**.
@@ -96,6 +111,9 @@ plugin copies of the same skill in one environment.
 - “Use urbanflow Design to create this Flux flow using Flow components in this
   destination: [Figma link].”
 - “Use urbanflow Design to compare this implementation with its Figma design.”
+- “Explore these two Figma options locally. Keep the alternatives and sample data out of the production PR until I choose one.”
+- “Fix this frontend spacing issue on the latest development branch and show me the preview before creating a PR.”
+- “Prepare the approved frontend change, run the checks on the final branch, create a PR and request the named engineer's review.”
 
 Confirm that the agent loads `urbanflow-design`, can read its reference files,
 and can inspect the intended Figma file. Test live write workflows only in a

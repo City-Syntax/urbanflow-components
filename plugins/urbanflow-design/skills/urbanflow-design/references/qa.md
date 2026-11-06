@@ -1,53 +1,41 @@
+# urbanflow and Flux design QA
 
-# Urbanflow UI QA
+Compare the actual interface with the approved design. Support both reporting findings and making requested local frontend fixes through the same design plugin.
 
-Checks what shipped against what was designed, then hands fixes to the GitHub coding agent (set up by Ryan) in a form it can execute unattended. Load `references/principles.md` for tokens and components.
+## Choose the requested outcome
 
-## Step 0 — Scope
+- **Review / compare / list issues:** inspect and report; do not edit code or Figma.
+- **Fix / update this UI / close this gap:** implement the requested frontend fix locally using `references/frontend-workflow.md`, then show the designer the result and run appropriate checks.
+- **Explore alternatives:** use `references/local-preview.md`; do not reclassify a routine QA correction as a design exploration.
+- **Prepare a branch / PR:** use the six-step frontend checklist. A branch request alone is not authorization for a PR.
+- **Hand findings to engineering:** use `references/qa/agent-issue-template.md` when an issue or coding-agent handoff is requested. This is an optional route, not a prerequisite for local fixes.
 
-Confirm (only if not given): product/repo, module, branch or environment URL, and the section list. Modules are split into numbered sections (e.g. 1 Toolbar · 2 Main panel · 3 Card · 4 Delete confirmation). Default: all sections, in order.
+Use known product, repository, target branch, environment and design links from the conversation. Ask only for missing information that materially affects the task. Load `references/principles.md` for visual decisions and verify relevant current Flow definitions.
 
-## Step 1 — Collect evidence (one pass per section, before judging)
+## Collect evidence before judging
 
-**Live (actual):** built-in browser at 1440×900 (`resize_window`), open the environment URL; if a sign-in page appears ask Pei Ning to sign in. Screenshot each section and its reachable states; `read_page` for real copy. Don't trigger destructive or paid actions (delete, render/generate) without asking — use existing items where possible.
+Inspect the real screen at its actual viewport plus relevant narrow/short sizes. Use supported browser or computer-use tools, follow their current instructions, and record the route/build examined. Use existing authorized sample data when possible. Do not trigger paid, destructive or shared-backend operations merely to create a QA state.
 
-**Figma (expected):** SVG exports of the expected frames (with QA notes). Export rules — check every file before using it:
-- **Outline Text OFF** and **Include "id" attribute ON** (so font-family, size, weight and fill stay readable as markup).
-- Verify: `grep -o '<text' file.svg | wc -l` — **0 means the export is unusable** for type QA; ask for a re-export.
-- Read values from the SVG (`font-family`, `font-size`, `font-weight`, `fill`, rect sizes/positions) and map them to Flow variables/styles and code tokens (`@urbanflow/theme` / `libs/urbanflow-components/src/tailwind.css`).
-If Pei Ning gives a Figma link instead, use `get_screenshot` + `get_design_context` per frame, batched (the Figma API rate-limits her often).
+Inspect the requested live Figma nodes through available metadata, screenshots, component and variable definitions. Follow the entrypoint's Figma skill prerequisites. Supplied screenshots or SVG exports can supplement this evidence; outlined SVG text cannot establish font properties, but it is still useful for layout. Do not block all QA on an export format when live Figma or other verified evidence is available.
 
-**Code (optional, read-only):** grep the repo for the section's component to cite the file an issue lives in.
+Read the owning component, styles, shared registry/adapters and relevant tests where accessible. Distinguish an observed regression, a pre-existing problem, a design-system difference, a hypothesis and an unavailable state. Do not claim backend or product behavior from static screenshots.
 
-## Step 2 — Compare, section by section
+## Compare and fix within scope
 
-For each section check: layout and alignment · spacing (token steps 0/2/4/6/8/12/16/24/32) · sizes (32px fields, 24px tree rows, button sizes 24/28/32) · type (family Figtree vs DM Mono for numbers, size, weight, line height, colour/ink %) · colour tokens · radii (0/2/4/8/12/full) · shadows/strokes (inset rings) · icons (right glyph and optical size) · copy (exact text, casing, units) · states (hover, focus, pressed, disabled, loading, empty, error) · behaviour noted in the design (e.g. Toast auto-dismiss 4s).
+Check relevant layout, alignment, token spacing, sizes, typography, colors, strokes, icons, copy, units, states and interactions. Use current verified Flow values rather than enforcing every historical number in the bundled snapshot.
 
-Classify each difference:
-- **Fixable by the agent** — visual/token/copy/state styling in existing components.
-- **ENG EFFORT REQUIRED** — needs logic, data, API or new behaviour → a human handles it; the agent must skip it.
-- **Needs decision** — design and build disagree and it isn't clear which is right (or the design is ambiguous).
-- **Flag only** — issues noticed outside the QA notes; report, don't fix.
+Classify each finding as:
+- **In-scope frontend fix:** implement when fixes were requested, preserving approved behavior.
+- **Engineering or product decision:** report the specific dependency or ambiguity; continue independent fixes. Do not silently invent API fields, change permissions or implement new backend behavior.
+- **Needs design decision:** describe the mismatch and give a concrete recommendation.
+- **Outside scope:** report separately; do not fold unrelated fixes into the branch without authorization.
 
-## Step 3 — Output
+Group related fixes into a reviewable patch rather than requiring a commit for every visual finding. Preserve local samples/explorations and exclude them from production handoff unless requested.
 
-**A. QA log in chat** (default): per section, bullets `N.x · [type] · element — expected vs actual → fix (token/component)`, then a count per type and a one-line verdict.
+## Verify and report
 
-**B. QA files for the repo** (on request): files go in `design-qa/<module>/` on `main` (e.g. `design-qa/<module-name>/`), named:
-- `N. <Section> - live app current image.png`
-- `N. <Section> - expected UI QA notes.svg`
-Pei Ning manages files through the GitHub web UI (no git): tell her the exact folder path to type in "Create new file" (slash-typed path creates folders), then which files to upload. If this session has push access and she asks you to, commit them yourself — confirm first.
+For each requested fix, verify the actual result, including applicable short-window, long-text, list, focus and scrolling states. Apply the frontend checklist on the final isolated branch before a PR. Show the preview and change list; honor a request to review first.
 
-**C. GitHub issue for the coding agent** (on request) — use `references/qa/agent-issue-template.md`. Draft it in chat for review; create the issue only after Pei Ning says yes.
+Report findings in chat by section with expected behavior, observed evidence, impact, concrete fix and file/node reference where available. Mark each requested finding fixed and verified, awaiting review, blocked, outside scope or needing a decision. Give a verdict only for the inspected scope.
 
-## Rules for anything the agent will run
-
-- Self-contained: no questions mid-run; every file path, token, exact copy and expected value is in the issue.
-- Skip **ENG EFFORT REQUIRED** items (list them in a separate section for Ryan).
-- Work sections in order; **one commit per issue/finding**.
-- **Flag, don't fix** anything not in the QA notes.
-- Missing decisions → write **"Needs decision: …"** in the PR/comment and continue.
-- Comment back on the issue when done, listing each finding as fixed / skipped (ENG EFFORT) / needs decision.
-- Ryan reviews and merges PRs.
-
-When drafting messages to Ryan, keep them plain and attribute reasoning to the design review rather than inventing technical justifications.
+Create repo QA files or GitHub issues only when requested. Use a suitable feature branch instead of writing directly to main, and honor existing authorization without redundant confirmation. Send reviewer requests or messages only when authorized. Leave merging to the designer or engineer unless explicitly authorized.

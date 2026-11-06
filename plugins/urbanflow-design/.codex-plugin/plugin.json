@@ -1,7 +1,7 @@
 {
   "name": "urbanflow-design",
-  "version": "0.1.1",
-  "description": "Build and analyse Flux and urbanflow designs using the Flow Design System.",
+  "version": "0.2.0",
+  "description": "Design, explore, QA and hand off Flux and urbanflow frontend changes with the Flow Design System.",
   "author": {
     "name": "urbanflow"
   },
@@ -9,18 +9,22 @@
     "figma",
     "design-system",
     "flux",
-    "urbanflow"
+    "urbanflow",
+    "frontend",
+    "design-qa",
+    "local-preview",
+    "pull-request"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "urbanflow Design",
-    "shortDescription": "Design and review Flux and urbanflow with Flow guidelines",
-    "longDescription": "Shared Flow Design System guidance, Figma workflows, design reviews and handoff references for Flux and urbanflow. Requires separately authorized Figma tools for live design work.",
+    "shortDescription": "Design, preview, QA and prepare frontend changes for review",
+    "longDescription": "One designer workflow for Flux and urbanflow: Figma and Flow DS updates, local flow previews and design explorations, frontend QA fixes, exact-branch validation and requested PR handoff. Requires separately authorized Figma, local development and GitHub tools for those actions.",
     "developerName": "urbanflow",
     "category": "Productivity",
     "defaultPrompt": [
-      "Use urbanflow Design to review this Figma screen against the Flow Design System.",
-      "Use urbanflow Design to design this Flux flow using existing Flow components."
+      "Use urbanflow Design to explore this Figma design locally with switchable variations.",
+      "Use urbanflow Design to fix this frontend QA issue, show me the preview, and check the final branch before a requested PR."
     ],
     "composerIcon": "./assets/icon.svg",
     "logo": "./assets/logo.png"

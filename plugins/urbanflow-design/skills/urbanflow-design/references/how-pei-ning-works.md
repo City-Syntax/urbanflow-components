@@ -1,6 +1,6 @@
 # How Pei Ning works
 
-Follow this checklist for every design task.
+Use this checklist for Figma design and visual reviews. For local frontend exploration, QA fixes, code checks and PR preparation, use the matching workflow routed from `SKILL.md`; do not require a new Figma flow or every design-creation step for a small code fix.
 
 1. Take the brief from PM or engineering. Capture the goal, users, scope, entry and exit points, data, permissions, constraints and success criteria.
 2. Review the current product, target Figma frames, design rules and relevant code before designing. Record what is current versus proposed. Inspect hidden layers before declaring content missing: in Figma Plugin API reads, include invisible instance children with `figma.skipInvisibleInstanceChildren = false` where needed. Prefer a targeted visibility, text or property edit; do not recreate content, detach components or reset overrides merely because an initial traversal omitted it.
@@ -40,3 +40,5 @@ Follow this checklist for every design task.
 12. Screenshot and inspect the completed flow. Check component provenance, connector continuity, clipping, spacing, copy, accessibility, all required states and handoff completeness before delivery.
 13. Maintain a numbered coverage table: request → screen/requirement link → structural and visual verification → status. Distinguish attempted, verified, incomplete, blocked, awaiting-decision and intentionally deferred work. Record explicit keep/defer decisions and do not repeatedly flag them as defects. End with verified outcomes and explicit unfinished items; never silently drop a task or treat one successful edit as completion of the whole batch.
 14. Check transitions across screens and annotations for consistent preservation of chat, unsent draft, attached files, selected context, scroll position and ongoing operations. Compare requirements against each other, not just against individual screenshots. Place message-action requirements beside the completed response that exposes those actions.
+
+15. Carry a selected design through local preview, implementation and engineering handoff when requested. Keep alternative explorations and repeatable sample data local, show the implemented result, and apply `references/frontend-workflow.md` to the exact production branch before a requested PR.
